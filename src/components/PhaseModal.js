@@ -65,67 +65,73 @@ const phaseDetails = {
   }
 };
 
-// Architecture layers data - proper robot system layers
+// Architecture layers data - based on official ROS documentation
+// Reference: wiki.ros.org/navigation, ros_control, docs.nav2.org
 const architectureLayers = [
   {
     name: 'Cloud / External',
     type: 'single',
+    isOutsideROS: true,
     items: [
-      { name: 'Fleet Management System', experienced: true },
-      { name: 'Realtime Database', experienced: true },
-      { name: 'Building Integration API', experienced: true },
-      { name: 'Inter-Robot Communication', experienced: false },
+      { name: 'Fleet Management', experienced: true },
+      { name: 'Database', experienced: true },
+      { name: 'Building API', experienced: true },
     ]
   },
   {
     name: 'Application',
     type: 'single',
+    isOutsideROS: true,
     items: [
       { name: 'User Interface', experienced: true },
-      { name: 'REST API Server', experienced: true },
+      { name: 'REST API', experienced: true },
       { name: 'Message Bridge', experienced: true },
     ]
   },
+  // ROS Framework starts here
   {
-    name: 'Behavior',
+    name: 'Behavior / Orchestration',
     type: 'single',
+    isROS: true,
     items: [
       { name: 'State Machine', experienced: true },
       { name: 'Behavior Tree', experienced: true },
       { name: 'Mission Sequencer', experienced: true },
-      { name: 'Error Recovery', experienced: true },
+      { name: 'Recovery Behavior', experienced: true },
     ]
   },
   {
     name: 'Domain Stacks',
     type: 'horizontal',
+    isROS: true,
     groups: [
       {
         name: 'Navigation',
+        // Official: amcl, move_base, costmap_2d, global_planner, local_planner
         items: [
-          { name: 'Localization', experienced: true },
-          { name: 'Global Planner', experienced: true },
-          { name: 'Local Planner', experienced: true },
-          { name: 'Costmap', experienced: true },
-          { name: 'Recovery Behavior', experienced: true },
+          { name: 'AMCL', experienced: true },
+          { name: 'move_base', experienced: true },
+          { name: 'costmap_2d', experienced: true },
+          { name: 'global_planner', experienced: true },
+          { name: 'local_planner', experienced: true },
         ]
       },
       {
         name: 'Manipulation',
         items: [
-          { name: 'Motion Planning', experienced: true },
+          { name: 'MoveIt', experienced: true },
           { name: 'Kinematics', experienced: true },
-          { name: 'Trajectory Execution', experienced: true },
-          { name: 'Gripper Control', experienced: true },
+          { name: 'Trajectory', experienced: true },
+          { name: 'Gripper', experienced: true },
         ]
       },
       {
         name: 'Perception',
         items: [
-          { name: 'Object Detection', experienced: false },
           { name: 'SLAM', experienced: false },
+          { name: 'Detection', experienced: false },
           { name: 'Sensor Fusion', experienced: false },
-          { name: 'Point Cloud Processing', experienced: false },
+          { name: 'PCL', experienced: false },
         ]
       },
     ]
@@ -133,53 +139,56 @@ const architectureLayers = [
   {
     name: 'ROS Communication',
     type: 'single',
+    isROS: true,
     items: [
-      { name: 'Topic Publish/Subscribe', experienced: true },
-      { name: 'Service Call', experienced: true },
-      { name: 'Action Server/Client', experienced: true },
-      { name: 'TF Transform', experienced: true },
-      { name: 'Parameter Server', experienced: true },
+      { name: 'Topic (Pub/Sub)', experienced: true },
+      { name: 'Service', experienced: true },
+      { name: 'Action', experienced: true },
+      { name: 'TF', experienced: true },
+      { name: 'Parameter', experienced: true },
     ]
   },
   {
-    name: 'Hardware Abstraction',
+    name: 'ros_control',
     type: 'single',
+    isROS: true,
+    // Official: Controller Manager, Hardware Interface, Joint Controllers
     items: [
       { name: 'Controller Manager', experienced: true },
-      { name: 'Diff Drive Controller', experienced: true },
-      { name: 'Joint State Controller', experienced: true },
-      { name: 'Joint Trajectory Controller', experienced: true },
+      { name: 'Hardware Interface', experienced: true },
+      { name: 'Joint Controllers', experienced: true },
+      { name: 'Transmissions', experienced: true },
     ]
   },
+  // ROS Framework ends here
   {
-    name: 'Device Drivers',
-    type: 'single',
+    name: 'Runtime Environment',
+    type: 'runtime',
     items: [
-      { name: 'CAN Interface', experienced: true },
-      { name: 'Serial Interface', experienced: true },
-      { name: 'USB Interface', experienced: true },
-      { name: 'Ethernet Interface', experienced: true },
+      { name: 'Docker', experienced: true },
+      { name: 'Ubuntu 20.04', experienced: true },
+      { name: 'ROS Noetic', experienced: true },
     ]
   },
   {
     name: 'OS / Kernel',
     type: 'single',
     items: [
-      { name: 'SocketCAN Subsystem', experienced: true },
-      { name: 'TTY Subsystem', experienced: true },
-      { name: 'V4L2 Subsystem', experienced: true },
-      { name: 'Network Stack', experienced: true },
+      { name: 'SocketCAN', experienced: true },
+      { name: 'TTY', experienced: true },
+      { name: 'V4L2', experienced: true },
+      { name: 'Network', experienced: true },
     ]
   },
   {
-    name: 'Physical',
+    name: 'Physical Layer',
     type: 'single',
     items: [
-      { name: 'Wheel Actuators', experienced: true },
+      { name: 'Wheel Motors', experienced: true },
       { name: 'Arm Actuators', experienced: true },
-      { name: 'LiDAR Sensor', experienced: true },
-      { name: 'Camera Sensor', experienced: true },
-      { name: 'IMU Sensor', experienced: true },
+      { name: 'LiDAR', experienced: true },
+      { name: 'Camera', experienced: true },
+      { name: 'IMU', experienced: true },
     ]
   },
 ];
@@ -189,6 +198,9 @@ function ArchitectureView({ onClose, phase }) {
   const countItems = (layer) => {
     if (layer.type === 'horizontal') {
       return layer.groups.reduce((acc, g) => acc + g.items.length, 0);
+    }
+    if (layer.type === 'runtime') {
+      return layer.items.length;
     }
     return layer.items.length;
   };
@@ -201,6 +213,71 @@ function ArchitectureView({ onClose, phase }) {
 
   const totalItems = architectureLayers.reduce((acc, layer) => acc + countItems(layer), 0);
   const experiencedItems = architectureLayers.reduce((acc, layer) => acc + countExperienced(layer), 0);
+
+  // Separate ROS and non-ROS layers
+  const rosLayers = architectureLayers.filter(l => l.isROS);
+  const outsideROSLayers = architectureLayers.filter(l => l.isOutsideROS);
+  const otherLayers = architectureLayers.filter(l => !l.isROS && !l.isOutsideROS);
+
+  const renderLayer = (layer, idx, showConnector = true, totalLength = 1) => (
+    <div key={idx} className="arch-layer-wrapper">
+      {layer.type === 'horizontal' ? (
+        <div className="arch-layer horizontal">
+          <div className="arch-layer-label">{layer.name}</div>
+          <div className="arch-horizontal-groups">
+            {layer.groups.map((group, gIdx) => (
+              <div key={gIdx} className="arch-group">
+                <div className="arch-group-label">{group.name}</div>
+                <div className="arch-group-nodes">
+                  {group.items.map((item, itemIdx) => (
+                    <div
+                      key={itemIdx}
+                      className={`arch-node ${item.experienced ? 'exp' : ''}`}
+                    >
+                      {item.name}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : layer.type === 'runtime' ? (
+        <div className="arch-layer runtime">
+          <div className="arch-layer-label">{layer.name}</div>
+          <div className="arch-runtime-stack">
+            {layer.items.map((item, itemIdx) => (
+              <div
+                key={itemIdx}
+                className={`arch-runtime-item ${item.experienced ? 'exp' : ''}`}
+              >
+                {item.name}
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="arch-layer">
+          <div className="arch-layer-label">{layer.name}</div>
+          <div className="arch-layer-nodes">
+            {layer.items.map((item, itemIdx) => (
+              <div
+                key={itemIdx}
+                className={`arch-node ${item.experienced ? 'exp' : ''}`}
+              >
+                {item.name}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {showConnector && idx < totalLength - 1 && (
+        <div className="arch-connector">
+          <div className="connector-line"></div>
+        </div>
+      )}
+    </div>
+  );
 
   return (
     <div className="phase-modal-overlay" onClick={onClose}>
@@ -223,50 +300,30 @@ function ArchitectureView({ onClose, phase }) {
         </div>
 
         <div className="arch-diagram">
-          {architectureLayers.map((layer, idx) => (
-            <div key={idx} className="arch-layer-wrapper">
-              {layer.type === 'horizontal' ? (
-                <div className="arch-layer horizontal">
-                  <div className="arch-layer-label">{layer.name}</div>
-                  <div className="arch-horizontal-groups">
-                    {layer.groups.map((group, gIdx) => (
-                      <div key={gIdx} className="arch-group">
-                        <div className="arch-group-label">{group.name}</div>
-                        <div className="arch-group-nodes">
-                          {group.items.map((item, itemIdx) => (
-                            <div
-                              key={itemIdx}
-                              className={`arch-node ${item.experienced ? 'exp' : ''}`}
-                            >
-                              {item.name}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <div className="arch-layer">
-                  <div className="arch-layer-label">{layer.name}</div>
-                  <div className="arch-layer-nodes">
-                    {layer.items.map((item, itemIdx) => (
-                      <div
-                        key={itemIdx}
-                        className={`arch-node ${item.experienced ? 'exp' : ''}`}
-                      >
-                        {item.name}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {idx < architectureLayers.length - 1 && (
-                <div className="arch-connector">
-                  <div className="connector-line"></div>
-                </div>
-              )}
+          {/* Outside ROS layers (Cloud, Application) */}
+          {outsideROSLayers.map((layer, idx) => renderLayer(layer, idx, true, outsideROSLayers.length))}
+
+          {/* Connector to ROS Framework */}
+          <div className="arch-connector">
+            <div className="connector-line"></div>
+          </div>
+
+          {/* ROS Framework Container */}
+          <div className="ros-framework-container">
+            <div className="ros-framework-label">ROS Framework</div>
+            <div className="ros-framework-content">
+              {rosLayers.map((layer, idx) => renderLayer(layer, idx, true, rosLayers.length))}
             </div>
+          </div>
+
+          {/* Other layers (Runtime, OS, Physical) */}
+          {otherLayers.map((layer, idx) => (
+            <React.Fragment key={idx}>
+              <div className="arch-connector">
+                <div className="connector-line"></div>
+              </div>
+              {renderLayer(layer, idx, idx < otherLayers.length - 1, otherLayers.length)}
+            </React.Fragment>
           ))}
         </div>
 
