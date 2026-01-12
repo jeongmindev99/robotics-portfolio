@@ -366,11 +366,11 @@ function ArchitectureView({ onClose, phase }) {
 
         <div className="arch-legend">
           <div className="legend-item">
-            <span className="legend-dot exp"></span>
+            <span className="legend-dot exp">●</span>
             <span>경험</span>
           </div>
           <div className="legend-item">
-            <span className="legend-dot"></span>
+            <span className="legend-dot">○</span>
             <span>미경험</span>
           </div>
         </div>

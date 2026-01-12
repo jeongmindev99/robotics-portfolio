@@ -250,15 +250,37 @@
 
 .arch-layer {
   width: 100%;
-  background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 6px;
   overflow: hidden;
 }
 
+/* Layer gradient backgrounds - color zones */
+/* Cloud/External layers - blue tones */
+.arch-diagram > .arch-layer-wrapper:nth-child(1) .arch-layer { background: rgba(100, 149, 237, 0.12); }
+.arch-diagram > .arch-layer-wrapper:nth-child(2) .arch-layer { background: rgba(100, 149, 237, 0.08); }
+
+/* ROS Framework layers - green tones */
+.ros-framework-content .arch-layer-wrapper:nth-child(1) .arch-layer { background: rgba(0, 212, 170, 0.10); }
+.ros-framework-content .arch-layer-wrapper:nth-child(2) .arch-layer,
+.ros-framework-content .arch-layer-wrapper:nth-child(2) .arch-group { background: rgba(0, 212, 170, 0.07); }
+.ros-framework-content .arch-layer-wrapper:nth-child(3) .arch-layer { background: rgba(0, 212, 170, 0.05); }
+.ros-framework-content .arch-layer-wrapper:nth-child(4) .arch-layer { background: rgba(0, 212, 170, 0.04); }
+
+/* Runtime layer - purple tone */
+.arch-layer.runtime { background: rgba(147, 112, 219, 0.10); }
+
+/* Lower layers - warm tones (orange to red gradient) */
+[class*="Device"] .arch-layer,
+.arch-diagram > div:nth-last-child(4) .arch-layer { background: rgba(255, 165, 0, 0.08); }
+.arch-diagram > div:nth-last-child(3) .arch-layer { background: rgba(255, 140, 0, 0.08); }
+.arch-diagram > div:nth-last-child(2) .arch-layer { background: rgba(255, 99, 71, 0.08); }
+.arch-diagram > div:nth-last-child(1) .arch-layer,
+.arch-diagram > div:nth-last-child(1) .arch-group { background: rgba(205, 92, 92, 0.08); }
+
 .arch-layer-label {
   padding: 6px 10px;
-  background: var(--bg-tertiary);
+  background: rgba(0, 0, 0, 0.2);
   border-bottom: 1px solid var(--border-color);
   font-family: var(--font-mono);
   font-size: 0.6rem;
@@ -278,20 +300,29 @@
 }
 
 .arch-node {
+  display: flex;
+  align-items: center;
+  gap: 5px;
   padding: 4px 8px;
-  background: var(--bg-tertiary);
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-color);
   border-radius: 3px;
   font-size: 0.6rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   transition: all 0.2s ease;
   cursor: default;
 }
 
-.arch-node.exp {
-  color: var(--text-primary);
-  border-color: var(--border-highlight);
-  background: rgba(255, 255, 255, 0.03);
+.arch-node::before {
+  content: '○';
+  font-size: 0.5rem;
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+.arch-node.exp::before {
+  content: '●';
+  color: var(--text-secondary);
 }
 
 /* Horizontal domain layer */
@@ -410,11 +441,14 @@
 }
 
 .arch-runtime-item {
-  padding: 6px 16px;
-  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-color);
   font-size: 0.65rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   position: relative;
 }
 
@@ -430,10 +464,15 @@
   border-left: none;
 }
 
-.arch-runtime-item.exp {
-  color: var(--text-primary);
-  border-color: var(--border-highlight);
-  background: rgba(255, 255, 255, 0.03);
+.arch-runtime-item::before {
+  content: '○';
+  font-size: 0.5rem;
+  color: var(--text-muted);
+}
+
+.arch-runtime-item.exp::before {
+  content: '●';
+  color: var(--text-secondary);
 }
 
 .arch-runtime-item::after {
@@ -463,22 +502,18 @@
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-size: 0.7rem;
   color: var(--text-secondary);
 }
 
 .legend-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--text-muted);
-  border: 1px solid var(--border-color);
+  font-size: 0.6rem;
+  color: var(--text-muted);
 }
 
 .legend-dot.exp {
-  background: var(--text-secondary);
-  border-color: var(--border-highlight);
+  color: var(--text-secondary);
 }
 
 /* ==================== */
