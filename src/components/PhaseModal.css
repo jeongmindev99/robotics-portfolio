@@ -235,7 +235,7 @@
 /* ==================== */
 
 .arch-diagram {
-  padding: 20px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -252,37 +252,37 @@
   width: 100%;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: 6px;
   overflow: hidden;
 }
 
 .arch-layer-label {
-  padding: 8px 12px;
+  padding: 6px 10px;
   background: var(--bg-tertiary);
   border-bottom: 1px solid var(--border-color);
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 600;
   color: var(--text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
   text-align: center;
 }
 
 .arch-layer-nodes {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  padding: 10px;
+  gap: 4px;
+  padding: 8px;
   justify-content: center;
 }
 
 .arch-node {
-  padding: 5px 10px;
+  padding: 4px 8px;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
-  border-radius: 4px;
-  font-size: 0.7rem;
+  border-radius: 3px;
+  font-size: 0.6rem;
   color: var(--text-muted);
   transition: all 0.2s ease;
   cursor: default;
@@ -294,8 +294,55 @@
   background: rgba(0, 212, 170, 0.1);
 }
 
-.arch-node:hover {
-  transform: translateY(-1px);
+/* Horizontal domain layer */
+.arch-layer.horizontal {
+  background: transparent;
+  border: none;
+}
+
+.arch-layer.horizontal .arch-layer-label {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px 6px 0 0;
+  border-bottom: none;
+}
+
+.arch-horizontal-groups {
+  display: flex;
+  gap: 8px;
+}
+
+.arch-group {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.arch-group-label {
+  padding: 5px 8px;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-color);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 500;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.arch-group-nodes {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 6px;
+}
+
+.arch-group-nodes .arch-node {
+  text-align: center;
+  width: 100%;
 }
 
 /* Connector between layers */
@@ -303,22 +350,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 20px;
-  position: relative;
+  height: 16px;
+  justify-content: center;
 }
 
 .connector-line {
   width: 2px;
-  height: 14px;
-  background: linear-gradient(180deg, var(--border-highlight) 0%, var(--accent-primary) 100%);
-}
-
-.connector-arrow {
-  width: 0;
-  height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 6px solid var(--accent-primary);
+  height: 16px;
+  background: var(--border-highlight);
 }
 
 /* Architecture Legend */
@@ -398,30 +437,39 @@
 
   /* Architecture responsive */
   .arch-diagram {
-    padding: 12px;
+    padding: 10px;
   }
 
   .arch-layer-label {
-    font-size: 0.6rem;
-    padding: 6px 10px;
+    font-size: 0.55rem;
+    padding: 5px 8px;
   }
 
   .arch-layer-nodes {
-    padding: 8px;
-    gap: 4px;
+    padding: 6px;
+    gap: 3px;
   }
 
   .arch-node {
-    padding: 4px 8px;
-    font-size: 0.6rem;
+    padding: 3px 6px;
+    font-size: 0.55rem;
+  }
+
+  .arch-horizontal-groups {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .arch-group-label {
+    font-size: 0.5rem;
   }
 
   .arch-connector {
-    height: 16px;
+    height: 12px;
   }
 
   .connector-line {
-    height: 10px;
+    height: 12px;
   }
 }
 

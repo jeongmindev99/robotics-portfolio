@@ -65,96 +65,142 @@ const phaseDetails = {
   }
 };
 
-// Architecture layers data
+// Architecture layers data - proper robot system layers
 const architectureLayers = [
   {
-    name: 'External Systems',
+    name: 'Cloud / External',
+    type: 'single',
     items: [
-      { name: 'Fleet Management', desc: '관제 시스템', experienced: true },
-      { name: 'Firebase RTDB', desc: '실시간 DB', experienced: true },
-      { name: 'Building API', desc: '엘리베이터 연동', experienced: true },
-      { name: 'Robot-to-Robot', desc: '로봇 간 통신', experienced: false },
+      { name: 'Fleet Management System', experienced: true },
+      { name: 'Realtime Database', experienced: true },
+      { name: 'Building Integration API', experienced: true },
+      { name: 'Inter-Robot Communication', experienced: false },
     ]
   },
   {
-    name: 'Application Layer',
+    name: 'Application',
+    type: 'single',
     items: [
-      { name: 'Robot UI', desc: 'React 화면', experienced: true },
-      { name: 'API Gateway', desc: 'Flask 서버', experienced: true },
-      { name: 'MQTT Bridge', desc: '메시지 브릿지', experienced: true },
+      { name: 'User Interface', experienced: true },
+      { name: 'REST API Server', experienced: true },
+      { name: 'Message Bridge', experienced: true },
     ]
   },
   {
-    name: 'ROS - Behavior',
+    name: 'Behavior',
+    type: 'single',
     items: [
-      { name: 'FlexBE', desc: '상태 머신', experienced: true },
-      { name: 'Mission Manager', desc: '미션 시퀀싱', experienced: true },
-      { name: 'Error Handler', desc: '에러 복구', experienced: true },
-      { name: 'Task Scheduler', desc: '태스크 스케줄링', experienced: true },
+      { name: 'State Machine', experienced: true },
+      { name: 'Behavior Tree', experienced: true },
+      { name: 'Mission Sequencer', experienced: true },
+      { name: 'Error Recovery', experienced: true },
     ]
   },
   {
-    name: 'ROS - Navigation',
-    items: [
-      { name: 'move_base', desc: '경로 계획', experienced: true },
-      { name: 'AMCL', desc: '위치 추정', experienced: true },
-      { name: 'costmap_2d', desc: '코스트맵', experienced: true },
-      { name: 'global_planner', desc: '전역 경로', experienced: true },
-      { name: 'local_planner', desc: '지역 경로', experienced: true },
+    name: 'Domain Stacks',
+    type: 'horizontal',
+    groups: [
+      {
+        name: 'Navigation',
+        items: [
+          { name: 'Localization', experienced: true },
+          { name: 'Global Planner', experienced: true },
+          { name: 'Local Planner', experienced: true },
+          { name: 'Costmap', experienced: true },
+          { name: 'Recovery Behavior', experienced: true },
+        ]
+      },
+      {
+        name: 'Manipulation',
+        items: [
+          { name: 'Motion Planning', experienced: true },
+          { name: 'Kinematics', experienced: true },
+          { name: 'Trajectory Execution', experienced: true },
+          { name: 'Gripper Control', experienced: true },
+        ]
+      },
+      {
+        name: 'Perception',
+        items: [
+          { name: 'Object Detection', experienced: false },
+          { name: 'SLAM', experienced: false },
+          { name: 'Sensor Fusion', experienced: false },
+          { name: 'Point Cloud Processing', experienced: false },
+        ]
+      },
     ]
   },
   {
-    name: 'ROS - Manipulation',
+    name: 'ROS Communication',
+    type: 'single',
     items: [
-      { name: 'MoveIt', desc: '모션 플래닝', experienced: true },
-      { name: 'Joint Controller', desc: '조인트 제어', experienced: true },
-      { name: 'Gripper Control', desc: '그리퍼 제어', experienced: true },
-    ]
-  },
-  {
-    name: 'ROS - Perception',
-    items: [
-      { name: 'YOLO', desc: '객체 인식', experienced: false },
-      { name: 'ORB-SLAM', desc: 'Visual SLAM', experienced: false },
-      { name: 'Point Cloud', desc: '3D 인식', experienced: false },
+      { name: 'Topic Publish/Subscribe', experienced: true },
+      { name: 'Service Call', experienced: true },
+      { name: 'Action Server/Client', experienced: true },
+      { name: 'TF Transform', experienced: true },
+      { name: 'Parameter Server', experienced: true },
     ]
   },
   {
     name: 'Hardware Abstraction',
+    type: 'single',
     items: [
-      { name: 'ros_control', desc: '컨트롤러 매니저', experienced: true },
-      { name: 'diff_drive', desc: '차동 구동', experienced: true },
-      { name: 'joint_state', desc: '조인트 상태', experienced: true },
-      { name: 'socketcan_bridge', desc: 'CAN 브릿지', experienced: true },
-      { name: 'serial_node', desc: '시리얼 통신', experienced: true },
+      { name: 'Controller Manager', experienced: true },
+      { name: 'Diff Drive Controller', experienced: true },
+      { name: 'Joint State Controller', experienced: true },
+      { name: 'Joint Trajectory Controller', experienced: true },
     ]
   },
   {
-    name: 'OS / Drivers',
+    name: 'Device Drivers',
+    type: 'single',
     items: [
-      { name: 'SocketCAN', desc: 'CAN 드라이버', experienced: true },
-      { name: 'TTY/Serial', desc: '시리얼 드라이버', experienced: true },
-      { name: 'V4L2', desc: '카메라 드라이버', experienced: true },
-      { name: 'Network', desc: '네트워크 스택', experienced: true },
+      { name: 'CAN Interface', experienced: true },
+      { name: 'Serial Interface', experienced: true },
+      { name: 'USB Interface', experienced: true },
+      { name: 'Ethernet Interface', experienced: true },
     ]
   },
   {
-    name: 'Physical Layer',
+    name: 'OS / Kernel',
+    type: 'single',
     items: [
-      { name: 'Wheel Motors', desc: 'BLDC 모터', experienced: true },
-      { name: 'Arm Motors', desc: '스테퍼/서보', experienced: true },
-      { name: 'LiDAR', desc: '2D/3D 라이다', experienced: true },
-      { name: 'Camera', desc: 'RGB/Depth', experienced: true },
-      { name: 'IMU', desc: '관성 센서', experienced: true },
+      { name: 'SocketCAN Subsystem', experienced: true },
+      { name: 'TTY Subsystem', experienced: true },
+      { name: 'V4L2 Subsystem', experienced: true },
+      { name: 'Network Stack', experienced: true },
+    ]
+  },
+  {
+    name: 'Physical',
+    type: 'single',
+    items: [
+      { name: 'Wheel Actuators', experienced: true },
+      { name: 'Arm Actuators', experienced: true },
+      { name: 'LiDAR Sensor', experienced: true },
+      { name: 'Camera Sensor', experienced: true },
+      { name: 'IMU Sensor', experienced: true },
     ]
   },
 ];
 
 function ArchitectureView({ onClose, phase }) {
-  const totalItems = architectureLayers.reduce((acc, layer) => acc + layer.items.length, 0);
-  const experiencedItems = architectureLayers.reduce(
-    (acc, layer) => acc + layer.items.filter(item => item.experienced).length, 0
-  );
+  // Calculate totals including horizontal groups
+  const countItems = (layer) => {
+    if (layer.type === 'horizontal') {
+      return layer.groups.reduce((acc, g) => acc + g.items.length, 0);
+    }
+    return layer.items.length;
+  };
+  const countExperienced = (layer) => {
+    if (layer.type === 'horizontal') {
+      return layer.groups.reduce((acc, g) => acc + g.items.filter(i => i.experienced).length, 0);
+    }
+    return layer.items.filter(i => i.experienced).length;
+  };
+
+  const totalItems = architectureLayers.reduce((acc, layer) => acc + countItems(layer), 0);
+  const experiencedItems = architectureLayers.reduce((acc, layer) => acc + countExperienced(layer), 0);
 
   return (
     <div className="phase-modal-overlay" onClick={onClose}>
@@ -179,24 +225,45 @@ function ArchitectureView({ onClose, phase }) {
         <div className="arch-diagram">
           {architectureLayers.map((layer, idx) => (
             <div key={idx} className="arch-layer-wrapper">
-              <div className="arch-layer">
-                <div className="arch-layer-label">{layer.name}</div>
-                <div className="arch-layer-nodes">
-                  {layer.items.map((item, itemIdx) => (
-                    <div
-                      key={itemIdx}
-                      className={`arch-node ${item.experienced ? 'exp' : ''}`}
-                      title={item.desc}
-                    >
-                      {item.name}
-                    </div>
-                  ))}
+              {layer.type === 'horizontal' ? (
+                <div className="arch-layer horizontal">
+                  <div className="arch-layer-label">{layer.name}</div>
+                  <div className="arch-horizontal-groups">
+                    {layer.groups.map((group, gIdx) => (
+                      <div key={gIdx} className="arch-group">
+                        <div className="arch-group-label">{group.name}</div>
+                        <div className="arch-group-nodes">
+                          {group.items.map((item, itemIdx) => (
+                            <div
+                              key={itemIdx}
+                              className={`arch-node ${item.experienced ? 'exp' : ''}`}
+                            >
+                              {item.name}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="arch-layer">
+                  <div className="arch-layer-label">{layer.name}</div>
+                  <div className="arch-layer-nodes">
+                    {layer.items.map((item, itemIdx) => (
+                      <div
+                        key={itemIdx}
+                        className={`arch-node ${item.experienced ? 'exp' : ''}`}
+                      >
+                        {item.name}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
               {idx < architectureLayers.length - 1 && (
                 <div className="arch-connector">
                   <div className="connector-line"></div>
-                  <div className="connector-arrow"></div>
                 </div>
               )}
             </div>
