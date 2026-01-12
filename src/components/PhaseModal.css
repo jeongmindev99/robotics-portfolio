@@ -290,8 +290,8 @@
 
 .arch-node.exp {
   color: var(--text-primary);
-  border-color: var(--accent-primary);
-  background: rgba(0, 212, 170, 0.1);
+  border-color: var(--border-highlight);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 /* Horizontal domain layer */
@@ -360,29 +360,30 @@
   background: var(--border-highlight);
 }
 
-/* ROS Framework Container */
+/* ROS Framework Container - subtle styling */
 .ros-framework-container {
   width: 100%;
-  border: 2px solid var(--accent-primary);
-  border-radius: 8px;
-  overflow: hidden;
-  background: rgba(0, 212, 170, 0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .ros-framework-label {
-  padding: 6px 12px;
-  background: var(--accent-primary);
-  color: var(--bg-primary);
+  padding: 4px 12px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
   font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
+  font-size: 0.55rem;
+  font-weight: 500;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  text-align: center;
+  margin-bottom: 8px;
 }
 
 .ros-framework-content {
-  padding: 8px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -393,7 +394,7 @@
 }
 
 .ros-framework-content .arch-layer {
-  border-color: rgba(0, 212, 170, 0.3);
+  border-color: var(--border-color);
 }
 
 /* Runtime Environment Stack */
@@ -431,8 +432,8 @@
 
 .arch-runtime-item.exp {
   color: var(--text-primary);
-  border-color: var(--accent-primary);
-  background: rgba(0, 212, 170, 0.1);
+  border-color: var(--border-highlight);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .arch-runtime-item::after {
@@ -476,9 +477,8 @@
 }
 
 .legend-dot.exp {
-  background: var(--accent-primary);
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 6px rgba(0, 212, 170, 0.5);
+  background: var(--text-secondary);
+  border-color: var(--border-highlight);
 }
 
 /* ==================== */
@@ -562,17 +562,10 @@
   }
 
   /* ROS Framework responsive */
-  .ros-framework-container {
-    border-width: 1px;
-  }
-
   .ros-framework-label {
-    font-size: 0.55rem;
-    padding: 4px 8px;
-  }
-
-  .ros-framework-content {
-    padding: 6px;
+    font-size: 0.5rem;
+    padding: 3px 8px;
+    margin-bottom: 6px;
   }
 
   /* Runtime responsive */
