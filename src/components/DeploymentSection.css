@@ -1,5 +1,4 @@
 .deployment-section {
-  padding-left: 80px;
   background: var(--bg-primary);
 }
 
@@ -163,14 +162,10 @@
 
 /* Mobile */
 @media (max-width: 768px) {
-  .deployment-section {
-    padding-left: 0;
-  }
-  
   .deployment-stats {
     flex-direction: column;
   }
-  
+
   .sites-container {
     grid-template-columns: 1fr;
   }

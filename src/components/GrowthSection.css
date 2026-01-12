@@ -1,5 +1,4 @@
 .growth-section {
-  padding-left: 80px;
   background: var(--bg-secondary);
 }
 
@@ -142,18 +141,14 @@
 
 /* Mobile */
 @media (max-width: 768px) {
-  .growth-section {
-    padding-left: 0;
-  }
-  
   .timeline-item {
     gap: 20px;
   }
-  
+
   .timeline-content {
     padding: 20px;
   }
-  
+
   .growth-quote blockquote {
     font-size: 1.25rem;
     padding: 0 20px;

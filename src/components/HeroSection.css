@@ -1,6 +1,5 @@
 .hero-section {
   position: relative;
-  padding-left: 80px;
   overflow: hidden;
 }
 
@@ -200,23 +199,22 @@
 /* Mobile */
 @media (max-width: 768px) {
   .hero-section {
-    padding-left: 0;
     padding-bottom: 120px;
   }
-  
+
   .hero-stats {
     flex-wrap: wrap;
     gap: 20px;
   }
-  
+
   .stat-divider {
     display: none;
   }
-  
+
   .hero-cta {
     flex-direction: column;
   }
-  
+
   .cta-button {
     justify-content: center;
   }

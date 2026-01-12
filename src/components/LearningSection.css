@@ -1,5 +1,4 @@
 .learning-section {
-  padding-left: 80px;
   background: var(--bg-primary);
 }
 
@@ -131,14 +130,10 @@
 
 /* Mobile */
 @media (max-width: 768px) {
-  .learning-section {
-    padding-left: 0;
-  }
-  
   .intro-card {
     padding: 30px 20px;
   }
-  
+
   .learning-grid {
     grid-template-columns: 1fr;
   }

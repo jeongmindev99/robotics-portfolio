@@ -24,10 +24,11 @@ npm run deploy # GitHub Pages 배포
 
 ```
 App.js (스크롤 트래킹)
-├── Navigation.js         # 좌측 네비게이션
+├── Navigation.js         # 좌측 네비게이션 (80px 고정)
 ├── HeroSection.js        # 히어로 + 통계
 ├── LifecycleSection.js   # 7개 Phase
-│   └── ArchitectureModal.js
+│   ├── PhaseModal.js     # Phase 상세 모달
+│   └── ArchitectureModal.js  # SW개발 아키텍처 모달
 ├── ProjectsSection.js    # PARL 구조 프로젝트
 ├── DeploymentSection.js  # 사이트 배포 현황
 ├── GrowthSection.js      # 성장 타임라인
@@ -67,4 +68,31 @@ main 브랜치 머지 완료 후:
 git checkout main
 git pull origin main
 npm run deploy
+```
+
+## UI/UX Checklist
+
+**CSS 수정 시 반드시 확인:**
+
+### 레이아웃
+- [ ] 고정 요소(Navigation 등)가 콘텐츠를 가리지 않는지 확인
+- [ ] `margin-left/right`와 `padding-left/right`가 충돌하지 않는지 확인
+- [ ] 고정 네비게이션(80px)이 있을 때 main에 `margin-left: 80px` 적용 여부 확인
+
+### 반응형
+- [ ] 모바일(max-width: 768px)에서 레이아웃 정상 동작 확인
+- [ ] 고정 요소가 모바일에서 적절히 처리되는지 확인
+
+### 섹션 구분
+- [ ] 섹션 간 시각적 분리가 명확한지 확인
+- [ ] 스크롤 시 현재 위치를 쉽게 파악할 수 있는지 확인
+
+### 인터랙션
+- [ ] 클릭 가능한 요소에 명확한 호버 효과가 있는지 확인
+- [ ] CTA 버튼이 사용자 행동을 유도하는 문구인지 확인
+- [ ] 모달이 정상적으로 열리고 닫히는지 확인
+
+### 테스트 명령
+```bash
+npm start  # 개발 서버에서 직접 확인
 ```

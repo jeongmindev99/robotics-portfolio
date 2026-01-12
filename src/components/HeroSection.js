@@ -48,13 +48,13 @@ function HeroSection() {
         
         <div className="hero-cta">
           <a href="#lifecycle" className="cta-button primary">
-            <span>업무 영역 보기</span>
+            <span>내가 할 수 있는 것들</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M7 17L17 7M17 7H7M17 7V17"/>
+              <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </a>
           <a href="#contact" className="cta-button secondary">
-            <span>연락하기</span>
+            <span>함께 일하기</span>
           </a>
         </div>
       </div>

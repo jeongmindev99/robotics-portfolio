@@ -1,5 +1,4 @@
 .projects-section {
-  padding-left: 80px;
   background: var(--bg-secondary);
 }
 
@@ -154,10 +153,6 @@
 
 /* Mobile */
 @media (max-width: 768px) {
-  .projects-section {
-    padding-left: 0;
-  }
-  
   .projects-grid {
     grid-template-columns: 1fr;
   }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './LifecycleSection.css';
 import ArchitectureModal from './ArchitectureModal';
+import PhaseModal from './PhaseModal';
 
 const phases = [
   {
@@ -101,15 +102,13 @@ const phases = [
 ];
 
 function LifecycleSection() {
-  const [expandedPhase, setExpandedPhase] = useState(null);
+  const [selectedPhase, setSelectedPhase] = useState(null);
   const [showArchitecture, setShowArchitecture] = useState(false);
 
-  const handlePhaseClick = (phaseId) => {
-    if (expandedPhase === phaseId) {
-      setExpandedPhase(null);
-    } else {
-      setExpandedPhase(phaseId);
-    }
+  const experiencedCount = phases.filter(p => p.experienced).length;
+
+  const handlePhaseClick = (phase) => {
+    setSelectedPhase(phase);
   };
 
   const handleArchitectureClick = () => {
@@ -123,17 +122,23 @@ function LifecycleSection() {
           <span className="section-number">01</span>
           <h2 className="section-title">What I Build</h2>
           <p className="section-subtitle">
-            로봇 엔지니어가 하는 일의 전체 사이클. 하이라이트된 영역이 제가 경험한 영역입니다.
+            로봇 엔지니어 업무의 전체 사이클. 클릭하여 각 Phase의 세부 영역을 확인하세요.
           </p>
         </div>
 
         <div className="lifecycle-container">
+          <div className="lifecycle-summary">
+            <span className="summary-text">
+              <strong>{experiencedCount}</strong> / {phases.length} Phase 경험
+            </span>
+          </div>
+
           <div className="lifecycle-timeline">
             {phases.map((phase, index) => (
-              <div 
+              <div
                 key={phase.id}
-                className={`phase-card ${phase.experienced ? 'experienced' : 'not-experienced'} ${expandedPhase === phase.id ? 'expanded' : ''}`}
-                onClick={() => handlePhaseClick(phase.id)}
+                className={`phase-card ${phase.experienced ? 'experienced' : 'not-experienced'}`}
+                onClick={() => handlePhaseClick(phase)}
               >
                 <div className="phase-header">
                   <span className="phase-number">{phase.number}</span>
@@ -143,45 +148,33 @@ function LifecycleSection() {
                   </div>
                   <div className={`phase-indicator ${phase.experienced ? 'active' : ''}`}></div>
                 </div>
-                
-                {expandedPhase === phase.id && (
-                  <div className="phase-content">
-                    <ul className="phase-items">
-                      {phase.items.map((item, idx) => (
-                        <li 
-                          key={idx} 
-                          className={`phase-item ${item.experienced ? 'experienced' : ''}`}
-                        >
-                          <span className="item-dot"></span>
-                          <span className="item-name">{item.name}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    
-                    {phase.hasArchitecture && (
-                      <button 
-                        className="architecture-button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleArchitectureClick();
-                        }}
+
+                <div className="phase-preview">
+                  <div className="preview-items">
+                    {phase.items.slice(0, 3).map((item, idx) => (
+                      <span
+                        key={idx}
+                        className={`preview-item ${item.experienced ? 'experienced' : ''}`}
                       >
-                        <span>시스템 아키텍처 보기</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                        </svg>
-                      </button>
+                        {item.name}
+                      </span>
+                    ))}
+                    {phase.items.length > 3 && (
+                      <span className="preview-more">+{phase.items.length - 3}</span>
                     )}
                   </div>
-                )}
-                
-                {index < phases.length - 1 && (
-                  <div className="phase-connector"></div>
-                )}
+                </div>
+
+                <div className="phase-cta">
+                  <span>상세 보기</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </div>
               </div>
             ))}
           </div>
-          
+
           <div className="lifecycle-legend">
             <div className="legend-item">
               <span className="legend-dot active"></span>
@@ -194,6 +187,14 @@ function LifecycleSection() {
           </div>
         </div>
       </div>
+
+      {selectedPhase && (
+        <PhaseModal
+          phase={selectedPhase}
+          onClose={() => setSelectedPhase(null)}
+          onArchitectureClick={handleArchitectureClick}
+        />
+      )}
 
       {showArchitecture && (
         <ArchitectureModal onClose={() => setShowArchitecture(false)} />

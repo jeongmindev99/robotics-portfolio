@@ -1,5 +1,4 @@
 .contact-section {
-  padding-left: 80px;
   background: var(--bg-secondary);
   min-height: 100vh;
   display: flex;
@@ -109,10 +108,9 @@
 /* Mobile */
 @media (max-width: 768px) {
   .contact-section {
-    padding-left: 0;
     padding-bottom: 100px;
   }
-  
+
   .contact-links {
     grid-template-columns: 1fr;
   }
