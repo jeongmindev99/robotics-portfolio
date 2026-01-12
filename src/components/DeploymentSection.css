@@ -1,0 +1,177 @@
+.deployment-section {
+  padding-left: 80px;
+  background: var(--bg-primary);
+}
+
+.deployment-stats {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+.stat-card {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-primary);
+}
+
+.stat-card.international {
+  border-color: var(--accent-secondary);
+  background: linear-gradient(135deg, rgba(0, 153, 255, 0.05) 0%, var(--bg-card) 100%);
+}
+
+.stat-card.international:hover {
+  box-shadow: var(--glow-secondary);
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  display: block;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  display: block;
+}
+
+.sites-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+}
+
+.sites-group {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.sites-group.international {
+  border-color: var(--accent-secondary);
+  background: linear-gradient(135deg, rgba(0, 153, 255, 0.03) 0%, var(--bg-card) 100%);
+}
+
+.group-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.flag {
+  font-size: 1.5rem;
+}
+
+.sites-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.site-card {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.site-card:hover {
+  border-color: var(--border-highlight);
+}
+
+.site-card.highlight {
+  border-color: var(--accent-primary);
+  background: linear-gradient(135deg, rgba(0, 212, 170, 0.05) 0%, var(--bg-tertiary) 100%);
+}
+
+.site-card.highlight:hover {
+  box-shadow: var(--glow-primary);
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.site-period {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.site-role {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  background: var(--bg-card);
+  border-radius: 4px;
+  color: var(--text-secondary);
+}
+
+.site-role.highlight {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+  font-weight: 500;
+}
+
+.site-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.site-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.site-location::before {
+  content: '📍';
+  margin-right: 4px;
+}
+
+.site-type::before {
+  content: '🤖';
+  margin-right: 4px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .deployment-section {
+    padding-left: 0;
+  }
+  
+  .deployment-stats {
+    flex-direction: column;
+  }
+  
+  .sites-container {
+    grid-template-columns: 1fr;
+  }
+}
