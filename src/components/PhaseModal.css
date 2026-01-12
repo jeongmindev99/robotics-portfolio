@@ -262,8 +262,7 @@
 
 /* ROS Framework layers - green tones */
 .ros-framework-content .arch-layer-wrapper:nth-child(1) .arch-layer { background: rgba(0, 212, 170, 0.10); }
-.ros-framework-content .arch-layer-wrapper:nth-child(2) .arch-layer,
-.ros-framework-content .arch-layer-wrapper:nth-child(2) .arch-group { background: rgba(0, 212, 170, 0.07); }
+.ros-framework-content .arch-layer-wrapper:nth-child(2) .arch-layer { background: rgba(0, 212, 170, 0.07); }
 .ros-framework-content .arch-layer-wrapper:nth-child(3) .arch-layer { background: rgba(0, 212, 170, 0.05); }
 .ros-framework-content .arch-layer-wrapper:nth-child(4) .arch-layer { background: rgba(0, 212, 170, 0.04); }
 
@@ -271,12 +270,10 @@
 .arch-layer.runtime { background: rgba(147, 112, 219, 0.10); }
 
 /* Lower layers - warm tones (orange to red gradient) */
-[class*="Device"] .arch-layer,
 .arch-diagram > div:nth-last-child(4) .arch-layer { background: rgba(255, 165, 0, 0.08); }
 .arch-diagram > div:nth-last-child(3) .arch-layer { background: rgba(255, 140, 0, 0.08); }
 .arch-diagram > div:nth-last-child(2) .arch-layer { background: rgba(255, 99, 71, 0.08); }
-.arch-diagram > div:nth-last-child(1) .arch-layer,
-.arch-diagram > div:nth-last-child(1) .arch-group { background: rgba(205, 92, 92, 0.08); }
+.arch-diagram > div:nth-last-child(1) .arch-layer { background: rgba(205, 92, 92, 0.08); }
 
 .arch-layer-label {
   padding: 6px 10px;
@@ -345,7 +342,7 @@
 
 .arch-group {
   flex: 1;
-  background: var(--bg-card);
+  background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--border-color);
   border-radius: 6px;
   overflow: hidden;
@@ -353,12 +350,12 @@
 
 .arch-group-label {
   padding: 5px 8px;
-  background: var(--bg-tertiary);
+  background: rgba(0, 0, 0, 0.15);
   border-bottom: 1px solid var(--border-color);
   font-family: var(--font-mono);
   font-size: 0.55rem;
   font-weight: 500;
-  color: var(--accent-primary);
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.02em;
   text-align: center;
