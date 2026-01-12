@@ -388,12 +388,16 @@
   background: var(--border-highlight);
 }
 
-/* ROS Framework Container - subtle styling */
+/* ROS Framework Container - subtle border */
 .ros-framework-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 10px;
+  border: 1px dashed var(--border-highlight);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.01);
 }
 
 .ros-framework-label {
