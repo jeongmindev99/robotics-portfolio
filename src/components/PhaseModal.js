@@ -65,8 +65,7 @@ const phaseDetails = {
   }
 };
 
-// Architecture layers data - based on official ROS documentation
-// Reference: wiki.ros.org/navigation, ros_control, docs.nav2.org
+// Architecture layers data - generic functional terms (not specific implementations)
 const architectureLayers = [
   {
     name: 'Cloud / External',
@@ -96,8 +95,8 @@ const architectureLayers = [
     items: [
       { name: 'State Machine', experienced: true },
       { name: 'Behavior Tree', experienced: true },
-      { name: 'Mission Sequencer', experienced: true },
-      { name: 'Recovery Behavior', experienced: true },
+      { name: 'Task Sequencer', experienced: true },
+      { name: 'Recovery Logic', experienced: true },
     ]
   },
   {
@@ -107,31 +106,30 @@ const architectureLayers = [
     groups: [
       {
         name: 'Navigation',
-        // Official: amcl, move_base, costmap_2d, global_planner, local_planner
         items: [
-          { name: 'AMCL', experienced: true },
-          { name: 'move_base', experienced: true },
-          { name: 'costmap_2d', experienced: true },
-          { name: 'global_planner', experienced: true },
-          { name: 'local_planner', experienced: true },
+          { name: 'Localization', experienced: true },
+          { name: 'Costmap', experienced: true },
+          { name: 'Global Planning', experienced: true },
+          { name: 'Local Planning', experienced: true },
+          { name: 'Path Execution', experienced: true },
         ]
       },
       {
         name: 'Manipulation',
         items: [
-          { name: 'MoveIt', experienced: true },
+          { name: 'Motion Planning', experienced: true },
           { name: 'Kinematics', experienced: true },
-          { name: 'Trajectory', experienced: true },
-          { name: 'Gripper', experienced: true },
+          { name: 'Trajectory Control', experienced: true },
+          { name: 'Gripper Control', experienced: true },
         ]
       },
       {
         name: 'Perception',
         items: [
-          { name: 'SLAM', experienced: false },
-          { name: 'Detection', experienced: false },
+          { name: 'Mapping (SLAM)', experienced: false },
+          { name: 'Object Detection', experienced: false },
           { name: 'Sensor Fusion', experienced: false },
-          { name: 'PCL', experienced: false },
+          { name: 'Point Cloud', experienced: false },
         ]
       },
     ]
@@ -149,15 +147,14 @@ const architectureLayers = [
     ]
   },
   {
-    name: 'ros_control',
+    name: 'Hardware Interface',
     type: 'single',
     isROS: true,
-    // Official: Controller Manager, Hardware Interface, Joint Controllers
     items: [
       { name: 'Controller Manager', experienced: true },
-      { name: 'Hardware Interface', experienced: true },
       { name: 'Joint Controllers', experienced: true },
-      { name: 'Transmissions', experienced: true },
+      { name: 'Sensor Interface', experienced: true },
+      { name: 'Actuator Interface', experienced: true },
     ]
   },
   // ROS Framework ends here
@@ -171,24 +168,64 @@ const architectureLayers = [
     ]
   },
   {
+    name: 'Device Drivers',
+    type: 'single',
+    items: [
+      { name: 'LiDAR Driver', experienced: true },
+      { name: 'Camera Driver', experienced: true },
+      { name: 'Motor Driver', experienced: true },
+      { name: 'IMU Driver', experienced: true },
+    ]
+  },
+  {
     name: 'OS / Kernel',
     type: 'single',
     items: [
       { name: 'SocketCAN', experienced: true },
-      { name: 'TTY', experienced: true },
+      { name: 'TTY/Serial', experienced: true },
       { name: 'V4L2', experienced: true },
+      { name: 'USB', experienced: true },
       { name: 'Network', experienced: true },
     ]
   },
   {
-    name: 'Physical Layer',
+    name: 'Firmware / MCU',
     type: 'single',
     items: [
-      { name: 'Wheel Motors', experienced: true },
-      { name: 'Arm Actuators', experienced: true },
-      { name: 'LiDAR', experienced: true },
-      { name: 'Camera', experienced: true },
-      { name: 'IMU', experienced: true },
+      { name: 'Motor Controller', experienced: true },
+      { name: 'Sensor Board', experienced: true },
+      { name: 'Power Management', experienced: true },
+    ]
+  },
+  {
+    name: 'Physical',
+    type: 'horizontal',
+    groups: [
+      {
+        name: 'Actuators',
+        items: [
+          { name: 'Wheel Motors', experienced: true },
+          { name: 'Arm Motors', experienced: true },
+          { name: 'Gripper', experienced: true },
+        ]
+      },
+      {
+        name: 'Sensors',
+        items: [
+          { name: 'LiDAR', experienced: true },
+          { name: 'Camera', experienced: true },
+          { name: 'IMU', experienced: true },
+          { name: 'Encoder', experienced: true },
+        ]
+      },
+      {
+        name: 'Power',
+        items: [
+          { name: 'Battery', experienced: true },
+          { name: 'BMS', experienced: true },
+          { name: 'PDU', experienced: true },
+        ]
+      },
     ]
   },
 ];
