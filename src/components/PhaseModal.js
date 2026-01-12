@@ -172,29 +172,33 @@ function ArchitectureView({ onClose, phase }) {
           </div>
           <h2 className="phase-modal-title">System Architecture</h2>
           <p className="phase-modal-description">
-            Mobile Manipulator Robot - Full Stack
+            {experiencedItems}/{totalItems} components experienced
           </p>
-          <div className="arch-stats">
-            <span className="arch-stat-value">{experiencedItems}/{totalItems}</span>
-            <span className="arch-stat-label">components experienced</span>
-          </div>
         </div>
 
-        <div className="arch-stack">
+        <div className="arch-diagram">
           {architectureLayers.map((layer, idx) => (
-            <div key={idx} className="arch-layer">
-              <div className="arch-layer-name">{layer.name}</div>
-              <div className="arch-layer-items">
-                {layer.items.map((item, itemIdx) => (
-                  <div
-                    key={itemIdx}
-                    className={`arch-item ${item.experienced ? 'exp' : ''}`}
-                  >
-                    <span className="arch-item-name">{item.name}</span>
-                    <span className="arch-item-desc">{item.desc}</span>
-                  </div>
-                ))}
+            <div key={idx} className="arch-layer-wrapper">
+              <div className="arch-layer">
+                <div className="arch-layer-label">{layer.name}</div>
+                <div className="arch-layer-nodes">
+                  {layer.items.map((item, itemIdx) => (
+                    <div
+                      key={itemIdx}
+                      className={`arch-node ${item.experienced ? 'exp' : ''}`}
+                      title={item.desc}
+                    >
+                      {item.name}
+                    </div>
+                  ))}
+                </div>
               </div>
+              {idx < architectureLayers.length - 1 && (
+                <div className="arch-connector">
+                  <div className="connector-line"></div>
+                  <div className="connector-arrow"></div>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -202,7 +206,7 @@ function ArchitectureView({ onClose, phase }) {
         <div className="arch-legend">
           <div className="legend-item">
             <span className="legend-dot exp"></span>
-            <span>직접 개발/수정 경험</span>
+            <span>경험</span>
           </div>
           <div className="legend-item">
             <span className="legend-dot"></span>

@@ -231,100 +231,94 @@
 }
 
 /* ==================== */
-/* Architecture Stack   */
+/* Architecture Diagram */
 /* ==================== */
 
-.arch-stats {
-  margin-top: 12px;
-}
-
-.arch-stat-value {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--accent-primary);
-}
-
-.arch-stat-label {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-left: 6px;
-}
-
-.arch-stack {
-  padding: 16px;
+.arch-diagram {
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  align-items: center;
+}
+
+.arch-layer-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .arch-layer {
-  display: flex;
-  align-items: stretch;
+  width: 100%;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
-  transition: all 0.2s ease;
 }
 
-.arch-layer:hover {
-  border-color: var(--border-highlight);
-}
-
-.arch-layer-name {
-  width: 130px;
-  min-width: 130px;
-  padding: 10px 12px;
+.arch-layer-label {
+  padding: 8px 12px;
   background: var(--bg-tertiary);
-  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
   font-family: var(--font-mono);
   font-size: 0.65rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-secondary);
-  display: flex;
-  align-items: center;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.05em;
+  text-align: center;
 }
 
-.arch-layer-items {
-  flex: 1;
+.arch-layer-nodes {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  padding: 8px 10px;
-  align-items: center;
+  padding: 10px;
+  justify-content: center;
 }
 
-.arch-item {
-  display: flex;
-  flex-direction: column;
-  padding: 6px 10px;
+.arch-node {
+  padding: 5px 10px;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: 0.7rem;
   color: var(--text-muted);
   transition: all 0.2s ease;
+  cursor: default;
 }
 
-.arch-item.exp {
+.arch-node.exp {
   color: var(--text-primary);
   border-color: var(--accent-primary);
-  background: rgba(0, 212, 170, 0.08);
+  background: rgba(0, 212, 170, 0.1);
 }
 
-.arch-item-name {
-  font-weight: 500;
-  line-height: 1.2;
+.arch-node:hover {
+  transform: translateY(-1px);
 }
 
-.arch-item-desc {
-  font-size: 0.6rem;
-  color: var(--text-muted);
-  opacity: 0.7;
-  margin-top: 2px;
+/* Connector between layers */
+.arch-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 20px;
+  position: relative;
+}
+
+.connector-line {
+  width: 2px;
+  height: 14px;
+  background: linear-gradient(180deg, var(--border-highlight) 0%, var(--accent-primary) 100%);
+}
+
+.connector-arrow {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--accent-primary);
 }
 
 /* Architecture Legend */
@@ -403,40 +397,31 @@
   }
 
   /* Architecture responsive */
-  .arch-stack {
+  .arch-diagram {
     padding: 12px;
   }
 
-  .arch-layer {
-    flex-direction: column;
-  }
-
-  .arch-layer-name {
-    width: 100%;
-    min-width: 100%;
-    padding: 8px 10px;
-    border-right: none;
-    border-bottom: 1px solid var(--border-color);
+  .arch-layer-label {
     font-size: 0.6rem;
+    padding: 6px 10px;
   }
 
-  .arch-layer-items {
+  .arch-layer-nodes {
     padding: 8px;
     gap: 4px;
   }
 
-  .arch-item {
-    padding: 5px 8px;
-    font-size: 0.65rem;
+  .arch-node {
+    padding: 4px 8px;
+    font-size: 0.6rem;
   }
 
-  .arch-item-desc {
-    display: none;
+  .arch-connector {
+    height: 16px;
   }
 
-  .arch-legend {
-    flex-direction: row;
-    gap: 16px;
+  .connector-line {
+    height: 10px;
   }
 }
 
