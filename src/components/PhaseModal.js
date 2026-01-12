@@ -65,8 +65,97 @@ const phaseDetails = {
   }
 };
 
-// Architecture visualization component
+// Architecture layers data
+const architectureLayers = [
+  {
+    name: 'External Systems',
+    items: [
+      { name: 'Fleet Management', desc: '관제 시스템', experienced: true },
+      { name: 'Firebase RTDB', desc: '실시간 DB', experienced: true },
+      { name: 'Building API', desc: '엘리베이터 연동', experienced: true },
+      { name: 'Robot-to-Robot', desc: '로봇 간 통신', experienced: false },
+    ]
+  },
+  {
+    name: 'Application Layer',
+    items: [
+      { name: 'Robot UI', desc: 'React 화면', experienced: true },
+      { name: 'API Gateway', desc: 'Flask 서버', experienced: true },
+      { name: 'MQTT Bridge', desc: '메시지 브릿지', experienced: true },
+    ]
+  },
+  {
+    name: 'ROS - Behavior',
+    items: [
+      { name: 'FlexBE', desc: '상태 머신', experienced: true },
+      { name: 'Mission Manager', desc: '미션 시퀀싱', experienced: true },
+      { name: 'Error Handler', desc: '에러 복구', experienced: true },
+      { name: 'Task Scheduler', desc: '태스크 스케줄링', experienced: true },
+    ]
+  },
+  {
+    name: 'ROS - Navigation',
+    items: [
+      { name: 'move_base', desc: '경로 계획', experienced: true },
+      { name: 'AMCL', desc: '위치 추정', experienced: true },
+      { name: 'costmap_2d', desc: '코스트맵', experienced: true },
+      { name: 'global_planner', desc: '전역 경로', experienced: true },
+      { name: 'local_planner', desc: '지역 경로', experienced: true },
+    ]
+  },
+  {
+    name: 'ROS - Manipulation',
+    items: [
+      { name: 'MoveIt', desc: '모션 플래닝', experienced: true },
+      { name: 'Joint Controller', desc: '조인트 제어', experienced: true },
+      { name: 'Gripper Control', desc: '그리퍼 제어', experienced: true },
+    ]
+  },
+  {
+    name: 'ROS - Perception',
+    items: [
+      { name: 'YOLO', desc: '객체 인식', experienced: false },
+      { name: 'ORB-SLAM', desc: 'Visual SLAM', experienced: false },
+      { name: 'Point Cloud', desc: '3D 인식', experienced: false },
+    ]
+  },
+  {
+    name: 'Hardware Abstraction',
+    items: [
+      { name: 'ros_control', desc: '컨트롤러 매니저', experienced: true },
+      { name: 'diff_drive', desc: '차동 구동', experienced: true },
+      { name: 'joint_state', desc: '조인트 상태', experienced: true },
+      { name: 'socketcan_bridge', desc: 'CAN 브릿지', experienced: true },
+      { name: 'serial_node', desc: '시리얼 통신', experienced: true },
+    ]
+  },
+  {
+    name: 'OS / Drivers',
+    items: [
+      { name: 'SocketCAN', desc: 'CAN 드라이버', experienced: true },
+      { name: 'TTY/Serial', desc: '시리얼 드라이버', experienced: true },
+      { name: 'V4L2', desc: '카메라 드라이버', experienced: true },
+      { name: 'Network', desc: '네트워크 스택', experienced: true },
+    ]
+  },
+  {
+    name: 'Physical Layer',
+    items: [
+      { name: 'Wheel Motors', desc: 'BLDC 모터', experienced: true },
+      { name: 'Arm Motors', desc: '스테퍼/서보', experienced: true },
+      { name: 'LiDAR', desc: '2D/3D 라이다', experienced: true },
+      { name: 'Camera', desc: 'RGB/Depth', experienced: true },
+      { name: 'IMU', desc: '관성 센서', experienced: true },
+    ]
+  },
+];
+
 function ArchitectureView({ onClose, phase }) {
+  const totalItems = architectureLayers.reduce((acc, layer) => acc + layer.items.length, 0);
+  const experiencedItems = architectureLayers.reduce(
+    (acc, layer) => acc + layer.items.filter(item => item.experienced).length, 0
+  );
+
   return (
     <div className="phase-modal-overlay" onClick={onClose}>
       <div className="phase-modal-content architecture-view" onClick={(e) => e.stopPropagation()}>
@@ -81,111 +170,42 @@ function ArchitectureView({ onClose, phase }) {
             <span className="badge-indicator active"></span>
             <span>Phase {phase.number} - {phase.title}</span>
           </div>
-          <h2 className="phase-modal-title">시스템 아키텍처</h2>
-          <p className="phase-modal-description">Mobile Manipulator Robot System</p>
+          <h2 className="phase-modal-title">System Architecture</h2>
+          <p className="phase-modal-description">
+            Mobile Manipulator Robot - Full Stack
+          </p>
+          <div className="arch-stats">
+            <span className="arch-stat-value">{experiencedItems}/{totalItems}</span>
+            <span className="arch-stat-label">components experienced</span>
+          </div>
         </div>
 
         <div className="arch-stack">
-          {/* External Layer */}
-          <div className="arch-layer-group external">
-            <div className="layer-label">External</div>
-            <div className="layer-boxes">
-              <div className="arch-box experienced">관제 시스템</div>
-              <div className="arch-box experienced">실시간 DB</div>
-              <div className="arch-box experienced">빌딩 API</div>
-            </div>
-          </div>
-
-          <div className="arch-connector">
-            <div className="connector-line"></div>
-            <span className="connector-label">REST / MQTT / WebSocket</span>
-          </div>
-
-          {/* Application Layer */}
-          <div className="arch-layer-group application">
-            <div className="layer-label">Application</div>
-            <div className="layer-boxes">
-              <div className="arch-box experienced">로봇 UI</div>
-              <div className="arch-box experienced">API Gateway</div>
-            </div>
-          </div>
-
-          <div className="arch-connector">
-            <div className="connector-line"></div>
-          </div>
-
-          {/* ROS Middleware */}
-          <div className="arch-layer-group ros-mid">
-            <div className="layer-label">ROS Middleware</div>
-            <div className="layer-boxes">
-              <div className="arch-box experienced">상태 머신</div>
-              <div className="arch-box experienced">미션 시퀀싱</div>
-              <div className="arch-box experienced">에러 복구</div>
-            </div>
-          </div>
-
-          <div className="arch-connector">
-            <div className="connector-line"></div>
-            <span className="connector-label">Topic / Service / Action</span>
-          </div>
-
-          {/* ROS Domain */}
-          <div className="arch-layer-group ros-domain">
-            <div className="layer-label">ROS Domain</div>
-            <div className="layer-boxes horizontal">
-              <div className="domain-stack">
-                <div className="arch-box experienced">Navigation</div>
-                <div className="arch-box-sub">move_base, costmap</div>
-              </div>
-              <div className="domain-stack">
-                <div className="arch-box experienced">Manipulation</div>
-                <div className="arch-box-sub">MoveIt, planning</div>
-              </div>
-              <div className="domain-stack">
-                <div className="arch-box">Perception</div>
-                <div className="arch-box-sub">vision, detection</div>
+          {architectureLayers.map((layer, idx) => (
+            <div key={idx} className="arch-layer">
+              <div className="arch-layer-name">{layer.name}</div>
+              <div className="arch-layer-items">
+                {layer.items.map((item, itemIdx) => (
+                  <div
+                    key={itemIdx}
+                    className={`arch-item ${item.experienced ? 'exp' : ''}`}
+                  >
+                    <span className="arch-item-name">{item.name}</span>
+                    <span className="arch-item-desc">{item.desc}</span>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
-
-          <div className="arch-connector">
-            <div className="connector-line"></div>
-          </div>
-
-          {/* HAL */}
-          <div className="arch-layer-group hal">
-            <div className="layer-label">Hardware Abstraction</div>
-            <div className="layer-boxes">
-              <div className="arch-box experienced">ros_control</div>
-              <div className="arch-box experienced">CAN Node</div>
-              <div className="arch-box experienced">Serial Node</div>
-            </div>
-          </div>
-
-          <div className="arch-connector">
-            <div className="connector-line"></div>
-            <span className="connector-label">SocketCAN / TTY / USB</span>
-          </div>
-
-          {/* Physical */}
-          <div className="arch-layer-group physical">
-            <div className="layer-label">Physical</div>
-            <div className="layer-boxes">
-              <div className="arch-box experienced hw">Motors</div>
-              <div className="arch-box experienced hw">LiDAR</div>
-              <div className="arch-box experienced hw">Camera</div>
-              <div className="arch-box experienced hw">IMU</div>
-            </div>
-          </div>
+          ))}
         </div>
 
         <div className="arch-legend">
           <div className="legend-item">
-            <span className="legend-box experienced"></span>
-            <span>직접 개발/수정</span>
+            <span className="legend-dot exp"></span>
+            <span>직접 개발/수정 경험</span>
           </div>
           <div className="legend-item">
-            <span className="legend-box"></span>
+            <span className="legend-dot"></span>
             <span>미경험</span>
           </div>
         </div>
@@ -199,12 +219,10 @@ function PhaseModal({ phase, onClose }) {
 
   const details = phaseDetails[phase.id];
 
-  // Architecture view for development phase
   if (details.isArchitecture) {
     return <ArchitectureView phase={phase} onClose={onClose} />;
   }
 
-  // Regular phase view
   const experiencedCount = details.layers.filter(l => l.experienced).length;
   const totalCount = details.layers.length;
 

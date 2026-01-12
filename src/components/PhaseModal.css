@@ -234,167 +234,129 @@
 /* Architecture Stack   */
 /* ==================== */
 
+.arch-stats {
+  margin-top: 12px;
+}
+
+.arch-stat-value {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+
+.arch-stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-left: 6px;
+}
+
 .arch-stack {
-  padding: 20px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 2px;
 }
 
-.arch-layer-group {
-  width: 100%;
-  max-width: 480px;
-  position: relative;
-}
-
-.layer-label {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 8px;
-  padding-left: 4px;
-}
-
-.layer-boxes {
+.arch-layer {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  padding: 12px;
+  align-items: stretch;
   background: var(--bg-card);
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-}
-
-.layer-boxes.horizontal {
-  justify-content: space-between;
-}
-
-/* Layer specific colors */
-.arch-layer-group.external .layer-boxes {
-  border-color: #ff6b35;
-  background: linear-gradient(180deg, rgba(255, 107, 53, 0.08) 0%, var(--bg-card) 100%);
-}
-
-.arch-layer-group.application .layer-boxes {
-  border-color: #ffd700;
-  background: linear-gradient(180deg, rgba(255, 215, 0, 0.08) 0%, var(--bg-card) 100%);
-}
-
-.arch-layer-group.ros-mid .layer-boxes {
-  border-color: #00d4aa;
-  background: linear-gradient(180deg, rgba(0, 212, 170, 0.08) 0%, var(--bg-card) 100%);
-}
-
-.arch-layer-group.ros-domain .layer-boxes {
-  border-color: #0099ff;
-  background: linear-gradient(180deg, rgba(0, 153, 255, 0.08) 0%, var(--bg-card) 100%);
-}
-
-.arch-layer-group.hal .layer-boxes {
-  border-color: #9b59b6;
-  background: linear-gradient(180deg, rgba(155, 89, 182, 0.08) 0%, var(--bg-card) 100%);
-}
-
-.arch-layer-group.physical .layer-boxes {
-  border-color: #95a5a6;
-  background: linear-gradient(180deg, rgba(149, 165, 166, 0.08) 0%, var(--bg-card) 100%);
-}
-
-/* Architecture boxes */
-.arch-box {
-  padding: 8px 14px;
-  background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
   border-radius: 6px;
-  font-size: 0.8rem;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.arch-layer:hover {
+  border-color: var(--border-highlight);
+}
+
+.arch-layer-name {
+  width: 130px;
+  min-width: 130px;
+  padding: 10px 12px;
+  background: var(--bg-tertiary);
+  border-right: 1px solid var(--border-color);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.arch-layer-items {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 10px;
+  align-items: center;
+}
+
+.arch-item {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 0.7rem;
   color: var(--text-muted);
   transition: all 0.2s ease;
-  text-align: center;
 }
 
-.arch-box.experienced {
+.arch-item.exp {
   color: var(--text-primary);
   border-color: var(--accent-primary);
-  background: rgba(0, 212, 170, 0.1);
-  box-shadow: 0 0 0 1px rgba(0, 212, 170, 0.2);
+  background: rgba(0, 212, 170, 0.08);
 }
 
-.arch-box.hw {
-  min-width: 60px;
+.arch-item-name {
+  font-weight: 500;
+  line-height: 1.2;
 }
 
-/* Domain stack */
-.domain-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  flex: 1;
-}
-
-.arch-box-sub {
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-}
-
-/* Connector */
-.arch-connector {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 6px 0;
-  position: relative;
-}
-
-.connector-line {
-  width: 2px;
-  height: 20px;
-  background: linear-gradient(180deg, var(--accent-primary) 0%, var(--border-highlight) 100%);
-  border-radius: 1px;
-}
-
-.connector-label {
-  font-family: var(--font-mono);
+.arch-item-desc {
   font-size: 0.6rem;
   color: var(--text-muted);
-  background: var(--bg-secondary);
-  padding: 2px 8px;
-  border-radius: 3px;
-  margin-top: 4px;
+  opacity: 0.7;
+  margin-top: 2px;
 }
 
 /* Architecture Legend */
 .arch-legend {
   display: flex;
-  gap: 20px;
+  gap: 24px;
   justify-content: center;
-  padding: 16px;
+  padding: 14px 16px;
   border-top: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
 }
 
-.arch-legend .legend-item {
+.legend-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--text-secondary);
 }
 
-.legend-box {
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-  background: var(--bg-tertiary);
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
   border: 1px solid var(--border-color);
 }
 
-.legend-box.experienced {
-  background: rgba(0, 212, 170, 0.1);
+.legend-dot.exp {
+  background: var(--accent-primary);
   border-color: var(--accent-primary);
+  box-shadow: 0 0 6px rgba(0, 212, 170, 0.5);
 }
 
 /* ==================== */
@@ -442,31 +404,39 @@
 
   /* Architecture responsive */
   .arch-stack {
-    padding: 16px;
+    padding: 12px;
   }
 
-  .layer-boxes {
-    padding: 10px;
-    gap: 6px;
+  .arch-layer {
+    flex-direction: column;
   }
 
-  .arch-box {
-    padding: 6px 10px;
-    font-size: 0.7rem;
-  }
-
-  .layer-label {
+  .arch-layer-name {
+    width: 100%;
+    min-width: 100%;
+    padding: 8px 10px;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
     font-size: 0.6rem;
   }
 
-  .connector-line {
-    height: 14px;
+  .arch-layer-items {
+    padding: 8px;
+    gap: 4px;
+  }
+
+  .arch-item {
+    padding: 5px 8px;
+    font-size: 0.65rem;
+  }
+
+  .arch-item-desc {
+    display: none;
   }
 
   .arch-legend {
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
+    flex-direction: row;
+    gap: 16px;
   }
 }
 
@@ -480,15 +450,11 @@
     padding: 4px 8px;
   }
 
-  .layer-boxes.horizontal {
-    flex-direction: column;
+  .arch-stats {
+    margin-top: 8px;
   }
 
-  .domain-stack {
-    width: 100%;
-  }
-
-  .arch-box {
-    width: 100%;
+  .arch-stat-value {
+    font-size: 1rem;
   }
 }
