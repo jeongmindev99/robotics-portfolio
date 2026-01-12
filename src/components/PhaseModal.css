@@ -27,7 +27,7 @@
 /* Modal Content */
 .phase-modal-content {
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
   max-height: calc(100vh - 40px);
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -38,7 +38,7 @@
 }
 
 .phase-modal-content.architecture-view {
-  max-width: 800px;
+  max-width: 600px;
 }
 
 @keyframes modalSlideIn {
@@ -55,14 +55,14 @@
 /* Close Button */
 .phase-modal-close {
   position: sticky;
-  top: 16px;
+  top: 12px;
   float: right;
-  margin: 16px;
-  width: 40px;
-  height: 40px;
+  margin: 12px;
+  width: 36px;
+  height: 36px;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
-  border-radius: 10px;
+  border-radius: 8px;
   color: var(--text-secondary);
   cursor: pointer;
   display: flex;
@@ -81,7 +81,7 @@
 
 /* Header */
 .phase-modal-header {
-  padding: 32px 32px 24px;
+  padding: 24px 24px 20px;
   text-align: center;
   border-bottom: 1px solid var(--border-color);
 }
@@ -90,19 +90,19 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 14px;
+  padding: 5px 12px;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
   border-radius: 100px;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-secondary);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .badge-indicator {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--text-muted);
   transition: all 0.3s ease;
@@ -115,32 +115,32 @@
 
 .phase-modal-title {
   font-family: var(--font-display);
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 4px;
 }
 
 .phase-modal-title-en {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .phase-modal-description {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 /* Stats */
 .phase-modal-stats {
   display: flex;
   justify-content: center;
-  padding: 20px;
+  padding: 16px;
   background: var(--bg-tertiary);
 }
 
@@ -150,30 +150,30 @@
 
 .phase-stat-value {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--accent-primary);
   display: block;
 }
 
 .phase-stat-label {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
 }
 
 /* Layers List */
 .phase-modal-layers {
-  padding: 24px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .layer-item {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 16px;
+  border-radius: 10px;
+  padding: 14px;
   transition: all 0.3s ease;
 }
 
@@ -190,12 +190,12 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .layer-indicator {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--text-muted);
   flex-shrink: 0;
@@ -208,156 +208,228 @@
 
 .layer-name {
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 500;
   color: var(--text-primary);
   flex: 1;
 }
 
 .layer-badge {
-  font-size: 0.65rem;
-  padding: 3px 8px;
+  font-size: 0.6rem;
+  padding: 2px 6px;
   background: var(--accent-primary);
   color: var(--bg-primary);
-  border-radius: 4px;
+  border-radius: 3px;
   font-weight: 600;
 }
 
 .layer-description {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-secondary);
-  line-height: 1.5;
-  margin-left: 18px;
+  line-height: 1.4;
+  margin-left: 16px;
 }
 
-/* Architecture View */
-.architecture-diagram {
-  padding: 24px;
+/* ==================== */
+/* Architecture Stack   */
+/* ==================== */
+
+.arch-stack {
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  align-items: center;
 }
 
-.arch-layer {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-left: 4px solid var(--layer-color);
-  border-radius: 8px;
-  padding: 16px;
-  transition: all 0.3s ease;
+.arch-layer-group {
+  width: 100%;
+  max-width: 480px;
+  position: relative;
 }
 
-.arch-layer:hover {
-  border-color: var(--layer-color);
-  transform: translateX(4px);
-}
-
-.arch-layer-header {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.arch-layer-name {
+.layer-label {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--layer-color);
-  font-weight: 500;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  padding-left: 4px;
 }
 
-.arch-layer-name-kr {
-  font-size: 0.95rem;
-  color: var(--text-primary);
-  font-weight: 500;
-}
-
-.arch-layer-items {
+.layer-boxes {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  justify-content: center;
+  padding: 12px;
+  background: var(--bg-card);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
 }
 
-.arch-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
+.layer-boxes.horizontal {
+  justify-content: space-between;
+}
+
+/* Layer specific colors */
+.arch-layer-group.external .layer-boxes {
+  border-color: #ff6b35;
+  background: linear-gradient(180deg, rgba(255, 107, 53, 0.08) 0%, var(--bg-card) 100%);
+}
+
+.arch-layer-group.application .layer-boxes {
+  border-color: #ffd700;
+  background: linear-gradient(180deg, rgba(255, 215, 0, 0.08) 0%, var(--bg-card) 100%);
+}
+
+.arch-layer-group.ros-mid .layer-boxes {
+  border-color: #00d4aa;
+  background: linear-gradient(180deg, rgba(0, 212, 170, 0.08) 0%, var(--bg-card) 100%);
+}
+
+.arch-layer-group.ros-domain .layer-boxes {
+  border-color: #0099ff;
+  background: linear-gradient(180deg, rgba(0, 153, 255, 0.08) 0%, var(--bg-card) 100%);
+}
+
+.arch-layer-group.hal .layer-boxes {
+  border-color: #9b59b6;
+  background: linear-gradient(180deg, rgba(155, 89, 182, 0.08) 0%, var(--bg-card) 100%);
+}
+
+.arch-layer-group.physical .layer-boxes {
+  border-color: #95a5a6;
+  background: linear-gradient(180deg, rgba(149, 165, 166, 0.08) 0%, var(--bg-card) 100%);
+}
+
+/* Architecture boxes */
+.arch-box {
+  padding: 8px 14px;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
   border-radius: 6px;
   font-size: 0.8rem;
   color: var(--text-muted);
   transition: all 0.2s ease;
+  text-align: center;
 }
 
-.arch-item.experienced {
+.arch-box.experienced {
   color: var(--text-primary);
-  border-color: var(--layer-color);
-  background: rgba(255, 255, 255, 0.02);
+  border-color: var(--accent-primary);
+  background: rgba(0, 212, 170, 0.1);
+  box-shadow: 0 0 0 1px rgba(0, 212, 170, 0.2);
 }
 
-.arch-item-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--layer-color);
+.arch-box.hw {
+  min-width: 60px;
+}
+
+/* Domain stack */
+.domain-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.arch-box-sub {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* Connector */
+.arch-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 0;
+  position: relative;
+}
+
+.connector-line {
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(180deg, var(--accent-primary) 0%, var(--border-highlight) 100%);
+  border-radius: 1px;
+}
+
+.connector-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  background: var(--bg-secondary);
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-top: 4px;
 }
 
 /* Architecture Legend */
-.architecture-legend {
+.arch-legend {
   display: flex;
-  gap: 24px;
+  gap: 20px;
   justify-content: center;
-  padding: 20px;
+  padding: 16px;
   border-top: 1px solid var(--border-color);
 }
 
-.architecture-legend .legend-item {
+.arch-legend .legend-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-secondary);
 }
 
-.legend-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--text-muted);
+.legend-box {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
 }
 
-.legend-dot.active {
-  background: var(--accent-primary);
-  box-shadow: 0 0 6px var(--accent-primary);
+.legend-box.experienced {
+  background: rgba(0, 212, 170, 0.1);
+  border-color: var(--accent-primary);
 }
 
-/* Responsive */
+/* ==================== */
+/* Responsive           */
+/* ==================== */
+
 @media (max-width: 768px) {
   .phase-modal-overlay {
     padding: 10px;
     align-items: flex-start;
-    padding-top: 20px;
+    padding-top: 10px;
   }
 
   .phase-modal-content {
-    max-height: calc(100vh - 40px);
-    border-radius: 16px;
+    max-height: calc(100vh - 20px);
+    border-radius: 14px;
+    max-width: 100%;
+  }
+
+  .phase-modal-content.architecture-view {
+    max-width: 100%;
   }
 
   .phase-modal-close {
-    width: 36px;
-    height: 36px;
-    margin: 12px;
+    width: 32px;
+    height: 32px;
+    margin: 10px;
   }
 
   .phase-modal-header {
-    padding: 24px 20px 20px;
+    padding: 20px 16px 16px;
   }
 
   .phase-modal-title {
-    font-size: 1.4rem;
+    font-size: 1.25rem;
   }
 
   .phase-modal-layers {
@@ -365,46 +437,58 @@
   }
 
   .layer-item {
-    padding: 14px;
-  }
-
-  .architecture-diagram {
-    padding: 16px;
-  }
-
-  .arch-layer {
     padding: 12px;
   }
 
-  .arch-layer-items {
+  /* Architecture responsive */
+  .arch-stack {
+    padding: 16px;
+  }
+
+  .layer-boxes {
+    padding: 10px;
     gap: 6px;
   }
 
-  .arch-item {
-    padding: 5px 10px;
-    font-size: 0.75rem;
+  .arch-box {
+    padding: 6px 10px;
+    font-size: 0.7rem;
   }
 
-  .architecture-legend {
+  .layer-label {
+    font-size: 0.6rem;
+  }
+
+  .connector-line {
+    height: 14px;
+  }
+
+  .arch-legend {
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 400px) {
   .phase-modal-title {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
   }
 
   .phase-modal-badge {
-    font-size: 0.7rem;
-    padding: 5px 10px;
+    font-size: 0.65rem;
+    padding: 4px 8px;
   }
 
-  .arch-layer-header {
+  .layer-boxes.horizontal {
     flex-direction: column;
-    gap: 4px;
-    align-items: flex-start;
+  }
+
+  .domain-stack {
+    width: 100%;
+  }
+
+  .arch-box {
+    width: 100%;
   }
 }
