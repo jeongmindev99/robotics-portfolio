@@ -17,13 +17,13 @@ function HeroSection() {
         </div>
         
         <h1 className="hero-title">
-          <span className="title-line">ROS를 몰랐던 내가</span>
-          <span className="title-line highlight">22개월 만에</span>
-          <span className="title-line">7개 사이트를 혼자 세팅할 수 있게 되기까지</span>
+          <span className="title-line">로봇 소프트웨어의</span>
+          <span className="title-line highlight">설계부터 운영까지</span>
+          <span className="title-line">전 과정을 경험한 엔지니어</span>
         </h1>
-        
+
         <p className="hero-subtitle">
-          로봇 시스템의 처음부터 끝까지를 경험한 엔지니어
+          22개월 만에 7개 사이트를 단독 세팅할 수 있게 되기까지의 여정
         </p>
         
         <div className="hero-stats">
@@ -48,13 +48,13 @@ function HeroSection() {
         
         <div className="hero-cta">
           <a href="#lifecycle" className="cta-button primary">
-            <span>내가 할 수 있는 것들</span>
+            <span>경험 살펴보기</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </a>
           <a href="#contact" className="cta-button secondary">
-            <span>함께 일하기</span>
+            <span>연락하기</span>
           </a>
         </div>
       </div>

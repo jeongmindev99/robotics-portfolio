@@ -3,12 +3,12 @@ import './Navigation.css';
 
 const navItems = [
   { id: 'hero', label: 'Home', labelKr: '홈' },
-  { id: 'lifecycle', label: 'What I Build', labelKr: '업무 영역' },
-  { id: 'projects', label: 'How I Solved', labelKr: '문제 해결' },
-  { id: 'deployment', label: 'Where I Deployed', labelKr: '현장 경험' },
-  { id: 'growth', label: 'How I Grew', labelKr: '성장 과정' },
-  { id: 'learning', label: 'What I\'m Building', labelKr: '학습 중' },
-  { id: 'contact', label: 'Contact', labelKr: '연락처' },
+  { id: 'lifecycle', label: 'What I Build', labelKr: '역할' },
+  { id: 'projects', label: 'How I Solved', labelKr: '프로젝트' },
+  { id: 'deployment', label: 'Where I Deployed', labelKr: '현장' },
+  { id: 'growth', label: 'How I Grew', labelKr: '성장' },
+  { id: 'learning', label: 'What I\'m Learning', labelKr: '학습' },
+  { id: 'contact', label: 'Contact', labelKr: '연락' },
 ];
 
 function Navigation({ activeSection, onNavigate }) {
@@ -34,7 +34,7 @@ function Navigation({ activeSection, onNavigate }) {
       </ul>
       
       <div className="nav-footer">
-        <span className="nav-year">2024</span>
+        <span className="nav-year">2025</span>
       </div>
     </nav>
   );

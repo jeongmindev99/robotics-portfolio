@@ -5,32 +5,26 @@ const projects = [
   {
     id: 1,
     title: 'Import Manager 리팩토링',
-    titleEn: 'Import Manager Refactoring',
-    problem: '코드가 여러 파일에 흩어져 있어 유지보수가 어려웠고, 동시성 문제가 발생',
-    action: 'Manager 패턴으로 코드를 통합하고 상태 관리를 중앙화',
-    result: '동시성 문제 해결, 유지보수 시간 50% 감소',
-    tags: ['ROS', 'Python', 'Refactoring'],
-    link: '#',
+    problem: '여러 파일에 흩어진 코드로 유지보수 어려움, 동시성 문제 발생',
+    action: 'Manager 패턴으로 코드 통합 및 상태 관리 중앙화',
+    result: '동시성 문제 해결, 유지보수 시간 50% 단축',
+    tags: ['ROS', 'Python', 'Architecture'],
   },
   {
     id: 2,
     title: 'FlexBE 배송 시나리오',
-    titleEn: 'FlexBE Delivery Scenario',
-    problem: '복잡한 배송 로직을 하드코딩으로 관리하여 수정이 어려웠음',
-    action: 'FlexBE 상태 머신으로 전체 배송 플로우를 시각화하고 모듈화',
-    result: '시나리오 수정 시간 70% 단축, 새로운 사이트 적용 용이',
+    problem: '하드코딩된 배송 로직으로 수정 및 확장 어려움',
+    action: 'FlexBE 상태 머신으로 배송 플로우 시각화 및 모듈화',
+    result: '시나리오 수정 시간 70% 단축, 신규 사이트 적용 용이',
     tags: ['FlexBE', 'State Machine', 'ROS'],
-    link: '#',
   },
   {
     id: 3,
     title: 'MQTT 통신 시스템',
-    titleEn: 'MQTT Communication System',
-    problem: '관제 서버와 로봇 간 실시간 통신이 불안정했음',
-    action: 'MQTT 프로토콜 기반 통신 레이어를 새로 설계하고 구현',
-    result: '통신 안정성 향상, 메시지 손실률 0.1% 이하',
-    tags: ['MQTT', 'Communication', 'Python'],
-    link: '#',
+    problem: '관제 서버-로봇 간 실시간 통신 불안정',
+    action: 'MQTT 프로토콜 기반 통신 레이어 재설계',
+    result: '통신 안정성 확보, 메시지 손실률 0.1% 이하',
+    tags: ['MQTT', 'Protocol', 'Python'],
   },
 ];
 
@@ -42,24 +36,19 @@ function ProjectsSection() {
           <span className="section-number">02</span>
           <h2 className="section-title">How I Solved</h2>
           <p className="section-subtitle">
-            문제를 정의하고, 해결하고, 결과를 측정한 경험들
+            실제 문제를 해결한 경험
           </p>
         </div>
         
         <div className="projects-grid">
           {projects.map((project, index) => (
-            <div 
-              key={project.id} 
+            <div
+              key={project.id}
               className="project-card"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="project-number">
-                {String(index + 1).padStart(2, '0')}
-              </div>
-              
               <div className="project-content">
                 <h3 className="project-title">{project.title}</h3>
-                <span className="project-title-en">{project.titleEn}</span>
                 
                 <div className="project-details">
                   <div className="detail-item">
@@ -83,12 +72,9 @@ function ProjectsSection() {
                 </div>
               </div>
               
-              <a href={project.link} className="project-link">
-                <span>상세 보기</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                </svg>
-              </a>
+              <div className="project-footer">
+                <span className="project-id">#{String(index + 1).padStart(2, '0')}</span>
+              </div>
             </div>
           ))}
         </div>

@@ -2,57 +2,19 @@
   background: var(--bg-primary);
 }
 
-.learning-intro {
-  max-width: 600px;
-  margin: 0 auto 60px;
-}
-
-.intro-card {
-  background: linear-gradient(135deg, rgba(0, 212, 170, 0.05) 0%, var(--bg-card) 100%);
-  border: 1px solid var(--accent-primary);
-  border-radius: 16px;
-  padding: 40px;
-  text-align: center;
-}
-
-.intro-icon {
-  width: 64px;
-  height: 64px;
-  background: var(--bg-tertiary);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 24px;
-  color: var(--accent-primary);
-}
-
-.intro-card h3 {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 16px;
-}
-
-.intro-card p {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-}
-
 .learning-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  margin-bottom: 60px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .learning-card {
+  flex: 1 1 200px;
+  max-width: 280px;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 28px;
+  border-radius: 10px;
+  padding: 20px;
   transition: all 0.3s ease;
 }
 
@@ -76,7 +38,7 @@
 }
 
 .learning-status {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   padding: 4px 10px;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
@@ -84,56 +46,15 @@
   color: var(--text-secondary);
 }
 
-.progress-bar {
-  height: 6px;
-  background: var(--bg-tertiary);
-  border-radius: 3px;
-  overflow: hidden;
-  margin-bottom: 16px;
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-  border-radius: 3px;
-  transition: width 0.5s ease;
-}
-
 .learning-description {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--text-secondary);
   line-height: 1.5;
-}
-
-.learning-cta {
-  text-align: center;
-}
-
-.learning-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 28px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  color: var(--text-primary);
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.learning-link:hover {
-  border-color: var(--accent-primary);
-  color: var(--accent-primary);
+  margin-top: 12px;
 }
 
 /* Mobile */
 @media (max-width: 768px) {
-  .intro-card {
-    padding: 30px 20px;
-  }
-
   .learning-grid {
     grid-template-columns: 1fr;
   }

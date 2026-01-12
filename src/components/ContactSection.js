@@ -8,9 +8,9 @@ function ContactSection() {
         <div className="contact-content">
           <div className="section-header">
             <span className="section-number">06</span>
-            <h2 className="section-title">Let's Connect</h2>
+            <h2 className="section-title">Contact</h2>
             <p className="section-subtitle">
-              새로운 도전을 함께하고 싶습니다.
+              함께 일하고 싶으시다면 연락주세요
             </p>
           </div>
           
@@ -69,7 +69,7 @@ function ContactSection() {
         </div>
         
         <footer className="footer">
-          <p>© 2024 Jeongmin Choi. Built with React.</p>
+          <p>© 2025 Jeongmin. Built with React.</p>
         </footer>
       </div>
     </section>

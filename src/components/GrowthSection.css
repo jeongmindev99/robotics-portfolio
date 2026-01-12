@@ -41,13 +41,13 @@
 }
 
 .timeline-item.start .marker-dot {
-  border-color: var(--accent-secondary);
-  background: var(--accent-secondary);
+  border-color: var(--text-muted);
+  background: var(--text-muted);
 }
 
-.timeline-item.turning-point .marker-dot {
-  border-color: var(--accent-warning);
-  background: var(--accent-warning);
+.timeline-item.growth .marker-dot {
+  border-color: var(--border-highlight);
+  background: var(--border-highlight);
 }
 
 .timeline-item.achievement .marker-dot {
@@ -56,9 +56,9 @@
 }
 
 .timeline-item.milestone .marker-dot {
-  border-color: var(--accent-highlight);
-  background: var(--accent-highlight);
-  box-shadow: 0 0 20px var(--accent-highlight);
+  border-color: var(--accent-primary);
+  background: var(--accent-primary);
+  box-shadow: 0 0 12px var(--accent-primary);
 }
 
 .marker-line {
