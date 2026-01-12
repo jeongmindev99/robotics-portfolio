@@ -161,73 +161,70 @@
   color: var(--text-muted);
 }
 
-/* Layers List */
-.phase-modal-layers {
-  padding: 20px;
+/* Phase Diagram - similar to architecture */
+.phase-diagram {
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
 }
 
-.layer-item {
-  background: var(--bg-card);
+.phase-layer {
+  width: 100%;
   border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 14px;
-  transition: all 0.3s ease;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(100, 149, 237, 0.08);
 }
 
-.layer-item:hover {
-  border-color: var(--border-highlight);
+.phase-layer-label {
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--border-color);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  text-align: center;
 }
 
-.layer-item.experienced {
-  border-color: rgba(0, 212, 170, 0.4);
-  background: linear-gradient(135deg, rgba(0, 212, 170, 0.05) 0%, var(--bg-card) 100%);
+.phase-layer-nodes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px;
+  justify-content: center;
 }
 
-.layer-item-header {
+.phase-node {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
-}
-
-.layer-indicator {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--text-muted);
-  flex-shrink: 0;
-}
-
-.layer-indicator.active {
-  background: var(--accent-primary);
-  box-shadow: 0 0 6px var(--accent-primary);
-}
-
-.layer-name {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--text-primary);
-  flex: 1;
-}
-
-.layer-badge {
-  font-size: 0.6rem;
-  padding: 2px 6px;
-  background: var(--accent-primary);
-  color: var(--bg-primary);
-  border-radius: 3px;
-  font-weight: 600;
-}
-
-.layer-description {
-  font-size: 0.8rem;
+  gap: 5px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 0.7rem;
   color: var(--text-secondary);
-  line-height: 1.4;
-  margin-left: 16px;
+  cursor: default;
+  transition: all 0.2s ease;
+}
+
+.phase-node::before {
+  content: '○';
+  font-size: 0.5rem;
+  color: var(--text-muted);
+}
+
+.phase-node.exp::before {
+  content: '●';
+  color: var(--text-secondary);
+}
+
+.phase-node:hover {
+  background: rgba(255, 255, 255, 0.06);
 }
 
 /* ==================== */
@@ -400,14 +397,14 @@
 }
 
 .ros-framework-label {
-  padding: 4px 12px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
+  padding: 6px 16px;
+  background: rgba(0, 212, 170, 0.15);
+  border: 1px solid rgba(0, 212, 170, 0.3);
   border-radius: 4px;
   font-family: var(--font-mono);
-  font-size: 0.55rem;
-  font-weight: 500;
-  color: var(--text-muted);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--accent-primary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 8px;
@@ -555,8 +552,24 @@
     padding: 16px;
   }
 
-  .layer-item {
+  /* Phase diagram responsive */
+  .phase-diagram {
     padding: 12px;
+  }
+
+  .phase-layer-label {
+    font-size: 0.6rem;
+    padding: 6px 10px;
+  }
+
+  .phase-layer-nodes {
+    padding: 10px;
+    gap: 4px;
+  }
+
+  .phase-node {
+    padding: 5px 8px;
+    font-size: 0.65rem;
   }
 
   /* Architecture responsive */

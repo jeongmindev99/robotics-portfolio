@@ -410,27 +410,32 @@ function PhaseModal({ phase, onClose }) {
           <p className="phase-modal-description">{details.description}</p>
         </div>
 
-        <div className="phase-modal-stats">
-          <div className="phase-stat">
-            <span className="phase-stat-value">{experiencedCount}/{totalCount}</span>
-            <span className="phase-stat-label">경험 영역</span>
+        <div className="phase-diagram">
+          <div className="phase-layer">
+            <div className="phase-layer-label">{phase.title}</div>
+            <div className="phase-layer-nodes">
+              {details.layers.map((layer, idx) => (
+                <div
+                  key={idx}
+                  className={`phase-node ${layer.experienced ? 'exp' : ''}`}
+                  title={layer.description}
+                >
+                  {layer.name}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="phase-modal-layers">
-          {details.layers.map((layer, idx) => (
-            <div
-              key={idx}
-              className={`layer-item ${layer.experienced ? 'experienced' : ''}`}
-            >
-              <div className="layer-item-header">
-                <span className={`layer-indicator ${layer.experienced ? 'active' : ''}`}></span>
-                <span className="layer-name">{layer.name}</span>
-                {layer.experienced && <span className="layer-badge">경험</span>}
-              </div>
-              <p className="layer-description">{layer.description}</p>
-            </div>
-          ))}
+        <div className="arch-legend">
+          <div className="legend-item">
+            <span className="legend-dot exp">●</span>
+            <span>경험 ({experiencedCount})</span>
+          </div>
+          <div className="legend-item">
+            <span className="legend-dot">○</span>
+            <span>미경험 ({totalCount - experiencedCount})</span>
+          </div>
         </div>
       </div>
     </div>
