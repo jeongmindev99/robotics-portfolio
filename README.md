@@ -542,25 +542,41 @@ const learningItems = [
 
 ## 📋 TODO
 
+### 완료된 항목
+- [x] GitHub Pages 배포 설정 (gh-pages, homepage URL)
+- [x] 사이트 정보 업데이트 (DeploymentSection.js) - 실제 사이트명 및 노션 링크
+- [x] 연락처 정보 업데이트 (ContactSection.js) - Email, GitHub, LinkedIn, Notion 실제 정보
+
 ### 필수 수정 (데이터)
 - [ ] Phase별 하위 항목 정확하게 업데이트 (LifecycleSection.js)
-- [ ] Architecture 레이어 경험 여부 정확하게 업데이트 (ArchitectureModal.js)
-- [ ] 프로젝트 3개 선정 및 상세 내용 작성 (ProjectsSection.js)
-- [ ] 사이트 정보 정확하게 업데이트 (DeploymentSection.js)
+- [ ] 프로젝트 3개 노션 링크 연결 (ProjectsSection.js) - CSS는 준비됨, 데이터/JSX 미구현
+- [ ] 프로젝트 CTA 노션 링크 실제 URL로 변경 (현재 href="#")
 - [ ] 성장 타임라인 전환점 확정 (GrowthSection.js)
-- [ ] 연락처 정보 업데이트 (ContactSection.js)
 
 ### 추가 개발 예정 (기능)
-- [ ] 각 Architecture 항목 클릭 시 노션 링크 연결
+- [ ] PhaseModal.js의 ArchitectureView에 노션 링크 연결 - ⚠️ ArchitectureModal.js에 추가되었으나 사용 안 됨
 - [ ] 프로젝트 상세 페이지 또는 모달
 - [ ] 사이트별 상세 정보 모달
 - [ ] 다크/라이트 모드 토글
 - [ ] 애니메이션 개선 (framer-motion 도입 검토)
-- [ ] GitHub Pages 배포
 
-### 버그 수정
+### 버그 수정 및 코드 정리
+- [ ] ArchitectureModal.js/css 삭제 필요 (PhaseModal.js로 통합됨, 사용 안 함)
+- [ ] ContactSection.js footer 연도(2025) 하드코딩 → 동적 처리 필요 (line 72)
+- [ ] Navigation.js nav-footer 연도(2025) 하드코딩 → 동적 처리 필요 (line 37)
+- [ ] LearningSection.css 모바일 반응형 CSS 오류 - flex 부모에 grid-template-columns 사용 (line 57-60)
+- [ ] ProjectsSection.css `.project-title` 중복 정의 수정 (line 69-75, 77-79)
 - [ ] 모바일 반응형 개선
 - [ ] 스크롤 스냅 모바일에서 비활성화 확인
+
+### CSS 일관성
+- [ ] 반응형 브레이크포인트 통일 (대부분 768px 사용, 일부 600px/900px/480px/400px 사용 중)
+
+### README-코드 불일치 수정
+- [ ] Phase 구조: LifecycleSection.js (icon, isHighlight) vs README 예시 (hasArchitecture, items)
+- [ ] PhaseModal.js: layers[] vs README 예시 items[]
+- [ ] sites 구조: 실제 (period, name, robot, role, notionLink) vs README (name, location, type, period, role, highlight)
+- [ ] GrowthSection type 값: 실제 'growth' vs README 'turning-point'
 
 ---
 
