@@ -7,6 +7,7 @@ const navItems = [
   { id: 'projects', label: 'How I Solved', labelKr: '프로젝트' },
   { id: 'deployment', label: 'Where I Deployed', labelKr: '현장' },
   { id: 'growth', label: 'How I Grew', labelKr: '성장' },
+  { id: 'tech-experience', label: 'Technical Deep Dive', labelKr: '기술' },
   { id: 'learning', label: 'What I\'m Learning', labelKr: '학습' },
   { id: 'contact', label: 'Contact', labelKr: '연락' },
 ];
