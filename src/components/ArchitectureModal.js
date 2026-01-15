@@ -113,6 +113,17 @@ function ArchitectureModal({ onClose }) {
         <div className="modal-header">
           <h2>시스템 아키텍처</h2>
           <p>Mobile Manipulator Robot System Architecture</p>
+          <a
+            href="https://notion.so/6f704e03f3734c9b9b2ee5a82e3a0224"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="architecture-notion-link"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466l1.823 1.447zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.166V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.934z"/>
+            </svg>
+            노션에서 상세 보기
+          </a>
         </div>
         
         <div className="architecture-container">

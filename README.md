@@ -335,7 +335,7 @@ const projects = [
     action: 'Manager 패턴으로 코드를 통합하고 상태 관리를 중앙화',
     result: '동시성 문제 해결, 유지보수 시간 50% 감소',
     tags: ['ROS', 'Python', 'Refactoring'],    // 기술 태그
-    link: '#',                                  // 노션 상세 링크
+    notionLink: 'https://notion.so/...',       // ⭐ 노션 상세 페이지 URL
   },
   {
     id: 2,
@@ -345,7 +345,7 @@ const projects = [
     action: 'FlexBE 상태 머신으로 전체 배송 플로우를 시각화하고 모듈화',
     result: '시나리오 수정 시간 70% 단축, 새로운 사이트 적용 용이',
     tags: ['FlexBE', 'State Machine', 'ROS'],
-    link: '#',
+    notionLink: 'https://notion.so/...',
   },
   {
     id: 3,
@@ -355,7 +355,7 @@ const projects = [
     action: 'MQTT 프로토콜 기반 통신 레이어를 새로 설계하고 구현',
     result: '통신 안정성 향상, 메시지 손실률 0.1% 이하',
     tags: ['MQTT', 'Communication', 'Python'],
-    link: '#',
+    notionLink: 'https://notion.so/...',
   },
 ];
 ```
@@ -542,25 +542,426 @@ const learningItems = [
 
 ## 📋 TODO
 
-### 필수 수정 (데이터)
-- [ ] Phase별 하위 항목 정확하게 업데이트 (LifecycleSection.js)
-- [ ] Architecture 레이어 경험 여부 정확하게 업데이트 (ArchitectureModal.js)
-- [ ] 프로젝트 3개 선정 및 상세 내용 작성 (ProjectsSection.js)
-- [ ] 사이트 정보 정확하게 업데이트 (DeploymentSection.js)
-- [ ] 성장 타임라인 전환점 확정 (GrowthSection.js)
-- [ ] 연락처 정보 업데이트 (ContactSection.js)
+### 작업 우선순위 가이드
 
-### 추가 개발 예정 (기능)
-- [ ] 각 Architecture 항목 클릭 시 노션 링크 연결
-- [ ] 프로젝트 상세 페이지 또는 모달
-- [ ] 사이트별 상세 정보 모달
+| 우선순위 | Phase | 설명 | 의존성 |
+|---------|-------|------|--------|
+| **최우선** | Phase 13 | 버그 수정, 코드 정리 | 없음 |
+| **높음** | Phase 0-2 | 콘텐츠 정리 및 연동 | 순차적 |
+| **높음** | Phase 4 | 코드 리팩토링 | 없음 |
+| **중간** | Phase 5 | 접근성 개선 | Phase 4 권장 |
+| **중간** | Phase 6 | 반응형 강화 | 없음 |
+| **중간** | Phase 7 | SEO/메타데이터 | 없음 |
+| **낮음** | Phase 3, 10 | UI/UX, 시각적 개선 | Phase 4 권장 |
+| **낮음** | Phase 8-9 | 성능/테스트 | Phase 4 이후 |
+| **낮음** | Phase 16 | 코드 품질/에러 핸들링 | Phase 4 이후 |
+| **선택** | Phase 11-12 | 문구 다듬기, 추가 기능 | Phase 0-2 이후 |
+| **선택** | Phase 17 | UX 세부 개선 | Phase 3, 10 이후 |
+| **추천** | Phase 18 | 포트폴리오 임팩트 강화 | Phase 10 이후 |
+
+**병렬 작업 가능:**
+- Phase 4 (코드 리팩토링)와 Phase 7 (SEO)는 동시 진행 가능
+- Phase 5 (접근성)와 Phase 6 (반응형)은 동시 진행 가능
+- Phase 13 (버그 수정)은 가장 먼저, 독립적으로 진행 가능
+- Phase 16 (코드 품질)은 Phase 4와 연계하거나 독립 진행 가능
+
+---
+
+### Phase 0: 노션 포트폴리오 콘텐츠 정리 (선행 작업)
+
+> 웹사이트 데이터 업데이트 전, 노션에서 포트폴리오 콘텐츠를 먼저 정리해야 함
+
+#### 0-1. 노션 기존 자료 수집
+- [x] 회사 재직 기간 동안 작성한 모든 노션 페이지 검토
+- [x] 프로젝트별 작업 내용 수집 (Import Manager, FlexBE, MQTT 등)
+- [x] 사이트별 세팅/운영 기록 수집
+- [x] 기술 스택별 경험 내용 수집 (ROS, Python, 통신 등)
+- [x] 문제 해결 사례 수집 (디버깅, 트러블슈팅)
+
+#### 0-2. 포트폴리오 루트 페이지 구성
+- [x] 포트폴리오 루트 페이지 생성 (https://notion.so/2e9d8a0a7b5a81c5a57ed22576f1cb0c)
+- [x] 프로젝트 상세 페이지 (PARL 구조로 정리)
+  - [x] Import Manager 리팩토링
+  - [x] FlexBE 배송 시나리오
+  - [x] MQTT 통신 시스템
+- [x] 사이트별 경험 페이지
+  - [x] 판교 테크원
+  - [x] 서초 래미안
+  - [x] 대치
+  - [x] 부산 호반/수자인
+  - [x] 지웰홈즈
+  - [x] 일본 팜코트
+  - [x] 일본 캐널코트
+- [x] 시스템 아키텍처 상세 페이지
+  - [x] 각 레이어별 경험 내용 정리
+  - [x] 기술 스택별 상세 설명
+
+---
+
+### Phase 1: 웹사이트 데이터 업데이트
+
+> Phase 0 완료 후, 노션 콘텐츠 기반으로 웹사이트 데이터 수정
+
+- [ ] Phase별 하위 항목 정확하게 업데이트 (LifecycleSection.js)
+- [x] Architecture 레이어 경험 여부 업데이트 + 노션 링크 연결 (ArchitectureModal.js)
+- [x] 프로젝트 3개 선정 및 상세 내용 작성 + 노션 링크 연결 (ProjectsSection.js)
+- [x] 사이트 정보 정확하게 업데이트 + 노션 링크 연결 (DeploymentSection.js)
+- [x] 성장 타임라인 전환점 확정 (GrowthSection.js)
+- [x] 연락처 정보 업데이트 (ContactSection.js)
+
+---
+
+### Phase 2: 노션 연동 및 기능 개발
+
+> Phase 0에서 만든 노션 페이지를 웹사이트와 연결
+
+- [ ] 실제 사용되는 PhaseModal.js의 ArchitectureView에 노션 링크 연결 (시스템 아키텍처 상세 페이지) - **⚠️ ArchitectureModal.js에는 추가되었으나 이 파일은 사용되지 않음**
+- [ ] 프로젝트 카드에 노션 상세 페이지 링크 추가 (notionLink 필드) - ⚠️ CSS만 준비됨
+- [x] 사이트 항목 클릭 시 노션 상세 페이지 연결
+- [x] Contact 섹션 노션 링크 연결
+- [ ] 프로젝트 상세 모달 (선택적)
+- [ ] 사이트별 상세 정보 모달 (선택적)
+
+---
+
+### Phase 3: UI/UX 개선
+
 - [ ] 다크/라이트 모드 토글
 - [ ] 애니메이션 개선 (framer-motion 도입 검토)
-- [ ] GitHub Pages 배포
-
-### 버그 수정
 - [ ] 모바일 반응형 개선
 - [ ] 스크롤 스냅 모바일에서 비활성화 확인
+
+---
+
+### Phase 4: 코드 리팩토링 및 가독성
+
+> 유지보수성과 코드 품질 향상
+
+#### 4-1. 파일 분리
+- [ ] PhaseModal.js에서 데이터(phaseDetails, architectureLayers)를 `src/data/` 폴더로 분리
+- [ ] phases 데이터를 `src/data/phases.js`로 분리 (LifecycleSection.js)
+- [ ] projects 데이터를 `src/data/projects.js`로 분리 (ProjectsSection.js)
+- [ ] sites 데이터를 `src/data/sites.js`로 분리 (DeploymentSection.js)
+- [ ] milestones 데이터를 `src/data/milestones.js`로 분리 (GrowthSection.js)
+- [ ] learningItems 데이터를 `src/data/learning.js`로 분리 (LearningSection.js)
+
+#### 4-2. 공통 컴포넌트 추출
+- [ ] SectionHeader 컴포넌트 추출 (section-number, section-title, section-subtitle 패턴)
+- [ ] Modal 컴포넌트 추출 (overlay, close 버튼 공통 패턴)
+
+#### 4-3. 상수 정리
+- [ ] 연락처 정보를 `src/constants/contact.js`로 분리 (현재 하드코딩)
+- [ ] navItems를 `src/constants/navigation.js`로 분리
+- [ ] Navigation.js의 연도(2025)를 동적으로 처리 (`new Date().getFullYear()`)
+- [ ] App.js의 sections 배열(line 17)을 navItems와 통합 또는 `src/constants/sections.js`로 분리
+
+#### 4-4. 코드 품질
+- [ ] ESLint 설정 추가 (airbnb 또는 react-app 확장)
+- [ ] Prettier 설정 추가 (.prettierrc)
+- [ ] PropTypes 추가 또는 TypeScript 마이그레이션 검토
+
+---
+
+### Phase 5: 접근성(A11y) 및 키보드 네비게이션
+
+> 모든 사용자가 사용할 수 있는 포트폴리오
+
+- [ ] 모달에 `aria-modal="true"`, `role="dialog"` 추가
+- [ ] 모달 ESC 키로 닫기 기능 추가 (현재 미구현)
+- [ ] 포커스 트랩 구현 (모달 열렸을 때 포커스가 모달 내에만 이동)
+- [ ] 네비게이션 항목에 `aria-label` 추가
+- [ ] 클릭 가능한 요소들에 `role="button"`, `tabIndex` 추가
+- [ ] 색상 대비 검사 및 개선 (WCAG AA 기준)
+- [ ] 스크린 리더 테스트
+
+---
+
+### Phase 6: 반응형 디자인 강화
+
+> 모든 디바이스에서 최적화된 경험
+
+#### 6-1. 브레이크포인트 확장
+- [ ] 태블릿 브레이크포인트 추가 (768px ~ 1024px)
+- [ ] 대형 화면 브레이크포인트 추가 (1400px+)
+- [ ] 초소형 화면 대응 (360px 이하)
+
+#### 6-2. 컴포넌트별 반응형 개선
+- [ ] DeploymentSection: 모바일에서 테이블 → 카드 형태로 변경
+- [ ] LifecycleSection: 모바일에서 가로 스크롤 또는 세로 레이아웃 검토
+- [ ] ProjectsSection: 모바일에서 카드 레이아웃 최적화
+- [ ] PhaseModal: 모바일에서 Architecture View 스크롤 가능하게 개선
+
+---
+
+### Phase 7: SEO 및 메타데이터
+
+> 검색 엔진 최적화 및 소셜 공유
+
+#### 7-1. 기본 메타데이터
+- [ ] public/index.html description 개선 (현재: "Robotics Software Engineer Portfolio" → 더 구체적으로)
+- [ ] canonical URL 추가
+- [ ] robots meta 태그 추가
+
+#### 7-2. 소셜 미디어 공유
+- [ ] Open Graph 태그 추가 (og:title, og:description, og:image, og:url, og:type)
+- [ ] Twitter Card 태그 추가 (twitter:card, twitter:title, twitter:description)
+- [ ] 소셜 공유용 이미지 준비 (1200x630px 권장)
+
+#### 7-3. 아이콘 및 PWA
+- [ ] favicon 추가 (현재 React 기본 로고) - 16x16, 32x32
+- [ ] apple-touch-icon 추가 (180x180)
+- [ ] manifest.json 추가 (PWA 지원)
+
+#### 7-4. 검색 엔진
+- [ ] robots.txt 검토
+- [ ] sitemap.xml 생성 (정적 사이트이므로 간단)
+
+---
+
+### Phase 8: 성능 최적화
+
+> 빠른 로딩과 부드러운 인터랙션
+
+- [ ] Lighthouse 성능 측정 및 점수 기록
+- [ ] React.lazy와 Suspense로 코드 스플리팅 검토
+- [ ] 이미지 최적화 준비 (향후 이미지 추가 시 대비)
+- [ ] CSS 번들 크기 최적화
+- [ ] font-display: swap 확인 (FOUT 방지)
+- [ ] 애니메이션 성능 최적화 (will-change, transform 사용)
+
+---
+
+### Phase 9: 테스트
+
+> 안정적인 배포를 위한 테스트 환경
+
+- [ ] Jest + React Testing Library 설정
+- [ ] 주요 컴포넌트 단위 테스트 작성
+- [ ] 네비게이션 클릭 시 스크롤 동작 테스트
+- [ ] 모달 열기/닫기 테스트
+- [ ] 반응형 레이아웃 테스트 (snapshot)
+- [ ] CI/CD에 테스트 연동 (GitHub Actions)
+
+---
+
+### Phase 10: 시각적 디자인 개선
+
+> 더 세련되고 전문적인 디자인
+
+#### 10-1. 섹션 구분
+- [ ] 섹션별 배경색 미묘한 차이 추가 (홀수/짝수 섹션)
+- [ ] 섹션 간 구분선 디자인 개선
+
+#### 10-2. 컴포넌트 디자인
+- [ ] LearningSection: progress 필드를 활용한 진행률 바 추가
+- [ ] GrowthSection: type별 아이콘/색상 적용 (start, growth, achievement, milestone)
+- [ ] GrowthSection: 'start' type 시각적 강조 개선 (현재 muted 색상으로 너무 흐림)
+- [ ] DeploymentSection: 일본 사이트 등 하이라이트 표시 추가 (해외 경험 강조 필요)
+- [ ] DeploymentSection: 해외 사이트에 국기 이모지나 배지 추가 (🇯🇵)
+- [ ] ProjectsSection: Result 영역 정량적 성과 강조 스타일 (50%, 70% 등 수치 하이라이트)
+
+#### 10-3. 인터랙션
+- [ ] 스크롤 진행률 표시기 추가 (상단 프로그레스 바)
+- [ ] "맨 위로" 버튼 추가 (스크롤 시 표시)
+- [ ] 프로젝트 카드 호버 시 더 풍부한 애니메이션
+
+---
+
+### Phase 11: 문구 및 가독성
+
+> 명확하고 설득력 있는 콘텐츠
+
+- [ ] 영문/한글 표기 일관성 검토 (섹션 제목은 영문, 내용은 한글로 통일 여부)
+- [ ] 히어로 섹션 메인 메시지 검토 및 다듬기
+- [ ] CTA 버튼 문구 개선 ("경험 살펴보기" → 더 행동 유도적으로)
+- [ ] 각 섹션 서브타이틀 문구 다듬기
+- [x] ContactSection placeholder(your.email@example.com) 실제 정보로 교체 ✓
+- [ ] 프로젝트 PARL 문구 간결하게 다듬기
+
+---
+
+### Phase 12: 추가 기능 (선택)
+
+> 차별화를 위한 추가 기능
+
+- [ ] 언어 토글 (한국어/영어)
+- [ ] 인쇄/PDF 내보내기 기능
+- [ ] 공유 버튼 (LinkedIn, Twitter, 링크 복사)
+- [ ] 방문자 분석 (Google Analytics 또는 간단한 카운터)
+
+---
+
+### Phase 13: 버그 수정 및 코드/문서 일치
+
+> 발견된 불일치 및 버그 수정
+
+#### 13-1. 코드-문서 불일치 해결
+- [ ] LearningSection: README에 있는 progress 필드 실제 구현 추가
+- [ ] DeploymentSection: README에 있는 highlight 필드 실제 구현 추가
+- [ ] LearningSection.css: 모바일 반응형 CSS 불일치 수정 (flex 사용 중인데 grid-template-columns 사용)
+- [ ] **PhaseModal.js에 노션 링크 추가 필요** - 실제 사용되는 아키텍처 뷰(PhaseModal.js)에는 노션 링크가 없음. ArchitectureModal.js에는 추가되었으나 이 파일은 사용되지 않음
+- [ ] README.md Phase 수정 가이드 업데이트 - 실제 구조 반영:
+  - LifecycleSection.js: phases 배열 (id, number, title, titleEn, icon, experienced, isHighlight)
+    - README 예시에서 `hasArchitecture`, `items` 필드 제거 필요 (실제로 없음)
+    - `icon` 필드 추가 필요 (이모지 사용)
+  - PhaseModal.js: phaseDetails 객체 (description, layers[], isArchitecture)
+    - README 예시에서 `items` → `layers` 필드명 수정 필요
+- [ ] README.md의 sites 구조 수정 필요:
+  - 실제: (id, period, name, robot, role, notionLink)
+  - README 예시: (id, name, location, type, period, role, highlight)
+  - `type` → `robot` 필드명 수정, `location`/`highlight` 제거, `notionLink` 추가 필요
+- [x] README.md의 milestones 구조 검증 완료 - 구조 일치 (type 값만 Phase 13-5에서 수정 필요)
+
+#### 13-2. 접근성 및 표준 준수
+- [ ] favicon 추가 (link rel="icon") - 현재 누락
+- [ ] apple-touch-icon 추가
+- [ ] manifest.json 추가 (PWA 지원 준비)
+
+#### 13-3. 코드 정리
+- [ ] ArchitectureModal.js 파일이 더 이상 사용되지 않음 → 삭제 필요 (PhaseModal.js로 통합됨)
+- [ ] ArchitectureModal.css 파일도 함께 삭제
+- [ ] 사용되지 않는 CSS 클래스 정리
+- [ ] ProjectsSection.css: `.project-title` 중복 정의 수정 (line 69-75, 77-79) - 두 번째 정의가 첫 번째를 덮어씀
+- [ ] ContactSection.js: footer 연도(2025) 하드코딩 → 동적 처리 필요 (`new Date().getFullYear()`) (line 72)
+- [ ] Navigation.js: nav-footer 연도(2025) 하드코딩 → 동적 처리 필요 (line 37)
+- [ ] LearningSection.css: 모바일 반응형에서 `grid-template-columns` 사용 오류 (line 57-60) - 부모가 `display: flex`인데 grid 속성 사용 중
+
+#### 13-4. CSS 일관성
+- [ ] 반응형 브레이크포인트 통일:
+  - **768px 사용 중**: Navigation, GrowthSection, HeroSection, ContactSection, PhaseModal, LearningSection, App, index
+  - **600px 사용 중**: DeploymentSection ⚠️
+  - **900px 사용 중**: LifecycleSection ⚠️
+  - **480px 사용 중**: LifecycleSection ⚠️
+  - **400px 사용 중**: PhaseModal ⚠️
+  - 권장: 480px (모바일), 768px (태블릿), 1024px (데스크톱), 1400px (대형)
+- [ ] 공통 hover 효과를 CSS 변수 또는 mixin으로 추출
+
+#### 13-5. 문서 일관성
+- [ ] CLAUDE.md Architecture 섹션에서 ArchitectureModal.js 참조 제거 (더 이상 사용 안 함)
+- [ ] CLAUDE.md Architecture 섹션에 PhaseModal.js가 ArchitectureView를 포함한다고 명시
+- [ ] CLAUDE.md와 README.md 간 구조 설명 동기화
+- [ ] README.md GrowthSection 예시에서 type 'turning-point' → 'growth'로 수정 (실제 코드와 일치시키기)
+
+#### 13-7. 완료 항목 검증 (⚠️ 불일치 발견)
+- [ ] ProjectsSection.js에 notionLink 필드 구현 필요 (CSS만 준비되어 있음, 데이터/JSX 미구현)
+- [ ] README.md projects 예시에서 `titleEn` 필드 제거 필요 (실제 코드에 없음) 또는 코드에 추가
+- [x] 완료 항목 목록의 "Phase 2: 프로젝트 카드에 노션 링크 기능 추가" 상태 수정 완료
+
+#### 13-6. 코드 중복 제거
+- [ ] 반복되는 SVG 아이콘 (Notion 아이콘 등)을 별도 컴포넌트로 추출
+- [ ] ContactSection, ProjectsSection, DeploymentSection에서 동일한 Notion SVG 사용 중
+- [ ] `src/components/icons/NotionIcon.js` 생성 고려
+
+---
+
+### Phase 14: 빌드 및 배포 안정성
+
+> CI/CD 및 빌드 프로세스 개선
+
+#### 14-1. CI/CD
+- [ ] GitHub Actions 워크플로우 추가 (빌드 테스트 자동화)
+- [ ] PR 생성 시 자동 프리뷰 배포
+
+#### 14-2. 빌드 최적화
+- [ ] 빌드 경고(warnings) 제거
+- [ ] bundle analyzer로 번들 크기 분석 (`npm run analyze` 스크립트 추가)
+- [ ] source map 설정 검토 (프로덕션에서 제거 여부)
+
+#### 14-3. package.json 개선
+- [ ] `test` 스크립트 추가 (현재 없음)
+- [ ] `lint` 스크립트 추가 (ESLint 설정 후)
+- [ ] `analyze` 스크립트 추가 (source-map-explorer 또는 webpack-bundle-analyzer)
+
+---
+
+### Phase 15: 콘텐츠 품질 점검
+
+> 포트폴리오 콘텐츠 검토
+
+- [x] 사이트 데이터 실제 정보로 검증 (가명 → 실제 사이트명으로 변경 완료)
+- [ ] 프로젝트 성과 수치 검증 (50%, 70% 등 근거 확인)
+- [ ] 기간 정보 정확성 검증 (22개월 등)
+- [ ] 모든 링크 동작 확인 (# 링크 실제 연결)
+- [ ] 스크린샷/이미지 추가 검토
+
+---
+
+### Phase 16: 코드 품질 및 에러 핸들링
+
+> 안정성과 유지보수성 향상
+
+#### 16-1. 에러 핸들링
+- [ ] React Error Boundary 추가 (섹션별 에러 격리)
+- [ ] 외부 링크 클릭 시 연결 실패 대응 (fallback UI)
+- [ ] 이미지 로드 실패 시 placeholder 표시 (향후 이미지 추가 대비)
+
+#### 16-2. 성능 최적화
+- [ ] React.memo 적용하여 불필요한 re-render 방지 (Navigation, 각 Section)
+- [ ] useMemo/useCallback 적용 (데이터 배열, 이벤트 핸들러)
+- [ ] App.js: 스크롤 이벤트 핸들러에 throttle 적용 (현재 모든 스크롤에서 실행)
+- [ ] console.log 정리 (프로덕션 빌드에서 제거)
+
+#### 16-3. 타입 안전성
+- [ ] PropTypes 추가 (Navigation, PhaseModal 등 props 받는 컴포넌트)
+- [ ] JSDoc 주석 추가 (주요 함수, 컴포넌트에 용도 설명)
+
+---
+
+### Phase 17: 사용자 경험 세부 개선
+
+> 더 세련된 인터랙션과 피드백
+
+#### 17-1. 테마 및 시스템 설정
+- [ ] prefers-color-scheme 감지하여 시스템 테마 따라가기 (다크 모드 기본)
+- [ ] prefers-reduced-motion 존중 (애니메이션 최소화 옵션)
+
+#### 17-2. 로딩 및 상태 표시
+- [ ] 노션 링크 클릭 시 로딩 인디케이터 (새 탭 열리는 중)
+- [ ] 섹션 lazy loading 시 Skeleton UI 적용 검토
+
+#### 17-3. 인터랙션 피드백
+- [ ] 버튼 클릭 시 ripple 효과 추가
+- [ ] 링크 호버 시 tooltip으로 목적지 미리보기
+- [ ] 키보드 단축키 추가 (1-7 숫자키로 섹션 이동)
+
+---
+
+### Phase 18: 포트폴리오 임팩트 강화 (신규)
+
+> 채용 담당자에게 더 강한 인상을 남기기 위한 개선
+
+#### 18-1. 핵심 성과 강조
+- [ ] HeroSection: 핵심 수치(22개월, 7사이트, 5+프로토콜)에 애니메이션 카운터 효과 추가
+- [ ] ProjectsSection: Result 수치(50%, 70%, 0.1%)를 색상/크기로 강조 표시
+- [ ] DeploymentSection: "해외 단독 세팅" 역할에 특별 배지/스타일 추가
+
+#### 18-2. 차별화 요소 부각
+- [ ] LifecycleSection: 경험한 Phase 비율(5/7)을 더 눈에 띄게 표시
+- [ ] 전체 페이지에 경험 요약 섹션 추가 검토 (기술 스택별 경험 레벨 차트)
+- [ ] PhaseModal의 ArchitectureView: 경험 비율(60/70+ components) 시각화 개선
+
+#### 18-3. 신뢰도 강화
+- [ ] 각 프로젝트에 구체적인 기간 정보 추가
+- [ ] 사이트별 배포 로봇 대수 정보 추가 (가능 시)
+- [ ] 기술 스택별 사용 기간 표시 (예: ROS 22개월)
+
+#### 18-4. CTA 개선
+- [ ] ContactSection 진입 전 스크롤 시 CTA 버튼 플로팅 표시 검토
+- [ ] 이력서/CV PDF 다운로드 링크 추가 검토
+- [ ] "함께 일하기" 버튼 문구 개선
+
+---
+
+### 완료된 항목
+- [x] GitHub Pages 배포 설정 (gh-pages, homepage URL)
+- [x] Phase 1: 사이트 정보 업데이트 (DeploymentSection.js) - 실제 사이트명으로 변경
+- [x] Phase 1: 연락처 정보 업데이트 (ContactSection.js) - Email, GitHub, LinkedIn 실제 정보로 변경
+- [ ] Phase 1: 프로젝트 추가 검토 (STVL 3D 장애물 회피, Localization Fail Safe, OCR 송장 인식 등) - 현재 3개
+- [ ] Phase 2: 프로젝트 카드에 노션 링크 기능 추가 (ProjectsSection.js) - ⚠️ CSS만 추가됨, 데이터/JSX 미구현
+- [x] Phase 2: 사이트 항목에 노션 링크 기능 추가 (DeploymentSection.js)
+- [x] Phase 2: Contact 섹션 노션 링크 실제 URL로 변경 (ContactSection.js)
+- [x] Phase 2: ArchitectureModal에 노션 링크 추가 (단, 이 컴포넌트는 현재 사용되지 않음 - Phase 13에서 삭제 예정)
+- [ ] Phase 2: ProjectsSection 하단 CTA 노션 링크 실제 URL로 변경 - ⚠️ 여전히 href="#"
 
 ---
 
