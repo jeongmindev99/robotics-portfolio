@@ -24,7 +24,7 @@ function LearningSection() {
     <section id="learning" className="learning-section section">
       <div className="container">
         <div className="section-header">
-          <span className="section-number">05</span>
+          <span className="section-number">06</span>
           <h2 className="section-title">What I'm Learning</h2>
           <p className="section-subtitle">
             부족한 점을 인정하고 꾸준히 학습 중
