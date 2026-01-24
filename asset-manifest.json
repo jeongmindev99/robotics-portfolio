@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/robotics-portfolio/static/css/main.563fe685.css",
-    "main.js": "/robotics-portfolio/static/js/main.abcaec06.js",
+    "main.css": "/robotics-portfolio/static/css/main.8999989b.css",
+    "main.js": "/robotics-portfolio/static/js/main.e095594c.js",
     "index.html": "/robotics-portfolio/index.html",
-    "main.563fe685.css.map": "/robotics-portfolio/static/css/main.563fe685.css.map",
-    "main.abcaec06.js.map": "/robotics-portfolio/static/js/main.abcaec06.js.map"
+    "main.8999989b.css.map": "/robotics-portfolio/static/css/main.8999989b.css.map",
+    "main.e095594c.js.map": "/robotics-portfolio/static/js/main.e095594c.js.map"
   },
   "entrypoints": [
-    "static/css/main.563fe685.css",
-    "static/js/main.abcaec06.js"
+    "static/css/main.8999989b.css",
+    "static/js/main.e095594c.js"
   ]
 }
