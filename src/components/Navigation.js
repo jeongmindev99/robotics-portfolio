@@ -35,7 +35,7 @@ function Navigation({ activeSection, onNavigate }) {
       </ul>
       
       <div className="nav-footer">
-        <span className="nav-year">2025</span>
+        <span className="nav-year">{new Date().getFullYear()}</span>
       </div>
     </nav>
   );

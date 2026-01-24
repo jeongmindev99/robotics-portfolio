@@ -69,7 +69,7 @@ function ContactSection() {
         </div>
 
         <footer className="footer">
-          <p>© 2025 Jeongmin. Built with React.</p>
+          <p>© {new Date().getFullYear()} Jeongmin. Built with React.</p>
         </footer>
       </div>
     </section>

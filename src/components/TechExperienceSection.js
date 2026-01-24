@@ -54,6 +54,7 @@ const techCategories = [
       { id: 'rosbridge', title: 'ROSBridge WebSocket', description: 'Web 기반 ROS 통신', details: ['웹 대시보드 연동', 'JSON 메시지 변환', '실시간 토픽 모니터링'], tags: ['ROSBridge', 'WebSocket'] },
       { id: 'rest-api', title: 'REST API 연동', description: '외부 서비스 API 연동', details: ['Firestore 실시간 데이터베이스 연동', 'Microsoft Teams API 연동 (알림/모니터링)', 'OneDrive API 연동 (파일 업로드/다운로드)'], tags: ['REST', 'API'] },
       { id: 'serial-comm', title: '시리얼 통신', description: 'MCU-PC 시리얼 통신', details: ['pyserial 기반 통신', '프로토콜 정의', '에러 핸들링'], tags: ['Serial', 'Communication'] },
+      { id: 'uart-serial', title: 'UART 시리얼 통신', description: '비동기식 직렬 통신', details: ['비동기식 직렬 통신 원리 이해 (Tx/Rx, 시작/정지 비트)', 'pyserial로 마이크로컨트롤러-ROS 노드 간 통신 구현', 'Baud Rate 설정 (9600, 115200bps 등) 및 프레임 구성', 'ESP32, Arduino와 ROS 간 데이터 교환 경험', '패리티 비트를 통한 오류 검출 개념 이해'], tags: ['UART', 'Serial', 'Communication'] },
       { id: 'can-protocol', title: 'CAN 통신', description: '모터 드라이버 CAN 통신', details: ['CAN 프로토콜 분석', 'socketcan 활용', '모터 상태 모니터링'], tags: ['CAN', 'Protocol'] },
       { id: 'myactuator-can', title: 'MyActuator CAN 통신', description: 'CAN 프로토콜 직접 구현', details: ['GitHub 오픈소스 한계로 직접 구현', 'RMD-X8-P20-120 모터 CAN 제어', '시스템 라이브러리로 사용 가능하도록 정리'], tags: ['MyActuator', 'CAN'] },
       { id: 'elevator-api', title: '엘리베이터 API 연동', description: '엘리베이터 호출 시스템', details: ['API 프로토콜 분석', '호출/도착 상태 관리', '타임아웃 처리'], tags: ['Elevator', 'Integration'] },
@@ -79,6 +80,8 @@ const techCategories = [
       { id: 'urdf-xacro', title: 'URDF/Xacro 통합', description: '로봇 모델 정의 파일 관리', details: ['Xarm6 로봇팔 xacro를 모바일 베이스에 통합', 'robot_state_publisher, joint_state_publisher 연동', 'TF 구성 커스터마이징'], tags: ['URDF', 'Xacro'] },
       { id: 'problem-solving', title: '체계적 문제 해결 방법론', description: '감에서 체계로 전환', details: ['문제 정의 → 분해 → 가설 수립 → 검증', '현상과 문제 분리, "왜?"를 5번 물어 근본 원인 파악', 'MECE 기반 문제 분해 및 우선순위 설정'], tags: ['Problem Solving', 'Methodology'] },
       { id: 'watt-metrics', title: '로봇 운영 지표 (와트 지표)', description: '운영 품질 모니터링 시스템', details: ['배송 성공률, 이동 시간, 장애물 회피 횟수 수집', '운영 로그 분석 및 실시간 패치 역량 확보', '서비스 품질 모니터링 자동화'], tags: ['Metrics', 'Monitoring'] },
+      { id: 'emergency-stop', title: '비상정지 시스템 구현', description: 'HW/SW 비상정지 시스템', details: ['하드웨어 비상정지: 릴레이 기반 물리적 전원 차단', '소프트웨어 비상정지: cmd_vel zero 발행 + 모터 제어 정지', 'Diagnostics 연동으로 비상정지 상태 모니터링', '비상정지 해제 서비스 인터페이스 구현', '로봇팔 safety 모드 강제 활성화 로직'], tags: ['Safety', 'Emergency Stop'] },
+      { id: 'kinematics', title: '기구학 (Kinematics) 이해', description: '로봇 관절/바퀴 운동학', details: ['Forward Kinematics: 관절 각도 → 말단 위치 계산', 'Inverse Kinematics: 목표 위치 → 관절 각도 계산', 'MoveIt에서 IK solver 활용 (Xarm6 로봇팔)', 'Differential Drive 기구학 이해 (cmd_vel → 바퀴 속도)', 'Swerve Drive 기구학 (4바퀴 독립 조향/구동)'], tags: ['Kinematics', 'MoveIt', 'IK'] },
     ],
   },
   {
@@ -98,6 +101,10 @@ const techCategories = [
       { id: 'mobile-manipulator', title: 'Mobile Manipulator 세팅', description: 'Xarm6 + Swerve 드라이브 통합', details: ['MoveIt 연동으로 로봇팔 모션 플래닝', 'Position Controller 기반 Joint 제어', '네비게이션 + 로봇팔 동시 제어 환경 구축'], tags: ['Manipulator', 'MoveIt'] },
       { id: 'swerve-drive', title: 'Swerve Drive 컨트롤러', description: '4바퀴 독립 조향/구동 제어', details: ['swerve_controller로 제어', 'cmd_vel → 각 바퀴별 속도/각도 변환', 'ros_control 프레임워크 기반 구현'], tags: ['Swerve', 'Controller'] },
       { id: 'udev', title: 'udev 장치 관리', description: 'USB 장치 관리', details: ['USB 장치 정보 확인 (udevadm info)', 'udev rules로 장치 고정 경로 설정', '라이다, 카메라 등 다중 USB 장치 관리'], tags: ['udev', 'Device'] },
+      { id: 'barometer-floor', title: '기압계 기반 층 감지 시스템', description: 'Kalman 필터 기반 고도 추정', details: ['Kalman 필터로 기압계 데이터 기반 고도(/kalman_h) 추정', '각 층별 절대 고도값 샘플링 후 층고 계산 스크립트 개발', 'floor_calculator.yaml로 층 리스트, 층고, 엘리베이터 속도 설정', '다층 건물 엘리베이터 연동 시 정확한 층 판단', '온도 변화에 따른 값 드리프트 대응 노하우'], tags: ['Barometer', 'Kalman Filter', 'Floor Detection'] },
+      { id: 'pwm-control', title: 'PWM (Pulse Width Modulation) 제어', description: '듀티 사이클 기반 제어', details: ['듀티 사이클 조절로 LED 밝기, 모터 속도 제어', 'Arduino/ESP32 analogWrite로 PWM 신호 생성', '고속 스위칭 + 잔상 효과 원리 이해', '전류 제한 회로 설계 (Ohm\'s Law 기반 저항값 계산)', '로봇 상태등, 모터 제어에 적용'], tags: ['PWM', 'Arduino', 'Motor Control'] },
+      { id: 'encoder-odometry', title: '엔코더 기반 오도메트리', description: '바퀴 회전 기반 위치 추정', details: ['A/B 위상 엔코더로 바퀴 회전 방향/속도 측정', 'tick_to_rad 변환으로 joint state 갱신', 'diff_drive_controller와 연동한 오도메트리 계산', 'wheel_radius, track(wheel separation) 파라미터 설정', '/odom 토픽으로 로봇 위치/방향 추정'], tags: ['Encoder', 'Odometry', 'Wheel'] },
+      { id: 'battery-management', title: '배터리 관리 시스템', description: '자동 충전/배송 전환', details: ['배터리 잔량 기반 충전/배송 자동 전환 로직', 'threshold 설정 (20% 이하 충전, 80% 이상 배송 시작)', 'FlexBE와 연동한 충전 시나리오 구현', '충전 실패 시 재시도 정책 구현', 'Diagnostics로 배터리 상태 모니터링'], tags: ['Battery', 'Charging', 'FlexBE'] },
     ],
   },
   {
@@ -115,6 +122,9 @@ const techCategories = [
       { id: 'shell-script', title: 'Shell Script 자동화', description: '반복 작업 자동화', details: ['SSH 키 기반 원격 접속 자동화', '부팅 시 네트워크 상태 확인 후 ROS 실행', '환경 변수 기반 자동 실행 제어'], tags: ['Shell', 'Automation'] },
       { id: 'automation-script', title: '자동화 스크립트', description: '시스템 자동화', details: ['로봇 부팅 시 핵심 노드 자동 실행', 'Docker 컨테이너 자동 실행 및 상태 체크', '세팅 간편화를 위한 셸 스크립트 제작'], tags: ['Automation', 'Script'] },
       { id: 'documentation', title: '기술 문서화', description: '시스템 문서 작성', details: ['세팅 매뉴얼', 'API 문서', '트러블슈팅 가이드'], tags: ['Documentation', 'Manual'] },
+      { id: 'catkin-build', title: 'catkin 빌드 시스템', description: 'ROS 워크스페이스 빌드', details: ['catkin_make, catkin build로 ROS 워크스페이스 빌드', 'CMakeLists.txt에서 의존성, 실행 파일, 라이브러리 정의', 'package.xml로 패키지 메타데이터 및 의존성 관리', 'catkin → CMake → make 호출 구조 이해', '여러 패키지 동시 빌드 및 의존성 순서 해결'], tags: ['catkin', 'CMake', 'Build'] },
+      { id: 'gazebo-simulation', title: 'Gazebo 시뮬레이션 환경', description: 'ROS-Gazebo 연동 시뮬레이션', details: ['gazebo_ros로 ROS-Gazebo 연동 시뮬레이션 환경 구축', 'SDF(Simulation Description Format) world 파일 작성', 'ODE 물리 엔진 파라미터 조정 (gravity, step_size, solver)', 'URDF 로봇 모델 Gazebo spawn 및 테스트', 'use_sim_time 파라미터로 시뮬레이션 시간 동기화'], tags: ['Gazebo', 'Simulation', 'SDF'] },
+      { id: 'python-testing', title: 'Python 테스트 프레임워크', description: '단위 테스트 및 통합 테스트', details: ['unittest로 단위 테스트 작성 및 실행', 'pytest로 간결한 테스트 코드 작성', 'unittest.mock으로 외부 의존성 모킹', 'doctest로 docstring 기반 테스트', '함수 단위 테스트 및 통합 테스트 경험'], tags: ['Python', 'Testing', 'pytest'] },
     ],
   },
   {
@@ -127,6 +137,9 @@ const techCategories = [
       { id: 'cmd-vel-mux', title: 'cmd_vel_mux 속도 명령 관리', description: '속도 명령 우선순위 관리', details: ['topic_tools/mux를 활용한 우선순위 관리', '네비게이션/텔레옵/비상정지 간 cmd_vel 전환', 'emergency_stopper 노드로 안전 정지'], tags: ['cmd_vel', 'mux'] },
       { id: 'teleop', title: 'Teleop 키보드 제어', description: '로봇 수동 조작', details: ['teleop_twist_keyboard로 로봇 조작', 'twist 메시지 (linear.x, angular.z) 제어', 'Mobile Manipulator 텔레옵 테스트'], tags: ['Teleop', 'Control'] },
       { id: 'assisted-teleop', title: 'Assisted Teleop 구현', description: '장애물 회피 기반 텔레옵', details: ['원격 조종 시 자동 장애물 회피', 'input cmd_vel → output cmd_vel 변환', '안전한 원격 제어 구현'], tags: ['Teleop', 'Assisted'] },
+      { id: 'python-threading', title: 'Python 멀티스레딩/비동기', description: '병렬 처리 및 비동기 통신', details: ['threading 모듈로 병렬 처리 구현 (Import Manager)', 'asyncio/aiohttp 기반 비동기 HTTP 통신', 'ROS 콜백과 비동기 반복문 통합', '동시성 문제 해결 경험 (Lock, Event 활용)'], tags: ['Python', 'Threading', 'Async'] },
+      { id: 'custom-msg-srv', title: 'Custom 메시지/서비스 정의', description: '사용자 정의 ROS 인터페이스', details: ['.msg 파일로 사용자 정의 메시지 타입 생성', '.srv 파일로 Request/Response 서비스 정의', '.action 파일로 Goal/Feedback/Result 액션 정의', 'CMakeLists.txt에 add_message_files, generate_messages 설정', '패키지 의존성 message_generation, message_runtime 관리'], tags: ['ROS', 'Message', 'Service'] },
+      { id: 'ros-namespace', title: 'ROS 네임스페이스/리맵', description: '토픽/서비스 충돌 방지', details: ['노드 네임스페이스로 토픽/서비스 충돌 방지', 'launch 파일 remap 태그로 토픽명 동적 변경', 'tf_prefix로 TF 트리 분리 및 다중 로봇 환경 지원', 'rospy.get_namespace()로 동적 네임스페이스 처리', '다중 로봇 운영 시 네임스페이스 기반 분리'], tags: ['ROS', 'Namespace', 'Remap'] },
     ],
   },
   {

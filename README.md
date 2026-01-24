@@ -25,11 +25,12 @@
 |---|---------|------|------|
 | 1 | `hero` | Hero | 첫인상. 성장 서사 + 정체성 선언 + 핵심 수치 |
 | 2 | `lifecycle` | What I Build | 로봇 엔지니어 업무 7개 Phase. 클릭 시 확장 |
-| 3 | `projects` | How I Solved | 문제 해결 경험 3개 (PARL 구조) |
+| 3 | `projects` | How I Solved | 문제 해결 경험 5개 (PARL 구조) |
 | 4 | `deployment` | Where I Deployed | 현장 경험 (국내 5 + 해외 2) |
 | 5 | `growth` | How I Grew | 성장 타임라인 (전환점 4개) |
-| 6 | `learning` | What I'm Building | 부족한 점 인정 + 학습 현황 |
-| 7 | `contact` | Contact | 연락처 (Email, GitHub, LinkedIn, Notion) |
+| 6 | `tech-experience` | Technical Deep Dive | 기술 심화 - 8개 카테고리별 기술 경험 상세 |
+| 7 | `learning` | What I'm Learning | 부족한 점 인정 + 학습 현황 |
+| 8 | `contact` | Contact | 연락처 (Email, GitHub, LinkedIn, Notion) |
 
 ### 핵심 인터랙션
 
@@ -60,14 +61,16 @@ robotics-portfolio/
         ├── HeroSection.css
         ├── LifecycleSection.js  # 7개 Phase (로봇 엔지니어 업무 사이클)
         ├── LifecycleSection.css
-        ├── ArchitectureModal.js # 시스템 아키텍처 모달 (SW개발 Phase 상세)
-        ├── ArchitectureModal.css
+        ├── PhaseModal.js        # Phase 클릭 시 상세 모달 (아키텍처 뷰 포함)
+        ├── PhaseModal.css
         ├── ProjectsSection.js   # 프로젝트 카드 (PARL 구조)
         ├── ProjectsSection.css
         ├── DeploymentSection.js # 사이트 배포 현황
         ├── DeploymentSection.css
         ├── GrowthSection.js     # 성장 타임라인
         ├── GrowthSection.css
+        ├── TechExperienceSection.js  # 기술 심화 (8개 카테고리)
+        ├── TechExperienceSection.css
         ├── LearningSection.js   # 학습 현황
         ├── LearningSection.css
         ├── ContactSection.js    # 연락처
@@ -106,112 +109,78 @@ robotics-portfolio/
 
 ### 2. Phase 수정 (LifecycleSection.js)
 
-로봇 엔지니어 업무의 7개 Phase와 각 하위 항목:
+로봇 엔지니어 업무의 7개 Phase:
 
 ```javascript
+// LifecycleSection.js - Phase 정의
 const phases = [
   {
-    id: 'design',           // 고유 ID
+    id: 'design',           // 고유 ID (PhaseModal과 연결)
     number: '01',           // 표시 번호
     title: '설계',          // 한글 제목
     titleEn: 'Design',      // 영문 제목
-    experienced: false,     // ⭐ Phase 전체 경험 여부 (하이라이트)
-    hasArchitecture: false, // SW개발 Phase만 true (아키텍처 모달 버튼 표시)
-    items: [
-      { name: '기구 설계', experienced: false },      // ⭐ 하위 항목 경험 여부
-      { name: '전장 설계', experienced: false },
-      { name: '회로 설계', experienced: false },
-      { name: 'SW 아키텍처 설계', experienced: false },
-    ]
+    icon: '📐',             // 아이콘
+    experienced: false,     // ⭐ Phase 전체 경험 여부
   },
   {
     id: 'inspection',
     number: '02',
-    title: '전장부 검사',
-    titleEn: 'Electrical Inspection',
+    title: '검사',
+    titleEn: 'Inspection',
+    icon: '🔍',
     experienced: true,      // ⭐ 경험함
-    items: [
-      { name: 'CAN 통신 테스트', experienced: true },
-      { name: '모터 동작 테스트', experienced: true },
-      { name: '센서 동작 테스트', experienced: true },
-      { name: '전원 테스트', experienced: true },
-    ]
   },
   {
     id: 'assembly',
     number: '03',
     title: '조립',
     titleEn: 'Assembly',
+    icon: '🔧',
     experienced: true,
-    items: [
-      { name: '프레임 조립', experienced: false },
-      { name: '배선', experienced: true },
-      { name: '센서 장착', experienced: true },
-      { name: '캘리브레이션', experienced: true },
-    ]
   },
   {
     id: 'development',
     number: '04',
     title: 'SW 개발',
     titleEn: 'Development',
+    icon: '💻',
     experienced: true,
-    hasArchitecture: true,  // ⭐ 아키텍처 모달 버튼 표시
-    items: [
-      { name: 'ROS 시스템', experienced: true },
-      { name: '미들웨어', experienced: true },
-      { name: '어플리케이션', experienced: true },
-      { name: '통신 연동', experienced: true },
-    ]
+    isHighlight: true,      // ⭐ 메인 강조 (아키텍처 뷰 포함)
   },
   {
     id: 'setup',
     number: '05',
-    title: '사이트 세팅',
+    title: '세팅',
     titleEn: 'Site Setup',
+    icon: '📍',
     experienced: true,
-    items: [
-      { name: '지도 세팅', experienced: true },
-      { name: '층/존 세팅', experienced: true },
-      { name: '포즈 세팅', experienced: true },
-      { name: '시나리오 개발', experienced: true },
-      { name: '이미지 학습', experienced: true },
-      { name: '테스트', experienced: true },
-    ]
   },
   {
     id: 'operation',
     number: '06',
     title: '운영',
     titleEn: 'Operation',
+    icon: '🚀',
     experienced: true,
-    items: [
-      { name: '모니터링', experienced: true },
-      { name: '장애 대응', experienced: true },
-      { name: '로그 분석', experienced: true },
-      { name: '유지보수', experienced: true },
-      { name: '원격 지원', experienced: true },
-    ]
   },
   {
     id: 'cicd',
     number: '07',
     title: 'CI/CD',
     titleEn: 'CI/CD',
+    icon: '🔄',
     experienced: false,
-    items: [
-      { name: '자동 배포', experienced: false },
-      { name: '테스트 자동화', experienced: false },
-      { name: '버전 관리', experienced: true },
-      { name: '롤백', experienced: false },
-    ]
   },
 ];
 ```
 
-### 3. 시스템 아키텍처 수정 (ArchitectureModal.js)
+> 📌 **Note**: 각 Phase 클릭 시 상세 내용은 `PhaseModal.js`의 `phaseDetails` 객체에서 관리됩니다.
 
-모바일 매니퓰레이터 시스템 아키텍처 8개 레이어:
+### 3. 시스템 아키텍처 수정 (PhaseModal.js)
+
+> ⚠️ ArchitectureModal.js는 삭제됨. 아키텍처 뷰는 PhaseModal.js 내에서 처리
+
+모바일 매니퓰레이터 시스템 아키텍처 8개 레이어 (PhaseModal.js의 architectureLayers):
 
 ```javascript
 const architectureLayers = [
@@ -364,36 +333,19 @@ const projects = [
 
 ```javascript
 const sites = [
-  {
-    id: 1,
-    name: '래미안 원베일리',      // 사이트명
-    location: '서울',             // 위치 (일본이면 '일본 🇯🇵')
-    type: '아파트 배송',          // 로봇 용도
-    period: '2024.04',           // 참여 시기
-    role: '세팅 보조',            // 역할
-    highlight: false,            // ⭐ 하이라이트 여부 (주요 경험)
-  },
-  {
-    id: 2,
-    name: '부산 포터',
-    location: '부산',
-    type: '물류 배송',
-    period: '2024.08',
-    role: '단독 세팅',
-    highlight: true,             // ⭐ 하이라이트
-  },
-  // 해외 사이트
-  {
-    id: 4,
-    name: '일본 팜코트',
-    location: '일본 🇯🇵',         // 🇯🇵 이모지로 해외 표시
-    type: '물류 배송',
-    period: '2025.07',
-    role: '해외 단독 세팅',
-    highlight: true,
-  },
+  { id: 1, period: '2024.04', name: '래미안 원베일리', robot: '배송로봇', role: '세팅 보조' },
+  { id: 2, period: '2024.08', name: '부산 포터', robot: '물류로봇', role: '세팅 및 운영' },
+  { id: 3, period: '2024.10', name: '판교 스타필드', robot: '배송로봇', role: '세팅 지원' },
+  { id: 4, period: '2025.07', name: '일본 팜코트', robot: '물류로봇', role: '현장 세팅' },
   // ...
 ];
+
+// 필드 설명:
+// - id: 고유 번호
+// - period: 참여 시기 (YYYY.MM 형식)
+// - name: 사이트명
+// - robot: 로봇 종류 (배송로봇, 물류로봇, 서빙로봇 등)
+// - role: 담당 역할
 ```
 
 ### 6. 성장 타임라인 수정 (GrowthSection.js)
@@ -407,7 +359,7 @@ const milestones = [
     type: 'start',                            // 타입 (색상 결정)
     // type 종류:
     // - 'start': 파랑 (시작점)
-    // - 'turning-point': 주황 (전환점)
+    // - 'growth': 주황 (전환점/성장)
     // - 'achievement': 민트 (성취)
     // - 'milestone': 골드 + 글로우 (마일스톤)
   },
@@ -415,7 +367,7 @@ const milestones = [
     date: '2024.10',
     title: '"감으로 디버깅" → 체계적 접근',
     description: '문제를 체계적으로 분석하고 기록하기 시작. 디버깅 과정을 습관화하고 문서화.',
-    type: 'turning-point',
+    type: 'growth',
   },
   {
     date: '2025.07',
@@ -549,34 +501,49 @@ const learningItems = [
 
 ### 필수 수정 (데이터)
 - [ ] Phase별 하위 항목 정확하게 업데이트 (LifecycleSection.js)
-- [ ] 프로젝트 3개 노션 링크 연결 (ProjectsSection.js) - CSS는 준비됨, 데이터/JSX 미구현
-- [ ] 프로젝트 CTA 노션 링크 실제 URL로 변경 (현재 href="#")
+- [x] 프로젝트 노션 링크 연결 (ProjectsSection.js) - 5개 프로젝트 + 노션 링크 구현 완료
+- [x] 프로젝트 CTA 노션 링크 실제 URL로 변경
 - [ ] 성장 타임라인 전환점 확정 (GrowthSection.js)
 
 ### 추가 개발 예정 (기능)
-- [ ] PhaseModal.js의 ArchitectureView에 노션 링크 연결 - ⚠️ ArchitectureModal.js에 추가되었으나 사용 안 됨
+- [ ] PhaseModal.js의 ArchitectureView에 노션 링크 연결
 - [ ] 프로젝트 상세 페이지 또는 모달
 - [ ] 사이트별 상세 정보 모달
 - [ ] 다크/라이트 모드 토글
 - [ ] 애니메이션 개선 (framer-motion 도입 검토)
 
 ### 버그 수정 및 코드 정리
-- [ ] ArchitectureModal.js/css 삭제 필요 (PhaseModal.js로 통합됨, 사용 안 함)
-- [ ] ContactSection.js footer 연도(2025) 하드코딩 → 동적 처리 필요 (line 72)
-- [ ] Navigation.js nav-footer 연도(2025) 하드코딩 → 동적 처리 필요 (line 37)
-- [ ] LearningSection.css 모바일 반응형 CSS 오류 - flex 부모에 grid-template-columns 사용 (line 57-60)
-- [ ] ProjectsSection.css `.project-title` 중복 정의 수정 (line 69-75, 77-79)
+- [x] ArchitectureModal.js/css 삭제 완료 (PhaseModal.js로 통합됨)
+- [x] ContactSection.js footer 연도 동적 처리 완료
+- [x] LearningSection.css 모바일 반응형 CSS 오류 수정 완료 (flex-direction: column)
+- [x] Navigation.js nav-footer 연도 동적 처리 완료
+- [x] ProjectsSection.css `.project-title` 중복 정의 수정 완료 (하나로 병합)
 - [ ] 모바일 반응형 개선
-- [ ] 스크롤 스냅 모바일에서 비활성화 확인
+- [x] 스크롤 스냅 모바일에서 비활성화 확인 완료 (index.css @media 768px에서 scroll-snap-type: none)
+
+### 디자인 개선 (Visual Enhancement)
+- [ ] HeroSection: 핵심 수치(22개월, 7사이트)에 카운트업 애니메이션 추가
+- [ ] HeroSection: 타이핑 애니메이션 효과 추가 (title-line에)
+- [ ] ProjectsSection: Result 수치(50%, 70%, 0.5초)를 색상/크기로 강조
+- [ ] DeploymentSection: 해외 사이트(일본)에 국기 이모지/배지 추가 (🇯🇵) - location 필드 없음, 구조 변경 필요
+- [x] GrowthSection: 타임라인 각 단계별 색상 구분 완료 (start, growth, achievement, milestone)
+- [ ] GrowthSection: 타입별 아이콘 추가 고려 (현재 색상 마커만 존재)
+- [ ] LearningSection: progress 필드 추가하여 진행률 바 시각화
+- [ ] Navigation: 스크롤 진행률 표시기 추가 (상단 프로그레스 바)
+- [ ] 전체: "맨 위로" 버튼 추가 (스크롤 시 표시)
+- [ ] 호버 효과 개선: 프로젝트 카드, 사이트 행에 더 풍부한 인터랙션
+- [ ] 섹션 전환 애니메이션: 스크롤 시 fade-in/slide-up 효과 (Intersection Observer 활용)
 
 ### CSS 일관성
-- [ ] 반응형 브레이크포인트 통일 (대부분 768px 사용, 일부 600px/900px/480px/400px 사용 중)
+- [x] 반응형 브레이크포인트 통일 완료
+  - DeploymentSection.css: 768px로 변경됨
+  - 전체적으로 768px로 통일됨
 
 ### README-코드 불일치 수정
-- [ ] Phase 구조: LifecycleSection.js (icon, isHighlight) vs README 예시 (hasArchitecture, items)
-- [ ] PhaseModal.js: layers[] vs README 예시 items[]
-- [ ] sites 구조: 실제 (period, name, robot, role, notionLink) vs README (name, location, type, period, role, highlight)
-- [ ] GrowthSection type 값: 실제 'growth' vs README 'turning-point'
+- [x] Phase 구조: README 예시를 실제 코드에 맞게 수정 완료 (icon, isHighlight 추가, items 제거)
+- [x] PhaseModal.js: Phase 상세 내용은 phaseDetails 객체에서 layers로 관리됨을 명시
+- [x] sites 구조: README 예시를 실제 코드(period, name, robot, role)에 맞게 수정 완료
+- [x] GrowthSection type 값: README 예시를 'growth'로 수정 완료
 
 ---
 
