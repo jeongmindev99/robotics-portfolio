@@ -60,10 +60,12 @@ robotics-portfolio/
     │   └── AdminContext.js      # 관리자 모드 상태 관리 (CRUD, localStorage, export)
     ├── data/                    # 각 섹션의 콘텐츠 데이터
     │   ├── phaseData.js         # Phase 모달 레이어 + 시스템 아키텍처 레이어
+    │   ├── heroData.js          # Hero 섹션 콘텐츠 (badge, title, subtitle 등)
     │   ├── projectsData.js      # 프로젝트 카드 (6개)
-    │   ├── deploymentData.js    # 배포 사이트 목록 (7개)
+    │   ├── deploymentData.js    # 배포 사이트 목록
     │   ├── growthData.js        # 성장 타임라인 마일스톤
-    │   └── learningData.js      # 학습 현황 항목
+    │   ├── learningData.js      # 학습 현황 항목
+    │   └── contactData.js       # 연락처 정보 (이메일, GitHub, LinkedIn, Notion)
     └── components/
         ├── Navigation.js/.css       # 좌측 네비게이션 바 (80px 고정)
         ├── HeroSection.js/.css      # 히어로 섹션
@@ -103,11 +105,13 @@ REACT_APP_ADMIN_PASSWORD=새_비밀번호
 ### 편집 가능 항목
 | 섹션 | 편집 내용 |
 |------|----------|
+| Hero | badge, 제목, 부제목, growthStart, 로봇 수 수정 |
 | How I Solved | 프로젝트 카드 추가/수정/삭제 |
 | Where I Deployed | 사이트 행 추가/수정/삭제 |
 | How I Grew | 타임라인 항목 추가/수정/삭제 |
 | What I'm Learning | 학습 항목 추가/수정/삭제 |
-| What I Build | Phase별 레이어 항목 추가/수정/삭제 |
+| What I Build | Phase별 레이어 항목 추가/수정/삭제, SW 아키텍처 노드 experienced 수정 |
+| Contact | 이메일, GitHub, LinkedIn, Notion URL 수정 |
 
 ### 변경사항 반영 워크플로우
 1. `?admin` 접속 → 비밀번호 입력 → 편집
@@ -122,12 +126,23 @@ REACT_APP_ADMIN_PASSWORD=새_비밀번호
 
 > 직접 코드를 수정할 때는 아래 안내에 따라 `src/data/` 폴더의 파일을 수정.
 
-### 1. Hero 섹션 수정 (HeroSection.js)
+### 1. Hero 섹션 수정 (src/data/heroData.js)
 
-Hero 섹션은 별도 데이터 파일 없이 `src/components/HeroSection.js`에서 직접 수정:
-- 메인 타이틀: `hero-title` 클래스 텍스트
-- 부제목: `hero-subtitle` 클래스 텍스트
-- 핵심 수치: `.stat-item` 항목들
+Hero 섹션 콘텐츠는 `src/data/heroData.js`의 `heroContent` 객체에서 관리:
+
+```js
+export const heroContent = {
+  badge: 'Robotics Software Engineer',
+  titleLines: ['로봇이 만들어지고', '현장에 배포되어 운영되기까지', '전 과정을 경험한 엔지니어'],
+  highlightLine: 1,       // titleLines 중 강조(highlight) 처리할 인덱스
+  subtitle: '문제를 해결하다 보니, ...',
+  growthStart: '2024.05', // stat-number: 연도, stat-label: .월 ~ 현재
+  robotCount: 4,
+};
+```
+
+- 사이트 수는 `deploymentData.js`의 `sites.length`에서 자동 계산
+- 관리자 모드: Hero 뱃지 영역의 ✏️ 버튼으로 편집
 
 ### 2. Phase 수정 (src/data/phaseData.js)
 
