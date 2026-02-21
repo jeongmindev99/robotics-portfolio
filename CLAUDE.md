@@ -88,7 +88,29 @@ git pull origin main
 npm run deploy
 ```
 
+## 관리자 페이지 사용법
+
+**접근**: `?admin` URL 파라미터 추가 (예: `localhost:3000/?admin`)
+**비밀번호**: `src/context/AdminContext.js` 상단 `ADMIN_PASSWORD` 상수 변경
+**편집 가능 섹션**: How I Solved / Where I Deployed / How I Grew / What I'm Learning / What I Build (Phase 레이어)
+**데이터 반영**: 편집 → [내보내기] → JS 코드 복사 → `src/data/xxx.js` 파일 교체 → `npm run deploy`
+
 ## 최근 변경 이력
+
+### 2026-02-21: 관리자 페이지 구현 (feature/admin-page → devel)
+- **AdminContext.js** 신규 — 전체 admin 상태 관리, CRUD, localStorage 자동 저장, JS 코드 export
+- **AdminLoginPrompt.js/.css** 신규 — `?admin` 파라미터 감지 시 표시되는 비밀번호 입력 오버레이
+- **AdminBar.js/.css** 신규 — 상단 고정 바 (ADMIN MODE 배지, 변경건수, 내보내기·초기화·나가기)
+- **AdminEditModal.js/.css** 신규 — 범용 폼 모달 (text/textarea/url/tags/boolean/select/number 타입)
+- **AdminExportPanel.js/.css** 신규 — dirty 파일별 JS 코드 복사 패널 (우측 drawer)
+- **App.js** 수정 — AdminProvider 래핑, 조건부 AdminLoginPrompt/AdminBar 렌더
+- **ProjectsSection.js** 수정 — 프로젝트 카드별 ✏️🗑️ 버튼, [+ 추가] 버튼
+- **DeploymentSection.js** 수정 — 사이트 행별 ✏️🗑️ 버튼, [+ 추가] 버튼
+- **GrowthSection.js** 수정 — 타임라인 항목별 ✏️🗑️ 버튼, [+ 추가] 버튼
+- **LearningSection.js** 수정 — 학습 카드별 ✏️🗑️ 버튼, [+ 추가] 버튼
+- **LifecycleSection.js** 수정 — Phase 노드에 ✏️ 버튼 → Phase 모달을 admin 모드로 열기
+- **PhaseModal.js** 수정 — isAdminMode prop 추가, phase-node별 편집·삭제, stage별 추가, 새 stage 추가
+- **App.css** 수정 — admin 공통 CSS (`.admin-item-wrapper`, `.admin-btn`, `.admin-add-btn` 등)
 
 ### 2026-02-21: 문서 동기화 (미커밋, docs/ + README.md + CLAUDE.md)
 - README.md: 코드와 불일치하던 데이터 구조 예시 8개 항목 수정

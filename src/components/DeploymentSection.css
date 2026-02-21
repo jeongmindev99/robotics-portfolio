@@ -82,6 +82,13 @@
   color: var(--text-primary);
 }
 
+/* Admin row controls */
+.admin-row-controls {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
 /* Mobile */
 @media (max-width: 600px) {
   .table-header {

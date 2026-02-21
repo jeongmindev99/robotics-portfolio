@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './PhaseModal.css';
 import { phaseDetails, architectureLayers } from '../data/phaseData';
+import { useAdmin } from '../context/AdminContext';
+import AdminEditModal from './AdminEditModal';
+
+const layerSchema = [
+  { key: 'name',        label: '항목명',     type: 'text' },
+  { key: 'description', label: '설명 (툴팁)', type: 'text' },
+  { key: 'experienced', label: '직접 경험',   type: 'boolean' },
+  { key: 'indirect',    label: '간접 경험',   type: 'boolean' },
+  { key: 'stage',       label: 'Stage 번호', type: 'number' },
+];
 
 function ArchitectureView({ onClose, phase }) {
-  // Calculate totals including horizontal groups
   const countItems = (layer) => {
     if (layer.type === 'horizontal') {
       return layer.groups.reduce((acc, g) => acc + g.items.length, 0);
-    }
-    if (layer.type === 'runtime') {
-      return layer.items.length;
     }
     return layer.items.length;
   };
@@ -23,7 +29,6 @@ function ArchitectureView({ onClose, phase }) {
   const totalItems = architectureLayers.reduce((acc, layer) => acc + countItems(layer), 0);
   const experiencedItems = architectureLayers.reduce((acc, layer) => acc + countExperienced(layer), 0);
 
-  // Separate ROS and non-ROS layers
   const rosLayers = architectureLayers.filter(l => l.isROS);
   const outsideROSLayers = architectureLayers.filter(l => l.isOutsideROS);
   const otherLayers = architectureLayers.filter(l => !l.isROS && !l.isOutsideROS);
@@ -39,10 +44,7 @@ function ArchitectureView({ onClose, phase }) {
                 <div className="arch-group-label">{group.name}</div>
                 <div className="arch-group-nodes">
                   {group.items.map((item, itemIdx) => (
-                    <div
-                      key={itemIdx}
-                      className={`arch-node ${item.experienced ? 'exp' : ''}`}
-                    >
+                    <div key={itemIdx} className={`arch-node ${item.experienced ? 'exp' : ''}`}>
                       {item.name}
                     </div>
                   ))}
@@ -56,10 +58,7 @@ function ArchitectureView({ onClose, phase }) {
           <div className="arch-layer-label">{layer.name}</div>
           <div className="arch-runtime-stack">
             {layer.items.map((item, itemIdx) => (
-              <div
-                key={itemIdx}
-                className={`arch-runtime-item ${item.experienced ? 'exp' : ''}`}
-              >
+              <div key={itemIdx} className={`arch-runtime-item ${item.experienced ? 'exp' : ''}`}>
                 {item.name}
               </div>
             ))}
@@ -70,10 +69,7 @@ function ArchitectureView({ onClose, phase }) {
           <div className="arch-layer-label">{layer.name}</div>
           <div className="arch-layer-nodes">
             {layer.items.map((item, itemIdx) => (
-              <div
-                key={itemIdx}
-                className={`arch-node ${item.experienced ? 'exp' : ''}`}
-              >
+              <div key={itemIdx} className={`arch-node ${item.experienced ? 'exp' : ''}`}>
                 {item.name}
               </div>
             ))}
@@ -109,23 +105,16 @@ function ArchitectureView({ onClose, phase }) {
         </div>
 
         <div className="arch-diagram">
-          {/* Outside ROS layers (Cloud, Application) */}
           {outsideROSLayers.map((layer, idx) => renderLayer(layer, idx, true, outsideROSLayers.length))}
-
-          {/* Connector to ROS Framework */}
           <div className="arch-connector">
             <div className="connector-line"></div>
           </div>
-
-          {/* ROS Framework Container */}
           <div className="ros-framework-container">
             <div className="ros-framework-label">ROS Framework</div>
             <div className="ros-framework-content">
               {rosLayers.map((layer, idx) => renderLayer(layer, idx, true, rosLayers.length))}
             </div>
           </div>
-
-          {/* Other layers (Runtime, OS, Physical) */}
           {otherLayers.map((layer, idx) => (
             <React.Fragment key={idx}>
               <div className="arch-connector">
@@ -151,30 +140,71 @@ function ArchitectureView({ onClose, phase }) {
   );
 }
 
-function PhaseModal({ phase, onClose }) {
+function PhaseModal({ phase, onClose, isAdminMode }) {
+  const { isAdmin, isAuthed, data, updatePhaseLayer, deletePhaseLayer, addPhaseLayer } = useAdmin();
+  const adminActive = isAdmin && isAuthed && isAdminMode;
+
+  const [editTarget, setEditTarget] = useState(null); // { index }
+
   if (!phase) return null;
 
-  const details = phaseDetails[phase.id];
+  const activePhaseDetails = adminActive ? data.phaseDetails : phaseDetails;
+  const details = activePhaseDetails[phase.id];
 
   if (details.isArchitecture) {
     return <ArchitectureView phase={phase} onClose={onClose} />;
   }
 
-  // Group layers by stage for sequential/parallel display
+  // Group layers by stage
   const stageMap = {};
-  details.layers.forEach(layer => {
+  details.layers.forEach((layer, globalIdx) => {
     const s = layer.stage ?? 1;
     if (!stageMap[s]) stageMap[s] = [];
-    stageMap[s].push(layer);
+    stageMap[s].push({ ...layer, _globalIdx: globalIdx });
   });
-  const stages = Object.keys(stageMap)
-    .sort((a, b) => Number(a) - Number(b))
-    .map(k => stageMap[k]);
+  const stageKeys = Object.keys(stageMap).sort((a, b) => Number(a) - Number(b));
+  const stages = stageKeys.map(k => stageMap[k]);
+  const maxStage = stageKeys.length > 0 ? Number(stageKeys[stageKeys.length - 1]) : 1;
 
   const directCount = details.layers.filter(l => l.experienced && !l.indirect).length;
   const indirectCount = details.layers.filter(l => l.indirect).length;
   const notExpCount = details.layers.filter(l => !l.experienced).length;
   const hasIndirect = indirectCount > 0;
+
+  const handleEdit = (globalIdx) => setEditTarget({ index: globalIdx });
+
+  const handleDelete = (globalIdx) => {
+    if (window.confirm('이 항목을 삭제하겠습니까?')) {
+      deletePhaseLayer(phase.id, globalIdx);
+    }
+  };
+
+  const handleAddToStage = (stageNum) => {
+    addPhaseLayer(phase.id, {
+      name: '새 항목',
+      description: '',
+      experienced: false,
+      indirect: false,
+      stage: stageNum,
+    });
+  };
+
+  const handleAddNewStage = () => {
+    addPhaseLayer(phase.id, {
+      name: '새 항목',
+      description: '',
+      experienced: false,
+      indirect: false,
+      stage: maxStage + 1,
+    });
+  };
+
+  const handleSave = (index, values) => {
+    updatePhaseLayer(phase.id, index, values);
+    setEditTarget(null);
+  };
+
+  const editingLayer = editTarget !== null ? details.layers[editTarget.index] : null;
 
   return (
     <div className="phase-modal-overlay" onClick={onClose}>
@@ -184,6 +214,10 @@ function PhaseModal({ phase, onClose }) {
             <path d="M18 6L6 18M6 6l12 12"/>
           </svg>
         </button>
+
+        {adminActive && (
+          <div className="admin-modal-badge">✏️ 관리자 편집 모드</div>
+        )}
 
         <div className="phase-modal-header">
           <div className="phase-modal-badge">
@@ -199,15 +233,36 @@ function PhaseModal({ phase, onClose }) {
           {stages.map((stageItems, stageIdx) => (
             <React.Fragment key={stageIdx}>
               <div className="phase-stage">
-                {stageItems.map((layer, idx) => (
+                {stageItems.map((layer) => (
                   <div
-                    key={idx}
-                    className={`phase-node ${layer.experienced ? (layer.indirect ? 'exp-indirect' : 'exp') : ''}`}
+                    key={layer._globalIdx}
+                    className={`phase-node ${layer.experienced ? (layer.indirect ? 'exp-indirect' : 'exp') : ''} ${adminActive ? 'admin-item-wrapper' : ''}`}
                     title={layer.description}
                   >
                     {layer.name}
+                    {adminActive && (
+                      <div className="admin-card-controls">
+                        <button
+                          className="admin-btn admin-btn-edit"
+                          onClick={(e) => { e.stopPropagation(); handleEdit(layer._globalIdx); }}
+                          title="수정"
+                        >✏️</button>
+                        <button
+                          className="admin-btn admin-btn-delete"
+                          onClick={(e) => { e.stopPropagation(); handleDelete(layer._globalIdx); }}
+                          title="삭제"
+                        >🗑️</button>
+                      </div>
+                    )}
                   </div>
                 ))}
+                {adminActive && (
+                  <button
+                    className="admin-stage-add-btn"
+                    onClick={() => handleAddToStage(Number(stageKeys[stageIdx]))}
+                    title="이 단계에 항목 추가"
+                  >+</button>
+                )}
               </div>
               {stageIdx < stages.length - 1 && (
                 <div className="phase-stage-connector">
@@ -216,6 +271,12 @@ function PhaseModal({ phase, onClose }) {
               )}
             </React.Fragment>
           ))}
+
+          {adminActive && (
+            <button className="admin-add-btn admin-new-stage-btn" onClick={handleAddNewStage}>
+              + 새 단계(Stage)에 항목 추가
+            </button>
+          )}
         </div>
 
         <div className="arch-legend">
@@ -235,6 +296,16 @@ function PhaseModal({ phase, onClose }) {
           </div>
         </div>
       </div>
+
+      {editingLayer !== null && editingLayer !== undefined && (
+        <AdminEditModal
+          title="Phase 항목 수정"
+          schema={layerSchema}
+          initialValues={editingLayer}
+          onSave={(values) => handleSave(editTarget.index, values)}
+          onClose={() => setEditTarget(null)}
+        />
+      )}
     </div>
   );
 }

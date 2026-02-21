@@ -1,0 +1,109 @@
+.admin-login-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(12px);
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: adminLoginFadeIn 0.3s ease;
+}
+
+@keyframes adminLoginFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.admin-login-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 40px 36px;
+  text-align: center;
+  animation: adminLoginSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes adminLoginSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.admin-login-icon {
+  font-size: 2.4rem;
+  margin-bottom: 12px;
+}
+
+.admin-login-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+}
+
+.admin-login-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin: 0 0 28px;
+  line-height: 1.6;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-login-input {
+  width: 100%;
+  padding: 11px 16px;
+  background: var(--bg-tertiary, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.admin-login-input:focus {
+  border-color: var(--accent-warning);
+}
+
+.admin-login-error {
+  font-size: 0.8rem;
+  color: var(--accent-warning);
+  margin: 0;
+  text-align: left;
+}
+
+.admin-login-btn {
+  padding: 11px 0;
+  background: rgba(255, 107, 53, 0.15);
+  border: 1px solid var(--accent-warning);
+  border-radius: 10px;
+  color: var(--accent-warning);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.admin-login-btn:hover {
+  background: rgba(255, 107, 53, 0.28);
+  transform: translateY(-1px);
+}
+
+.admin-login-btn:active {
+  transform: translateY(0);
+}
