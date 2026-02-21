@@ -88,11 +88,9 @@ function GrowthSection() {
           ))}
 
           {adminActive && (
-            <div className="timeline-item" style={{ padding: '0' }}>
-              <button className="admin-add-btn" onClick={handleAdd}>
-                + 마일스톤 추가
-              </button>
-            </div>
+            <button className="admin-add-btn" style={{ marginTop: '8px' }} onClick={handleAdd}>
+              + 마일스톤 추가
+            </button>
           )}
         </div>
 

@@ -207,92 +207,94 @@ function PhaseModal({ phase, onClose, isAdminMode }) {
   const editingLayer = editTarget !== null ? details.layers[editTarget.index] : null;
 
   return (
-    <div className="phase-modal-overlay" onClick={onClose}>
-      <div className="phase-modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="phase-modal-close" onClick={onClose}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M18 6L6 18M6 6l12 12"/>
-          </svg>
-        </button>
-
-        {adminActive && (
-          <div className="admin-modal-badge">✏️ 관리자 편집 모드</div>
-        )}
-
-        <div className="phase-modal-header">
-          <div className="phase-modal-badge">
-            <span className={`badge-indicator ${phase.experienced ? 'active' : ''}`}></span>
-            <span>Phase {phase.number}</span>
-          </div>
-          <h2 className="phase-modal-title">{phase.title}</h2>
-          <span className="phase-modal-title-en">{phase.titleEn}</span>
-          <p className="phase-modal-description">{details.description}</p>
-        </div>
-
-        <div className="phase-diagram">
-          {stages.map((stageItems, stageIdx) => (
-            <React.Fragment key={stageIdx}>
-              <div className="phase-stage">
-                {stageItems.map((layer) => (
-                  <div
-                    key={layer._globalIdx}
-                    className={`phase-node ${layer.experienced ? (layer.indirect ? 'exp-indirect' : 'exp') : ''} ${adminActive ? 'admin-item-wrapper' : ''}`}
-                    title={layer.description}
-                  >
-                    {layer.name}
-                    {adminActive && (
-                      <div className="admin-card-controls">
-                        <button
-                          className="admin-btn admin-btn-edit"
-                          onClick={(e) => { e.stopPropagation(); handleEdit(layer._globalIdx); }}
-                          title="수정"
-                        >✏️</button>
-                        <button
-                          className="admin-btn admin-btn-delete"
-                          onClick={(e) => { e.stopPropagation(); handleDelete(layer._globalIdx); }}
-                          title="삭제"
-                        >🗑️</button>
-                      </div>
-                    )}
-                  </div>
-                ))}
-                {adminActive && (
-                  <button
-                    className="admin-stage-add-btn"
-                    onClick={() => handleAddToStage(Number(stageKeys[stageIdx]))}
-                    title="이 단계에 항목 추가"
-                  >+</button>
-                )}
-              </div>
-              {stageIdx < stages.length - 1 && (
-                <div className="phase-stage-connector">
-                  <div className="connector-line"></div>
-                </div>
-              )}
-            </React.Fragment>
-          ))}
+    <>
+      <div className="phase-modal-overlay" onClick={onClose}>
+        <div className="phase-modal-content" onClick={(e) => e.stopPropagation()}>
+          <button className="phase-modal-close" onClick={onClose}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
 
           {adminActive && (
-            <button className="admin-add-btn admin-new-stage-btn" onClick={handleAddNewStage}>
-              + 새 단계(Stage)에 항목 추가
-            </button>
+            <div className="admin-modal-badge">✏️ 관리자 편집 모드</div>
           )}
-        </div>
 
-        <div className="arch-legend">
-          <div className="legend-item">
-            <span className="legend-dot exp">●</span>
-            <span>직접 경험 ({directCount})</span>
-          </div>
-          {hasIndirect && (
-            <div className="legend-item">
-              <span className="legend-dot exp-indirect">◎</span>
-              <span>간접 경험 ({indirectCount})</span>
+          <div className="phase-modal-header">
+            <div className="phase-modal-badge">
+              <span className={`badge-indicator ${phase.experienced ? 'active' : ''}`}></span>
+              <span>Phase {phase.number}</span>
             </div>
-          )}
-          <div className="legend-item">
-            <span className="legend-dot">○</span>
-            <span>미경험 ({notExpCount})</span>
+            <h2 className="phase-modal-title">{phase.title}</h2>
+            <span className="phase-modal-title-en">{phase.titleEn}</span>
+            <p className="phase-modal-description">{details.description}</p>
+          </div>
+
+          <div className="phase-diagram">
+            {stages.map((stageItems, stageIdx) => (
+              <React.Fragment key={stageIdx}>
+                <div className="phase-stage">
+                  {stageItems.map((layer) => (
+                    <div
+                      key={layer._globalIdx}
+                      className={`phase-node ${layer.experienced ? (layer.indirect ? 'exp-indirect' : 'exp') : ''} ${adminActive ? 'admin-item-wrapper' : ''}`}
+                      title={layer.description}
+                    >
+                      {layer.name}
+                      {adminActive && (
+                        <div className="admin-card-controls">
+                          <button
+                            className="admin-btn admin-btn-edit"
+                            onClick={(e) => { e.stopPropagation(); handleEdit(layer._globalIdx); }}
+                            title="수정"
+                          >✏️</button>
+                          <button
+                            className="admin-btn admin-btn-delete"
+                            onClick={(e) => { e.stopPropagation(); handleDelete(layer._globalIdx); }}
+                            title="삭제"
+                          >🗑️</button>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                  {adminActive && (
+                    <button
+                      className="admin-stage-add-btn"
+                      onClick={() => handleAddToStage(Number(stageKeys[stageIdx]))}
+                      title="이 단계에 항목 추가"
+                    >+</button>
+                  )}
+                </div>
+                {stageIdx < stages.length - 1 && (
+                  <div className="phase-stage-connector">
+                    <div className="connector-line"></div>
+                  </div>
+                )}
+              </React.Fragment>
+            ))}
+
+            {adminActive && (
+              <button className="admin-add-btn admin-new-stage-btn" onClick={handleAddNewStage}>
+                + 새 단계(Stage)에 항목 추가
+              </button>
+            )}
+          </div>
+
+          <div className="arch-legend">
+            <div className="legend-item">
+              <span className="legend-dot exp">●</span>
+              <span>직접 경험 ({directCount})</span>
+            </div>
+            {hasIndirect && (
+              <div className="legend-item">
+                <span className="legend-dot exp-indirect">◎</span>
+                <span>간접 경험 ({indirectCount})</span>
+              </div>
+            )}
+            <div className="legend-item">
+              <span className="legend-dot">○</span>
+              <span>미경험 ({notExpCount})</span>
+            </div>
           </div>
         </div>
       </div>
@@ -306,7 +308,7 @@ function PhaseModal({ phase, onClose, isAdminMode }) {
           onClose={() => setEditTarget(null)}
         />
       )}
-    </div>
+    </>
   );
 }
 

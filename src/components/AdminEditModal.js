@@ -29,10 +29,11 @@ export default function AdminEditModal({ title, schema, initialValues, onSave, o
     return init;
   });
 
-  // Body scroll lock
+  // Body scroll lock — preserve previous value so nested modals don't unlock parent's lock
   useEffect(() => {
+    const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = ''; };
+    return () => { document.body.style.overflow = prev; };
   }, []);
 
   const handleChange = (key, value) => {
