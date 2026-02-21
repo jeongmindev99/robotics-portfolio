@@ -8,7 +8,7 @@ import { phaseDetails as srcPhaseDetails, architectureLayers as srcArchitectureL
 // ─── 비밀번호 설정 ──────────────────────────────────────────────────────────
 // 변경하려면 프로젝트 루트의 .env.local 파일에서 REACT_APP_ADMIN_PASSWORD 값을 수정하세요.
 // 예: REACT_APP_ADMIN_PASSWORD=my_new_password
-const ADMIN_PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD || 'robotics2024';
+const ADMIN_PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD || 'admin';
 
 // ─── localStorage 키 ─────────────────────────────────────────────────────────
 const LS_DATA_KEY = 'portfolioAdminData';
