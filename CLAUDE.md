@@ -23,24 +23,29 @@ npm run deploy # GitHub Pages 배포
 ## Architecture
 
 ```
-App.js (스크롤 트래킹)
-├── Navigation.js         # 좌측 네비게이션 (80px 고정)
-├── HeroSection.js        # 히어로 + 통계
-├── LifecycleSection.js   # 7개 Phase
-│   └── PhaseModal.js     # Phase 상세 모달 (ArchitectureView 포함)
-├── ProjectsSection.js    # PARL 구조 프로젝트 (6개)
-├── DeploymentSection.js  # 사이트 배포 현황
-├── GrowthSection.js      # 성장 타임라인
-├── LearningSection.js    # 학습 현황
-└── ContactSection.js     # 연락처
+App.js (AdminProvider 래핑, 스크롤 트래킹)
+├── AdminLoginPrompt.js  # ?admin 접속 시 비밀번호 입력 오버레이
+├── AdminBar.js          # 관리자 모드 상단 고정 바
+├── Navigation.js        # 좌측 네비게이션 (80px 고정)
+├── HeroSection.js       # 히어로 + 통계
+├── LifecycleSection.js  # 7개 Phase
+│   └── PhaseModal.js    # Phase 상세 모달 (ArchitectureView 포함, admin 편집 지원)
+├── ProjectsSection.js   # PARL 구조 프로젝트 (6개, admin 편집 지원)
+├── DeploymentSection.js # 사이트 배포 현황 (admin 편집 지원)
+├── GrowthSection.js     # 성장 타임라인 (admin 편집 지원)
+├── LearningSection.js   # 학습 현황 (admin 편집 지원)
+└── ContactSection.js    # 연락처
 ```
 
-각 컴포넌트는 `src/components/`에 `.js`와 `.css` 파일 쌍으로 존재.
+관리자 공통 컴포넌트 (`src/components/`):
+- `AdminEditModal.js` — 범용 폼 모달 (text/textarea/url/tags/boolean/select/number)
+- `AdminExportPanel.js` — dirty 파일별 JS 코드 복사 패널 (우측 drawer)
 
-> **참고**: `ArchitectureModal.js`는 삭제됨. SW 개발 Phase 클릭 시 아키텍처 뷰는 `PhaseModal.js` 내부의 `ArchitectureView` 컴포넌트가 담당.
+관리자 컨텍스트 (`src/context/`):
+- `AdminContext.js` — admin 상태, CRUD 뮤테이션, localStorage 자동 저장, JS export
 
-데이터는 `src/data/` 폴더에서 관리:
-- `phaseData.js` — Phase 모달 데이터 (`phaseDetails`, `architectureLayers`)
+데이터 (`src/data/`):
+- `phaseData.js` — `phaseDetails` (Phase 레이어), `architectureLayers` (SW개발 아키텍처)
 - `projectsData.js` — How I Solved 프로젝트 목록
 - `deploymentData.js` — Where I Deployed 사이트 목록
 - `growthData.js` — How I Grew 타임라인
@@ -88,7 +93,29 @@ git pull origin main
 npm run deploy
 ```
 
+## 관리자 페이지 사용법
+
+**접근**: `?admin` URL 파라미터 추가 (예: `localhost:3000/?admin`)
+**비밀번호**: 프로젝트 루트 `.env.local` 파일의 `REACT_APP_ADMIN_PASSWORD` 값 변경 후 재빌드
+**편집 가능 섹션**: How I Solved / Where I Deployed / How I Grew / What I'm Learning / What I Build (Phase 레이어)
+**데이터 반영**: 편집 → [내보내기] → JS 코드 복사 → `src/data/xxx.js` 파일 교체 → `npm run deploy`
+
 ## 최근 변경 이력
+
+### 2026-02-21: 관리자 페이지 구현 (feature/admin-page → devel)
+- **AdminContext.js** 신규 — 전체 admin 상태 관리, CRUD, localStorage 자동 저장, JS 코드 export
+- **AdminLoginPrompt.js/.css** 신규 — `?admin` 파라미터 감지 시 표시되는 비밀번호 입력 오버레이
+- **AdminBar.js/.css** 신규 — 상단 고정 바 (ADMIN MODE 배지, 변경건수, 내보내기·초기화·나가기)
+- **AdminEditModal.js/.css** 신규 — 범용 폼 모달 (text/textarea/url/tags/boolean/select/number 타입)
+- **AdminExportPanel.js/.css** 신규 — dirty 파일별 JS 코드 복사 패널 (우측 drawer)
+- **App.js** 수정 — AdminProvider 래핑, 조건부 AdminLoginPrompt/AdminBar 렌더
+- **ProjectsSection.js** 수정 — 프로젝트 카드별 ✏️🗑️ 버튼, [+ 추가] 버튼
+- **DeploymentSection.js** 수정 — 사이트 행별 ✏️🗑️ 버튼, [+ 추가] 버튼
+- **GrowthSection.js** 수정 — 타임라인 항목별 ✏️🗑️ 버튼, [+ 추가] 버튼
+- **LearningSection.js** 수정 — 학습 카드별 ✏️🗑️ 버튼, [+ 추가] 버튼
+- **LifecycleSection.js** 수정 — Phase 노드에 ✏️ 버튼 → Phase 모달을 admin 모드로 열기
+- **PhaseModal.js** 수정 — isAdminMode prop 추가, phase-node별 편집·삭제, stage별 추가, 새 stage 추가
+- **App.css** 수정 — admin 공통 CSS (`.admin-item-wrapper`, `.admin-btn`, `.admin-add-btn` 등)
 
 ### 2026-02-21: 문서 동기화 (미커밋, docs/ + README.md + CLAUDE.md)
 - README.md: 코드와 불일치하던 데이터 구조 예시 8개 항목 수정

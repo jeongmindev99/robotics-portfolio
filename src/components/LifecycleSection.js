@@ -2,16 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import './LifecycleSection.css';
 import PhaseModal from './PhaseModal';
 import { phaseDetails } from '../data/phaseData';
+import { useAdmin } from '../context/AdminContext';
 
 // B-1: auto-calculate experienced from phaseDetails layers data
-const isPhaseExperienced = (phaseId) => {
-  const detail = phaseDetails[phaseId];
+const isPhaseExperienced = (phaseId, detailsOverride) => {
+  const details = detailsOverride || phaseDetails;
+  const detail = details[phaseId];
   if (!detail) return false;
   if (detail.isArchitecture) return true;
   return detail.layers.some(l => l.experienced);
 };
 
-const phases = [
+const BASE_PHASES = [
   { id: 'design',      number: '01', title: '설계',   titleEn: 'Design',      icon: '📐' },
   { id: 'inspection',  number: '02', title: '검사',   titleEn: 'Inspection',  icon: '🔍' },
   { id: 'assembly',    number: '03', title: '조립',   titleEn: 'Assembly',    icon: '🔧' },
@@ -19,10 +21,20 @@ const phases = [
   { id: 'setup',       number: '05', title: '세팅',   titleEn: 'Site Setup',  icon: '📍' },
   { id: 'operation',   number: '06', title: '운영',   titleEn: 'Operation',   icon: '🚀' },
   { id: 'cicd',        number: '07', title: 'CI/CD',  titleEn: 'CI/CD',       icon: '🔄' },
-].map(phase => ({ ...phase, experienced: isPhaseExperienced(phase.id) }));
+];
 
 function LifecycleSection() {
+  const { isAdmin, isAuthed, data } = useAdmin();
+  const adminActive = isAdmin && isAuthed;
+  const activePhaseDetails = adminActive ? data.phaseDetails : phaseDetails;
+
+  const phases = BASE_PHASES.map(phase => ({
+    ...phase,
+    experienced: isPhaseExperienced(phase.id, activePhaseDetails),
+  }));
+
   const [selectedPhase, setSelectedPhase] = useState(null);
+  const [adminMode, setAdminMode] = useState(false);
   const scrollPosRef = useRef(0);
 
   // B-2: lock body scroll when modal is open
@@ -37,13 +49,15 @@ function LifecycleSection() {
     };
   }, [selectedPhase]);
 
-  const openModal = (phase) => {
+  const openModal = (phase, opts = {}) => {
     scrollPosRef.current = window.scrollY;
+    setAdminMode(Boolean(opts.adminMode));
     setSelectedPhase(phase);
   };
 
   const closeModal = () => {
     setSelectedPhase(null);
+    setAdminMode(false);
     window.scrollTo({ top: scrollPosRef.current, behavior: 'instant' });
   };
 
@@ -65,7 +79,7 @@ function LifecycleSection() {
             {phases.map((phase, index) => (
               <React.Fragment key={phase.id}>
                 <div
-                  className={`flow-node ${phase.experienced ? 'experienced' : ''} ${phase.isHighlight ? 'highlight' : ''}`}
+                  className={`flow-node ${phase.experienced ? 'experienced' : ''} ${phase.isHighlight ? 'highlight' : ''} admin-item-wrapper`}
                   onClick={() => openModal(phase)}
                 >
                   <div className="node-icon">{phase.icon}</div>
@@ -76,6 +90,15 @@ function LifecycleSection() {
                   </div>
                   {phase.experienced && (
                     <div className="node-badge">경험</div>
+                  )}
+                  {adminActive && (
+                    <div className="admin-card-controls">
+                      <button
+                        className="admin-btn admin-btn-edit"
+                        onClick={(e) => { e.stopPropagation(); openModal(phase, { adminMode: true }); }}
+                        title="Phase 항목 편집"
+                      >✏️</button>
+                    </div>
                   )}
                 </div>
                 {index < phases.length - 1 && (
@@ -109,6 +132,7 @@ function LifecycleSection() {
         <PhaseModal
           phase={selectedPhase}
           onClose={closeModal}
+          isAdminMode={adminMode}
         />
       )}
     </section>

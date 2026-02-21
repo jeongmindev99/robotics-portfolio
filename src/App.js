@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { AdminProvider, useAdmin } from './context/AdminContext';
 import Navigation from './components/Navigation';
 import HeroSection from './components/HeroSection';
 import LifecycleSection from './components/LifecycleSection';
@@ -7,9 +8,12 @@ import DeploymentSection from './components/DeploymentSection';
 import GrowthSection from './components/GrowthSection';
 import LearningSection from './components/LearningSection';
 import ContactSection from './components/ContactSection';
+import AdminLoginPrompt from './components/AdminLoginPrompt';
+import AdminBar from './components/AdminBar';
 import './App.css';
 
-function App() {
+function AppInner() {
+  const { isAdmin, isAuthed } = useAdmin();
   const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
@@ -42,8 +46,10 @@ function App() {
 
   return (
     <div className="app">
+      {isAdmin && !isAuthed && <AdminLoginPrompt />}
+      {isAdmin && isAuthed && <AdminBar />}
       <Navigation activeSection={activeSection} onNavigate={scrollToSection} />
-      <main>
+      <main style={isAdmin && isAuthed ? { paddingTop: '48px' } : undefined}>
         <HeroSection />
         <LifecycleSection />
         <ProjectsSection />
@@ -53,6 +59,14 @@ function App() {
         <ContactSection />
       </main>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AdminProvider>
+      <AppInner />
+    </AdminProvider>
   );
 }
 
