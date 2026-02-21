@@ -5,6 +5,12 @@ const phaseDetails = {
   design: {
     description: '로봇 시스템의 기초를 설계하는 단계',
     layers: [
+      // 하드웨어 선정 (간접 경험)
+      { name: '구동계 선정', description: '모터, 감속기, 모터 드라이버 사양 선정', experienced: true },
+      { name: '센서 선정', description: 'LiDAR, 카메라, IMU 등 센서 스펙 및 공급업체 선정', experienced: true },
+      { name: '하드웨어 통신 선정', description: 'CAN, RS-232, USB 등 인터페이스 방식 결정', experienced: true },
+      { name: '컴퓨팅 플랫폼 선정', description: '메인 컴퓨터, MCU, 임베디드 보드 선정', experienced: false },
+      // 설계
       { name: '기구 설계', description: '로봇의 물리적 구조와 움직임 설계', experienced: false },
       { name: '배선 설계', description: '케이블 라우팅 및 커넥터 배치 설계', experienced: false },
       { name: '회로/PCB 설계', description: '전자 회로 및 PCB 레이아웃 설계', experienced: false },
@@ -20,32 +26,34 @@ const phaseDetails = {
   inspection: {
     description: '조립 전 부품 및 전장품의 품질을 검증하는 단계',
     layers: [
-      { name: '외관 검사', description: '부품 손상, 이물질, 마킹 확인', experienced: true },
-      { name: '치수 검사', description: '기구 부품 공차 및 치수 확인', experienced: false },
-      { name: 'PCB 검사', description: 'PCB 납땜 상태 및 패턴 검사', experienced: true },
-      { name: '전기 테스트', description: '절연 저항, 도통, 전압 측정', experienced: true },
+      { name: '외관·치수 검사', description: '부품 손상, 이물질, 마킹 및 기구 공차 확인', experienced: false },
+      { name: 'PCB 검사', description: 'PCB 납땜 상태 및 패턴 검사', experienced: false },
+      { name: '전기 테스트', description: '절연 저항, 도통, 전압 측정', experienced: false },
       { name: 'CAN 통신 테스트', description: '모터 드라이버, 센서 CAN 통신 검증', experienced: true },
       { name: '모터 테스트', description: '정/역방향 회전, 토크, 전류 테스트', experienced: true },
       { name: '센서 테스트', description: 'LiDAR, 카메라, IMU 데이터 검증', experienced: true },
-      { name: '전원 테스트', description: '배터리 전압, 전류, 충방전 테스트', experienced: true },
-      { name: '기능 테스트', description: '부품별 기능 동작 확인', experienced: true },
-      { name: '품질 기록', description: '검사 결과 문서화 및 이력 관리', experienced: true },
+      { name: '전원 테스트', description: '배터리 전압, 전류, 충방전 테스트', experienced: false },
+      { name: '낙하·진동 시험', description: '기계적 충격 및 진동 내구성 테스트', experienced: false },
+      { name: '방수·방진 테스트', description: 'IP 등급 기준 침수 및 먼지 차단 테스트', experienced: false },
+      { name: 'EMC 테스트', description: '전자기 적합성 및 외부 간섭 테스트', experienced: false },
+      { name: '품질 기록', description: '검사 결과 문서화 및 이력 관리', experienced: false },
     ]
   },
   assembly: {
     description: '검증된 부품들을 조립하고 캘리브레이션하는 단계',
     layers: [
       { name: '프레임 조립', description: '로봇 본체 프레임 및 샤시 조립', experienced: false },
-      { name: '모터 장착', description: '휠/암 모터 및 감속기 장착', experienced: true },
-      { name: '센서 장착', description: 'LiDAR, 카메라, 초음파 센서 마운팅', experienced: true },
-      { name: '와이어 하네스', description: '전원/신호 케이블 번들 제작', experienced: true },
-      { name: '케이블 라우팅', description: '케이블 배선 및 고정', experienced: true },
-      { name: '커넥터 결선', description: '커넥터 핀 배열 및 압착/납땜', experienced: true },
-      { name: '전자부 통합', description: '컨트롤러, 드라이버 보드 장착', experienced: true },
-      { name: '접지 처리', description: '접지 연결 및 본딩', experienced: true },
+      { name: '모터 장착', description: '휠/암 모터 및 감속기 장착', experienced: false },
+      { name: '센서 장착', description: 'LiDAR, 카메라, 초음파 센서 마운팅', experienced: false },
+      { name: '전자부 통합', description: '컨트롤러, 드라이버 보드 장착', experienced: false },
+      { name: '케이블 배선 및 결선', description: '와이어 하네스 제작, 케이블 라우팅, 커넥터 압착/납땜', experienced: false },
+      { name: '접지 처리', description: '접지 연결 및 본딩', experienced: false },
+      { name: '도장·마감', description: '표면 처리 및 외장 마감 작업', experienced: false },
+      { name: '방수 씰링', description: '커넥터 및 개구부 방수 처리', experienced: false },
+      { name: '무게중심 측정', description: '조립 완료 후 중량 및 무게중심 밸런스 확인', experienced: false },
       { name: '조인트 캘리브레이션', description: '조인트 영점 및 엔코더 정렬', experienced: true },
       { name: '센서 캘리브레이션', description: '카메라 내외부 파라미터 보정', experienced: true },
-      { name: '통합 테스트', description: '조립 완료 후 전체 동작 확인', experienced: true },
+      { name: '통합 테스트', description: '조립 완료 후 전체 동작 확인', experienced: false },
     ]
   },
   development: {
@@ -56,15 +64,16 @@ const phaseDetails = {
     description: '실제 현장에서 로봇을 세팅하고 시나리오를 구성하는 단계',
     layers: [
       { name: '현장 평가', description: '바닥 상태, 네트워크, 장애물 사전 조사', experienced: true },
+      { name: '네트워크 인프라 설치', description: 'WiFi AP 설치, 엘리베이터 IO·도어 제어 연동', experienced: false },
       { name: '지도 생성', description: 'SLAM으로 현장 지도 생성 및 편집', experienced: true },
-      { name: '존/구역 설정', description: '엘리베이터, 출입문, 금지 구역 설정', experienced: true },
+      { name: '존·구역 설정', description: '엘리베이터, 출입문, 금지 구역 설정', experienced: true },
       { name: '포즈 등록', description: '대기, 충전, 배송 위치 좌표 등록', experienced: true },
-      { name: '경로 최적화', description: '이동 경로 및 대기 전략 최적화', experienced: true },
-      { name: '시나리오 개발', description: '배송 플로우 및 예외 처리 구현', experienced: true },
-      { name: '이미지 학습', description: '버튼, 도어 인식 모델 현장 학습', experienced: true },
-      { name: '안전 설정', description: '비상정지, 속도 제한, 안전 구역 설정', experienced: true },
-      { name: '통합 시험', description: '전체 시나리오 반복 테스트', experienced: true },
-      { name: '인수 테스트', description: '고객 입회 하 최종 검증', experienced: true },
+      { name: '경로 최적화', description: '이동 경로 및 대기 전략 최적화', experienced: false },
+      { name: '시나리오 개발', description: '배송 플로우 및 예외 처리 구현', experienced: false },
+      { name: '이미지 학습', description: '버튼, 도어 인식 모델 현장 학습', experienced: false },
+      { name: '안전 설정', description: '비상정지, 속도 제한, 안전 구역 설정', experienced: false },
+      { name: '통합 시험·인수 테스트', description: '전체 시나리오 반복 테스트 및 고객 입회 최종 검증', experienced: false },
+      { name: '운영 교육', description: '현장 담당자 교육 및 비상 시 대응 절차 수립', experienced: false },
     ]
   },
   operation: {

@@ -27,9 +27,8 @@ App.js (스크롤 트래킹)
 ├── Navigation.js         # 좌측 네비게이션 (80px 고정)
 ├── HeroSection.js        # 히어로 + 통계
 ├── LifecycleSection.js   # 7개 Phase
-│   ├── PhaseModal.js     # Phase 상세 모달
-│   └── ArchitectureModal.js  # SW개발 아키텍처 모달
-├── ProjectsSection.js    # PARL 구조 프로젝트
+│   └── PhaseModal.js     # Phase 상세 모달 (ArchitectureView 포함)
+├── ProjectsSection.js    # PARL 구조 프로젝트 (6개)
 ├── DeploymentSection.js  # 사이트 배포 현황
 ├── GrowthSection.js      # 성장 타임라인
 ├── LearningSection.js    # 학습 현황
@@ -37,6 +36,8 @@ App.js (스크롤 트래킹)
 ```
 
 각 컴포넌트는 `src/components/`에 `.js`와 `.css` 파일 쌍으로 존재.
+
+> **참고**: `ArchitectureModal.js`는 현재 사용되지 않음. SW 개발 Phase 클릭 시 아키텍처 뷰는 `PhaseModal.js` 내부의 `ArchitectureView` 컴포넌트가 담당.
 
 ## Workflow Rules
 
@@ -69,6 +70,33 @@ git checkout main
 git pull origin main
 npm run deploy
 ```
+
+## 최근 변경 이력
+
+### 2026-02-21: 문서 동기화 (미커밋, docs/ + README.md + CLAUDE.md)
+- README.md: 코드와 불일치하던 데이터 구조 예시 8개 항목 수정
+  - `phaseDetails` 구조 (`hasArchitecture/items` → `isArchitecture/layers`)
+  - `architectureLayers` 전체 구조 재작성 (type/isROS/isOutsideROS/groups 반영)
+  - `projects` 3개 → 6개, `titleEn` 필드 제거, `notionLink` 구현 완료 반영
+  - `sites` 필드명 정정 (`location/type/highlight` → `robot/notionLink`)
+  - `milestones` type 값 정정 (`turning-point` → `growth`)
+  - `learningItems` `progress` 필드 없음으로 정정
+- CLAUDE.md: 아키텍처 트리 수정 (ArchitectureModal.js 미사용 명시, PhaseModal ArchitectureView 주석 추가, 프로젝트 수 6개로 수정)
+- docs/TODO-by-human.md, docs/TODO-by-claude.md 신규 생성
+
+### 2026-02-21: P1 콘텐츠 정확성 수정 (PR #4 / feature/p1-content-fixes)
+- **HeroSection.js**
+  - 타이틀: "로봇 소프트웨어의 설계부터 운영까지" → "로봇이 만들어지고 현장에 배포되어 운영되기까지"
+  - 부제목: "22개월 만에 7개 사이트…" → "문제를 해결하다 보니, 어느새 소프트웨어 잡부가 되어버린 나의 여정"
+  - 통계: 22개월 → 2024.05~현재, 사이트 7 → 9, 통신 경험 제거 후 로봇 4모델 추가
+  - CTA: "경험 살펴보기" → "나의 여정 보기"
+- **PhaseModal.js**
+  - Phase 1(설계): 구동계·센서·하드웨어 통신·컴퓨팅 플랫폼 선정 항목 4개 추가
+  - Phase 2(검사): CAN·모터·센서 테스트만 경험으로 정정, 외관+치수 통합, 기능 테스트 제거, 낙하/방수/EMC 시험 추가
+  - Phase 3(조립): 캘리브레이션 2개만 경험으로 정정, 케이블 3개 항목 통합, 도장/방수/무게중심 추가
+  - Phase 4(세팅): 현장 평가·지도·존구역·포즈만 경험으로 정정, 네트워크 설치·운영 교육 항목 추가
+
+---
 
 ## UI/UX Checklist
 
