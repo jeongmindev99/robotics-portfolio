@@ -23,24 +23,29 @@ npm run deploy # GitHub Pages 배포
 ## Architecture
 
 ```
-App.js (스크롤 트래킹)
-├── Navigation.js         # 좌측 네비게이션 (80px 고정)
-├── HeroSection.js        # 히어로 + 통계
-├── LifecycleSection.js   # 7개 Phase
-│   └── PhaseModal.js     # Phase 상세 모달 (ArchitectureView 포함)
-├── ProjectsSection.js    # PARL 구조 프로젝트 (6개)
-├── DeploymentSection.js  # 사이트 배포 현황
-├── GrowthSection.js      # 성장 타임라인
-├── LearningSection.js    # 학습 현황
-└── ContactSection.js     # 연락처
+App.js (AdminProvider 래핑, 스크롤 트래킹)
+├── AdminLoginPrompt.js  # ?admin 접속 시 비밀번호 입력 오버레이
+├── AdminBar.js          # 관리자 모드 상단 고정 바
+├── Navigation.js        # 좌측 네비게이션 (80px 고정)
+├── HeroSection.js       # 히어로 + 통계
+├── LifecycleSection.js  # 7개 Phase
+│   └── PhaseModal.js    # Phase 상세 모달 (ArchitectureView 포함, admin 편집 지원)
+├── ProjectsSection.js   # PARL 구조 프로젝트 (6개, admin 편집 지원)
+├── DeploymentSection.js # 사이트 배포 현황 (admin 편집 지원)
+├── GrowthSection.js     # 성장 타임라인 (admin 편집 지원)
+├── LearningSection.js   # 학습 현황 (admin 편집 지원)
+└── ContactSection.js    # 연락처
 ```
 
-각 컴포넌트는 `src/components/`에 `.js`와 `.css` 파일 쌍으로 존재.
+관리자 공통 컴포넌트 (`src/components/`):
+- `AdminEditModal.js` — 범용 폼 모달 (text/textarea/url/tags/boolean/select/number)
+- `AdminExportPanel.js` — dirty 파일별 JS 코드 복사 패널 (우측 drawer)
 
-> **참고**: `ArchitectureModal.js`는 삭제됨. SW 개발 Phase 클릭 시 아키텍처 뷰는 `PhaseModal.js` 내부의 `ArchitectureView` 컴포넌트가 담당.
+관리자 컨텍스트 (`src/context/`):
+- `AdminContext.js` — admin 상태, CRUD 뮤테이션, localStorage 자동 저장, JS export
 
-데이터는 `src/data/` 폴더에서 관리:
-- `phaseData.js` — Phase 모달 데이터 (`phaseDetails`, `architectureLayers`)
+데이터 (`src/data/`):
+- `phaseData.js` — `phaseDetails` (Phase 레이어), `architectureLayers` (SW개발 아키텍처)
 - `projectsData.js` — How I Solved 프로젝트 목록
 - `deploymentData.js` — Where I Deployed 사이트 목록
 - `growthData.js` — How I Grew 타임라인
