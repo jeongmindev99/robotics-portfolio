@@ -52,17 +52,27 @@ App.js (스크롤 트래킹)
 - **작업 전 README.md 필수 참조**
 - 아키텍처/설계 변경 시 CLAUDE.md와 README.md 즉시 업데이트
 
+### Branch Strategy
+
+```
+main   ← 배포용 브랜치 (GitHub Pages). 직접 push 금지.
+  ↑
+devel  ← 통합 테스트 브랜치. feature PR은 여기로 머지.
+  ↑
+feature/*, fix/*, docs/*  ← 단위 작업 브랜치
+```
+
 ### Git Workflow
-- 작업 완료 후 자동 commit & push
-- **main 브랜치 직접 push 금지** - PR을 통해서만 머지
-- 기능 개발/버그 수정 시 feature branch 생성 → PR 생성
+- **feature → devel PR**: 기능 개발/버그 수정 완료 시 `devel`로 PR 생성
+- **devel → main PR**: 충분히 테스트 후 `main`으로 PR 생성 → 머지 후 배포
+- **main, devel 직접 push 금지** — PR을 통해서만 머지
 
 ### PR Process
-1. 새 기능/수정 요청 → 브랜치 생성
-2. 코드 변경 및 commit
-3. GitHub push 후 PR 생성
-4. 사용자가 PR 리뷰 및 승인
-5. main 머지 후 `npm run deploy`로 배포
+1. `devel` 기반으로 feature 브랜치 생성
+2. 코드 변경 및 commit → `devel`로 PR 생성
+3. 사용자가 PR 리뷰 및 승인 → `devel` 머지
+4. 충분한 테스트 후 `devel` → `main` PR 생성 → 머지
+5. `npm run deploy`로 GitHub Pages 배포
 
 ### Branch Naming
 - `feature/기능명` - 새 기능
@@ -71,7 +81,7 @@ App.js (스크롤 트래킹)
 - `refactor/대상` - 리팩토링
 
 ### Deployment
-main 브랜치 머지 완료 후:
+devel → main 머지 완료 후:
 ```bash
 git checkout main
 git pull origin main
