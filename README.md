@@ -94,10 +94,11 @@ https://jeongmindev99.github.io/robotics-portfolio/?admin
 ```
 
 ### 비밀번호 변경
-`src/context/AdminContext.js` 파일 상단의 `ADMIN_PASSWORD` 상수 수정:
-```js
-const ADMIN_PASSWORD = 'robotics2024'; // ← 여기 변경
+프로젝트 루트의 `.env.local` 파일에서 수정 (git에 올라가지 않음):
+```bash
+REACT_APP_ADMIN_PASSWORD=새_비밀번호
 ```
+변경 후 개발 서버 재시작 or `npm run deploy` 재배포 필요.
 
 ### 편집 가능 항목
 | 섹션 | 편집 내용 |

@@ -6,8 +6,9 @@ import { learningItems as srcLearningItems } from '../data/learningData';
 import { phaseDetails as srcPhaseDetails, architectureLayers as srcArchitectureLayers } from '../data/phaseData';
 
 // ─── 비밀번호 설정 ──────────────────────────────────────────────────────────
-// 변경하려면 아래 상수를 직접 수정하세요.
-const ADMIN_PASSWORD = 'robotics2024';
+// 변경하려면 프로젝트 루트의 .env.local 파일에서 REACT_APP_ADMIN_PASSWORD 값을 수정하세요.
+// 예: REACT_APP_ADMIN_PASSWORD=my_new_password
+const ADMIN_PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD || 'robotics2024';
 
 // ─── localStorage 키 ─────────────────────────────────────────────────────────
 const LS_DATA_KEY = 'portfolioAdminData';

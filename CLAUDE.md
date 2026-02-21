@@ -96,7 +96,7 @@ npm run deploy
 ## 관리자 페이지 사용법
 
 **접근**: `?admin` URL 파라미터 추가 (예: `localhost:3000/?admin`)
-**비밀번호**: `src/context/AdminContext.js` 상단 `ADMIN_PASSWORD` 상수 변경
+**비밀번호**: 프로젝트 루트 `.env.local` 파일의 `REACT_APP_ADMIN_PASSWORD` 값 변경 후 재빌드
 **편집 가능 섹션**: How I Solved / Where I Deployed / How I Grew / What I'm Learning / What I Build (Phase 레이어)
 **데이터 반영**: 편집 → [내보내기] → JS 코드 복사 → `src/data/xxx.js` 파일 교체 → `npm run deploy`
 
