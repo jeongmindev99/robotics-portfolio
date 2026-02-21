@@ -1,69 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './LifecycleSection.css';
 import PhaseModal from './PhaseModal';
+import { phaseDetails } from '../data/phaseData';
+
+// B-1: auto-calculate experienced from phaseDetails layers data
+const isPhaseExperienced = (phaseId) => {
+  const detail = phaseDetails[phaseId];
+  if (!detail) return false;
+  if (detail.isArchitecture) return true;
+  return detail.layers.some(l => l.experienced);
+};
 
 const phases = [
-  {
-    id: 'design',
-    number: '01',
-    title: '설계',
-    titleEn: 'Design',
-    icon: '📐',
-    experienced: false,
-  },
-  {
-    id: 'inspection',
-    number: '02',
-    title: '검사',
-    titleEn: 'Inspection',
-    icon: '🔍',
-    experienced: true,
-  },
-  {
-    id: 'assembly',
-    number: '03',
-    title: '조립',
-    titleEn: 'Assembly',
-    icon: '🔧',
-    experienced: true,
-  },
-  {
-    id: 'development',
-    number: '04',
-    title: 'SW 개발',
-    titleEn: 'Development',
-    icon: '💻',
-    experienced: true,
-    isHighlight: true,
-  },
-  {
-    id: 'setup',
-    number: '05',
-    title: '세팅',
-    titleEn: 'Site Setup',
-    icon: '📍',
-    experienced: true,
-  },
-  {
-    id: 'operation',
-    number: '06',
-    title: '운영',
-    titleEn: 'Operation',
-    icon: '🚀',
-    experienced: true,
-  },
-  {
-    id: 'cicd',
-    number: '07',
-    title: 'CI/CD',
-    titleEn: 'CI/CD',
-    icon: '🔄',
-    experienced: false,
-  },
-];
+  { id: 'design',      number: '01', title: '설계',   titleEn: 'Design',      icon: '📐' },
+  { id: 'inspection',  number: '02', title: '검사',   titleEn: 'Inspection',  icon: '🔍' },
+  { id: 'assembly',    number: '03', title: '조립',   titleEn: 'Assembly',    icon: '🔧' },
+  { id: 'development', number: '04', title: 'SW 개발', titleEn: 'Development', icon: '💻', isHighlight: true },
+  { id: 'setup',       number: '05', title: '세팅',   titleEn: 'Site Setup',  icon: '📍' },
+  { id: 'operation',   number: '06', title: '운영',   titleEn: 'Operation',   icon: '🚀' },
+  { id: 'cicd',        number: '07', title: 'CI/CD',  titleEn: 'CI/CD',       icon: '🔄' },
+].map(phase => ({ ...phase, experienced: isPhaseExperienced(phase.id) }));
 
 function LifecycleSection() {
   const [selectedPhase, setSelectedPhase] = useState(null);
+  const scrollPosRef = useRef(0);
+
+  // B-2: lock body scroll when modal is open
+  useEffect(() => {
+    if (selectedPhase) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedPhase]);
+
+  const openModal = (phase) => {
+    scrollPosRef.current = window.scrollY;
+    setSelectedPhase(phase);
+  };
+
+  const closeModal = () => {
+    setSelectedPhase(null);
+    window.scrollTo({ top: scrollPosRef.current, behavior: 'instant' });
+  };
 
   const experiencedCount = phases.filter(p => p.experienced).length;
 
@@ -84,7 +66,7 @@ function LifecycleSection() {
               <React.Fragment key={phase.id}>
                 <div
                   className={`flow-node ${phase.experienced ? 'experienced' : ''} ${phase.isHighlight ? 'highlight' : ''}`}
-                  onClick={() => setSelectedPhase(phase)}
+                  onClick={() => openModal(phase)}
                 >
                   <div className="node-icon">{phase.icon}</div>
                   <div className="node-content">
@@ -126,7 +108,7 @@ function LifecycleSection() {
       {selectedPhase && (
         <PhaseModal
           phase={selectedPhase}
-          onClose={() => setSelectedPhase(null)}
+          onClose={closeModal}
         />
       )}
     </section>

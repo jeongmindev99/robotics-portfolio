@@ -165,13 +165,15 @@
 
 .cta-button.secondary {
   background: transparent;
-  color: var(--text-primary);
+  color: var(--text-secondary);
   border: 1px solid var(--border-highlight);
 }
 
 .cta-button.secondary:hover {
   border-color: var(--accent-primary);
   color: var(--accent-primary);
+  background: rgba(0, 212, 170, 0.06);
+  transform: translateY(-2px);
 }
 
 .scroll-indicator {

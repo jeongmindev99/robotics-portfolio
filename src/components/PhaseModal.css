@@ -227,6 +227,40 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
+/* Stage-based layout (B-4) */
+.phase-stage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  width: 100%;
+}
+
+.phase-stage-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 16px;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Indirect experience node */
+.phase-node.exp-indirect {
+  border-style: dashed;
+  border-color: rgba(255, 165, 0, 0.45);
+}
+
+.phase-node.exp-indirect::before {
+  content: '◎';
+  color: rgba(255, 165, 0, 0.75);
+  font-size: 0.5rem;
+}
+
+.legend-dot.exp-indirect {
+  color: rgba(255, 165, 0, 0.75);
+}
+
 /* ==================== */
 /* Architecture Diagram */
 /* ==================== */
