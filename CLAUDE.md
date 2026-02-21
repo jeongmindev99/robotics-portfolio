@@ -37,7 +37,14 @@ App.js (스크롤 트래킹)
 
 각 컴포넌트는 `src/components/`에 `.js`와 `.css` 파일 쌍으로 존재.
 
-> **참고**: `ArchitectureModal.js`는 현재 사용되지 않음. SW 개발 Phase 클릭 시 아키텍처 뷰는 `PhaseModal.js` 내부의 `ArchitectureView` 컴포넌트가 담당.
+> **참고**: `ArchitectureModal.js`는 삭제됨. SW 개발 Phase 클릭 시 아키텍처 뷰는 `PhaseModal.js` 내부의 `ArchitectureView` 컴포넌트가 담당.
+
+데이터는 `src/data/` 폴더에서 관리:
+- `phaseData.js` — Phase 모달 데이터 (`phaseDetails`, `architectureLayers`)
+- `projectsData.js` — How I Solved 프로젝트 목록
+- `deploymentData.js` — Where I Deployed 사이트 목록
+- `growthData.js` — How I Grew 타임라인
+- `learningData.js` — What I'm Learning 목록
 
 ## Workflow Rules
 
@@ -83,6 +90,32 @@ npm run deploy
   - `learningItems` `progress` 필드 없음으로 정정
 - CLAUDE.md: 아키텍처 트리 수정 (ArchitectureModal.js 미사용 명시, PhaseModal ArchitectureView 주석 추가, 프로젝트 수 6개로 수정)
 - docs/TODO-by-human.md, docs/TODO-by-claude.md 신규 생성
+
+### 2026-02-21: P2~P4 기능·구조 개선 (PR #5 / feature/p2-p3-p4-improvements)
+- **G-1** `ArchitectureModal.js`, `ArchitectureModal.css` 삭제 (미사용 파일)
+- **G-2** `ContactSection.js` Footer 연도 → `{new Date().getFullYear()}` 동적 처리
+- **G-3 / B-3** 데이터 파일 분리 (관리자 페이지 대비)
+  - `src/data/phaseData.js` 신규 — `phaseDetails`, `architectureLayers` export
+  - `src/data/projectsData.js` 신규 — `projects` export
+  - `src/data/deploymentData.js` 신규 — `sites` export
+  - `src/data/growthData.js` 신규 — `milestones` export
+  - `src/data/learningData.js` 신규 — `learningItems` export
+  - 각 컴포넌트(ProjectsSection, DeploymentSection, GrowthSection, LearningSection, PhaseModal) 인라인 데이터 제거 → import로 교체
+- **B-4** `PhaseModal.js` stage 기반 순차·병렬 배치 렌더링 구현
+  - `phaseData.js`의 `stage` 필드로 그루핑 → 같은 stage 항목 나란히 표시
+  - `indirect: true` 항목은 `.exp-indirect` CSS 클래스로 별도 스타일 (주황 점선 테두리)
+  - 범례: 직접 경험(●) / 간접 경험(◎) / 미경험(○) 3단계 표시
+- **B-1** `LifecycleSection.js` Phase 카드 `experienced` 자동 계산
+  - `phaseDetails.layers` 중 `experienced === true` 항목이 하나라도 있으면 Phase 카드 "경험" 표시
+  - `development` (isArchitecture) 는 항상 경험 처리
+  - 하드코딩된 `experienced` 필드 제거
+- **B-2** 모달 열릴 때 배경 스크롤 잠금 및 닫힐 때 위치 복원
+  - `useEffect`로 `document.body.style.overflow = 'hidden'` / `''` 전환
+  - `useRef`로 scrollY 저장, 닫힐 때 `window.scrollTo({ behavior: 'instant' })` 복원
+- **A-5** Hero secondary CTA 버튼 개선
+  - 문구: "연락하기" → "커피 한 잔 어때요?" + 이메일 아이콘 추가
+  - CSS: 호버 시 배경색·translateY 효과 추가
+- **C-2** Phase 1 설계 항목 순서 → stage 필드 기반 논리적 순서로 phaseData.js에 반영
 
 ### 2026-02-21: P1 콘텐츠 정확성 수정 (PR #4 / feature/p1-content-fixes)
 - **HeroSection.js**

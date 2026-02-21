@@ -60,8 +60,7 @@ robotics-portfolio/
         ├── HeroSection.css
         ├── LifecycleSection.js  # 7개 Phase (로봇 엔지니어 업무 사이클)
         ├── LifecycleSection.css
-        ├── ArchitectureModal.js # 시스템 아키텍처 모달 (SW개발 Phase 상세)
-        ├── ArchitectureModal.css
+        # (ArchitectureModal.js/css 삭제됨 - PhaseModal.js의 ArchitectureView로 통합)
         ├── ProjectsSection.js   # 프로젝트 카드 (PARL 구조)
         ├── ProjectsSection.css
         ├── DeploymentSection.js # 사이트 배포 현황
@@ -106,259 +105,212 @@ robotics-portfolio/
 
 ### 2. Phase 수정 (LifecycleSection.js)
 
-로봇 엔지니어 업무의 7개 Phase와 각 하위 항목:
+로봇 엔지니어 업무의 7개 Phase. 클릭 시 PhaseModal이 열리며 세부 항목 표시.
 
 ```javascript
 const phases = [
   {
-    id: 'design',           // 고유 ID
+    id: 'design',           // 고유 ID (phaseDetails 키와 일치해야 함)
     number: '01',           // 표시 번호
     title: '설계',          // 한글 제목
     titleEn: 'Design',      // 영문 제목
-    experienced: false,     // ⭐ Phase 전체 경험 여부 (하이라이트)
-    hasArchitecture: false, // SW개발 Phase만 true (아키텍처 모달 버튼 표시)
-    items: [
-      { name: '기구 설계', experienced: false },      // ⭐ 하위 항목 경험 여부
-      { name: '전장 설계', experienced: false },
-      { name: '회로 설계', experienced: false },
-      { name: 'SW 아키텍처 설계', experienced: false },
-    ]
+    icon: '📐',             // ⭐ 이모지 아이콘
+    experienced: false,     // ⭐ 경험 여부 (테두리/배지 하이라이트)
   },
   {
     id: 'inspection',
     number: '02',
-    title: '전장부 검사',
-    titleEn: 'Electrical Inspection',
-    experienced: true,      // ⭐ 경험함
-    items: [
-      { name: 'CAN 통신 테스트', experienced: true },
-      { name: '모터 동작 테스트', experienced: true },
-      { name: '센서 동작 테스트', experienced: true },
-      { name: '전원 테스트', experienced: true },
-    ]
+    title: '검사',
+    titleEn: 'Inspection',
+    icon: '🔍',
+    experienced: true,
   },
   {
     id: 'assembly',
     number: '03',
     title: '조립',
     titleEn: 'Assembly',
+    icon: '🔧',
     experienced: true,
-    items: [
-      { name: '프레임 조립', experienced: false },
-      { name: '배선', experienced: true },
-      { name: '센서 장착', experienced: true },
-      { name: '캘리브레이션', experienced: true },
-    ]
   },
   {
     id: 'development',
     number: '04',
     title: 'SW 개발',
     titleEn: 'Development',
+    icon: '💻',
     experienced: true,
-    hasArchitecture: true,  // ⭐ 아키텍처 모달 버튼 표시
-    items: [
-      { name: 'ROS 시스템', experienced: true },
-      { name: '미들웨어', experienced: true },
-      { name: '어플리케이션', experienced: true },
-      { name: '통신 연동', experienced: true },
-    ]
+    isHighlight: true,      // ⭐ 특별 하이라이트 (핵심 Phase)
   },
   {
     id: 'setup',
     number: '05',
-    title: '사이트 세팅',
+    title: '세팅',
     titleEn: 'Site Setup',
+    icon: '📍',
     experienced: true,
-    items: [
-      { name: '지도 세팅', experienced: true },
-      { name: '층/존 세팅', experienced: true },
-      { name: '포즈 세팅', experienced: true },
-      { name: '시나리오 개발', experienced: true },
-      { name: '이미지 학습', experienced: true },
-      { name: '테스트', experienced: true },
-    ]
   },
   {
     id: 'operation',
     number: '06',
     title: '운영',
     titleEn: 'Operation',
+    icon: '🚀',
     experienced: true,
-    items: [
-      { name: '모니터링', experienced: true },
-      { name: '장애 대응', experienced: true },
-      { name: '로그 분석', experienced: true },
-      { name: '유지보수', experienced: true },
-      { name: '원격 지원', experienced: true },
-    ]
   },
   {
     id: 'cicd',
     number: '07',
     title: 'CI/CD',
     titleEn: 'CI/CD',
+    icon: '🔄',
     experienced: false,
-    items: [
-      { name: '자동 배포', experienced: false },
-      { name: '테스트 자동화', experienced: false },
-      { name: '버전 관리', experienced: true },
-      { name: '롤백', experienced: false },
-    ]
   },
 ];
 ```
 
-### 3. 시스템 아키텍처 수정 (ArchitectureModal.js)
+Phase 세부 항목은 `PhaseModal.js`의 `phaseDetails` 객체에서 관리:
 
-모바일 매니퓰레이터 시스템 아키텍처 8개 레이어:
+```javascript
+const phaseDetails = {
+  design: {
+    description: '...',
+    layers: [
+      { name: '기구 설계', description: '...', experienced: false },
+      { name: 'SW 아키텍처', description: '...', experienced: true },
+      // ...
+    ]
+  },
+  development: {
+    description: '...',
+    isArchitecture: true,  // ⭐ true면 ArchitectureView로 렌더링
+  },
+  // 나머지 phase ID별 정의
+};
+```
+
+### 3. 시스템 아키텍처 수정 (PhaseModal.js - ArchitectureView)
+
+> **참고**: `ArchitectureModal.js`는 삭제됨. 아키텍처 뷰는 `PhaseModal.js` 내부의 `ArchitectureView`와 `src/data/phaseData.js`의 `architectureLayers`에서 관리.
+
+`architectureLayers` 레이어 타입:
+- `'single'`: 단일 행 레이어 (items 배열)
+- `'horizontal'`: 수평 그룹 레이어 (groups 배열, 각 group에 items)
+- `'runtime'`: 런타임 환경 레이어
+
+레이어 속성:
+- `isOutsideROS: true` → Cloud/Application 레이어 (ROS 프레임워크 외부)
+- `isROS: true` → ROS 프레임워크 내부 레이어
+- 둘 다 없으면 → Runtime, OS, Hardware 등 하위 레이어
 
 ```javascript
 const architectureLayers = [
+  // --- ROS 외부 레이어 (isOutsideROS: true) ---
   {
-    id: 'external',
-    name: 'External Systems',           // 영문명
-    nameKr: '외부 시스템',               // 한글명
-    color: '#ff6b35',                   // 레이어 색상 (CSS에서 사용)
+    name: 'Cloud / External',
+    type: 'single',
+    isOutsideROS: true,
     items: [
-      { 
-        name: 'Fleet Management',       // 영문 항목명
-        nameKr: '관제 시스템',           // 한글 항목명
-        experienced: true,              // ⭐ 경험 여부 (하이라이트)
-        link: '#'                       // 노션 링크 (추후 연결)
+      { name: 'Fleet Management', experienced: true },
+      { name: 'Database', experienced: true },
+      { name: 'Building API', experienced: true },
+    ]
+  },
+  {
+    name: 'Application',
+    type: 'single',
+    isOutsideROS: true,
+    items: [
+      { name: 'User Interface', experienced: true },
+      { name: 'REST API', experienced: true },
+      { name: 'Message Bridge', experienced: true },
+    ]
+  },
+  // --- ROS 프레임워크 레이어 (isROS: true) ---
+  {
+    name: 'Behavior / Orchestration',
+    type: 'single',
+    isROS: true,
+    items: [
+      { name: 'State Machine', experienced: true },
+      { name: 'Behavior Tree', experienced: true },
+      { name: 'Task Sequencer', experienced: true },
+      { name: 'Recovery Logic', experienced: true },
+    ]
+  },
+  {
+    name: 'Domain Stacks',
+    type: 'horizontal',    // ⭐ 수평 그룹 타입
+    isROS: true,
+    groups: [              // ⭐ items 대신 groups 사용
+      {
+        name: 'Navigation',
+        items: [
+          { name: 'Localization', experienced: true },
+          { name: 'Global Planning', experienced: true },
+          // ...
+        ]
       },
-      { name: 'Realtime Database', nameKr: '실시간 DB', experienced: true, link: '#' },
-      { name: 'Building API', nameKr: '빌딩 API (엘리베이터)', experienced: true, link: '#' },
-      { name: 'Other Robots', nameKr: '다른 로봇 통신', experienced: false, link: '#' },
+      {
+        name: 'Manipulation',
+        items: [
+          { name: 'Motion Planning', experienced: true },
+          // ...
+        ]
+      },
+      {
+        name: 'Perception',
+        items: [
+          { name: 'Mapping (SLAM)', experienced: false },
+          // ...
+        ]
+      },
     ]
   },
+  // ... (ROS Communication, Hardware Interface)
+  // --- 하위 레이어 (isROS/isOutsideROS 없음) ---
   {
-    id: 'application',
-    name: 'Application Layer',
-    nameKr: '어플리케이션 레이어',
-    color: '#ffd700',
+    name: 'Runtime Environment',
+    type: 'runtime',
     items: [
-      { name: 'Robot Screen UI', nameKr: '로봇 화면 UI', experienced: true, link: '#' },
-      { name: 'API Gateway', nameKr: 'API 게이트웨이', experienced: true, link: '#' },
+      { name: 'Docker', experienced: true },
+      { name: 'Ubuntu 20.04', experienced: true },
+      { name: 'ROS Noetic', experienced: true },
     ]
   },
-  {
-    id: 'ros-behavior',
-    name: 'ROS - Behavior Orchestration',
-    nameKr: 'ROS - 행동 오케스트레이션',
-    color: '#00d4aa',
-    items: [
-      { name: 'State Machine / BT', nameKr: '상태 머신 / 행동 트리', experienced: true, link: '#' },
-      { name: 'Mission Sequencing', nameKr: '미션 시퀀싱', experienced: true, link: '#' },
-      { name: 'Error Recovery', nameKr: '에러 복구', experienced: true, link: '#' },
-    ]
-  },
-  {
-    id: 'ros-domain',
-    name: 'ROS - Domain Stacks',
-    nameKr: 'ROS - 도메인 스택',
-    color: '#0099ff',
-    items: [
-      { name: 'Navigation Stack', nameKr: '네비게이션 스택', experienced: true, link: '#' },
-      { name: 'Manipulation Stack', nameKr: '매니퓰레이션 스택', experienced: true, link: '#' },
-      { name: 'Perception Stack', nameKr: '퍼셉션 스택', experienced: false, link: '#' },
-    ]
-  },
-  {
-    id: 'ros-comm',
-    name: 'ROS - Communication',
-    nameKr: 'ROS - 통신 레이어',
-    color: '#00d4aa',
-    items: [
-      { name: 'TCPROS / XMLRPC', nameKr: 'TCPROS / XMLRPC', experienced: true, link: '#' },
-      { name: 'Topic / Service / Action', nameKr: '토픽 / 서비스 / 액션', experienced: true, link: '#' },
-    ]
-  },
-  {
-    id: 'hal',
-    name: 'Hardware Abstraction Layer',
-    nameKr: '하드웨어 추상화 레이어',
-    color: '#9b59b6',
-    items: [
-      { name: 'ROS Control Framework', nameKr: 'ROS 컨트롤 프레임워크', experienced: true, link: '#' },
-      { name: 'Diff Drive Controller', nameKr: '차동 구동 컨트롤러', experienced: true, link: '#' },
-      { name: 'Joint State Controller', nameKr: '조인트 상태 컨트롤러', experienced: true, link: '#' },
-      { name: 'CAN Node', nameKr: 'CAN 노드', experienced: true, link: '#' },
-      { name: 'Serial Node', nameKr: '시리얼 노드', experienced: true, link: '#' },
-      { name: 'USB Node', nameKr: 'USB 노드', experienced: true, link: '#' },
-    ]
-  },
-  {
-    id: 'os-driver',
-    name: 'OS / Kernel Driver Layer',
-    nameKr: 'OS / 커널 드라이버 레이어',
-    color: '#e74c3c',
-    items: [
-      { name: 'SocketCAN Subsystem', nameKr: 'SocketCAN 서브시스템', experienced: true, link: '#' },
-      { name: 'TTY/Serial Subsystem', nameKr: 'TTY/시리얼 서브시스템', experienced: true, link: '#' },
-      { name: 'V4L2/USB Subsystem', nameKr: 'V4L2/USB 서브시스템', experienced: true, link: '#' },
-      { name: 'Network Stack', nameKr: '네트워크 스택', experienced: true, link: '#' },
-    ]
-  },
-  {
-    id: 'hardware',
-    name: 'Physical Layer',
-    nameKr: '물리 레이어',
-    color: '#95a5a6',
-    items: [
-      { name: 'Motors (Wheel, Arm)', nameKr: '모터 (휠, 팔)', experienced: true, link: '#' },
-      { name: 'Sensors (LiDAR, Camera)', nameKr: '센서 (라이다, 카메라)', experienced: true, link: '#' },
-      { name: 'Embedded Controller', nameKr: '임베디드 컨트롤러', experienced: true, link: '#' },
-      { name: 'Network Devices', nameKr: '네트워크 장치', experienced: true, link: '#' },
-      { name: 'CAN Bus / USB / Serial', nameKr: 'CAN 버스 / USB / 시리얼', experienced: true, link: '#' },
-    ]
-  },
+  // ... (Device Drivers, OS/Kernel, Firmware, Physical)
 ];
 ```
 
-**아키텍처 레이어 설계 원칙**:
-- 수직 레이어 (Vertical Layers): 추상화 수준에 따른 분리
-- 수평 도메인 (Horizontal Domains): Navigation, Manipulation, Perception
-- 통신 경로 (Communication Paths): 레이어 간, 외부 시스템 간 데이터 흐름
+**아키텍처 레이어 구조 원칙**:
+- ROS 외부 → ROS 프레임워크 컨테이너 → 하위 레이어 순으로 렌더링
+- `isROS: true` 레이어는 "ROS Framework" 컨테이너로 묶임
+- `type: 'horizontal'`은 도메인 스택(Navigation/Manipulation/Perception) 표현에 사용
 
 ### 4. 프로젝트 수정 (ProjectsSection.js)
 
-PARL 구조 (Problem → Action → Result → Learning):
+PAR 구조 (Problem → Action → Result). 현재 6개 프로젝트:
 
 ```javascript
 const projects = [
   {
     id: 1,
-    title: 'Import Manager 리팩토링',           // 프로젝트 제목
-    titleEn: 'Import Manager Refactoring',     // 영문 제목
-    problem: '코드가 여러 파일에 흩어져 있어 유지보수가 어려웠고, 동시성 문제가 발생',
-    action: 'Manager 패턴으로 코드를 통합하고 상태 관리를 중앙화',
-    result: '동시성 문제 해결, 유지보수 시간 50% 감소',
-    tags: ['ROS', 'Python', 'Refactoring'],    // 기술 태그
-    notionLink: 'https://notion.so/...',       // ⭐ 노션 상세 페이지 URL
+    title: 'Import Manager 리팩토링',    // 프로젝트 제목
+    problem: '...',
+    action: '...',
+    result: '...',
+    tags: ['ROS', 'Python', 'Architecture'],  // 기술 태그
+    notionLink: 'https://notion.so/...',      // ⭐ 노션 상세 페이지 URL
   },
-  {
-    id: 2,
-    title: 'FlexBE 배송 시나리오',
-    titleEn: 'FlexBE Delivery Scenario',
-    problem: '복잡한 배송 로직을 하드코딩으로 관리하여 수정이 어려웠음',
-    action: 'FlexBE 상태 머신으로 전체 배송 플로우를 시각화하고 모듈화',
-    result: '시나리오 수정 시간 70% 단축, 새로운 사이트 적용 용이',
-    tags: ['FlexBE', 'State Machine', 'ROS'],
-    notionLink: 'https://notion.so/...',
-  },
-  {
-    id: 3,
-    title: 'MQTT 통신 시스템',
-    titleEn: 'MQTT Communication System',
-    problem: '관제 서버와 로봇 간 실시간 통신이 불안정했음',
-    action: 'MQTT 프로토콜 기반 통신 레이어를 새로 설계하고 구현',
-    result: '통신 안정성 향상, 메시지 손실률 0.1% 이하',
-    tags: ['MQTT', 'Communication', 'Python'],
-    notionLink: 'https://notion.so/...',
-  },
+  { id: 2, title: 'FlexBE 배송 시나리오', ... },
+  { id: 3, title: 'MQTT 통신 시스템', ... },
+  { id: 4, title: 'STVL 3D 장애물 회피', ... },
+  { id: 5, title: 'Localization Fail Safe', ... },
+  { id: 6, title: 'OCR 송장 인식 시스템', ... },
 ];
 ```
+
+> **참고**: `titleEn` 필드는 실제 코드에 없음. `notionLink`가 있으면 카드 하단에 "상세 보기" 링크 자동 표시.
 
 ### 5. 사이트 수정 (DeploymentSection.js)
 
@@ -366,35 +318,25 @@ const projects = [
 const sites = [
   {
     id: 1,
-    name: '래미안 원베일리',      // 사이트명
-    location: '서울',             // 위치 (일본이면 '일본 🇯🇵')
-    type: '아파트 배송',          // 로봇 용도
-    period: '2024.04',           // 참여 시기
-    role: '세팅 보조',            // 역할
-    highlight: false,            // ⭐ 하이라이트 여부 (주요 경험)
+    period: '2024.05',           // 참여 시기
+    name: '판교 테크원',          // 사이트명
+    robot: '배송로봇',            // 로봇 종류
+    role: '세팅 및 운영',         // 역할
+    notionLink: 'https://notion.so/...',  // ⭐ 노션 상세 페이지 URL
   },
   {
-    id: 2,
-    name: '부산 포터',
-    location: '부산',
-    type: '물류 배송',
-    period: '2024.08',
-    role: '단독 세팅',
-    highlight: true,             // ⭐ 하이라이트
-  },
-  // 해외 사이트
-  {
-    id: 4,
-    name: '일본 팜코트',
-    location: '일본 🇯🇵',         // 🇯🇵 이모지로 해외 표시
-    type: '물류 배송',
+    id: 6,
     period: '2025.07',
+    name: '일본 팜코트',           // 해외 사이트는 이름에 국가 포함
+    robot: '물류로봇',
     role: '해외 단독 세팅',
-    highlight: true,
+    notionLink: 'https://notion.so/...',
   },
-  // ...
+  // 현재 총 7개 사이트 (국내 5, 해외 2)
 ];
 ```
+
+> **참고**: `location`, `type`, `highlight` 필드는 없음. 사이트명에 국가명 직접 포함 (예: '일본 팜코트').
 
 ### 6. 성장 타임라인 수정 (GrowthSection.js)
 
@@ -405,9 +347,9 @@ const milestones = [
     title: 'ROS 제로에서 시작',                // 제목
     description: 'WATT Robotics 입사. ROS가 뭔지도 몰랐던 상태에서 로보틱스 세계에 첫 발을 내딛다.',
     type: 'start',                            // 타입 (색상 결정)
-    // type 종류:
+    // type 종류 (GrowthSection.css에서 색상 정의):
     // - 'start': 파랑 (시작점)
-    // - 'turning-point': 주황 (전환점)
+    // - 'growth': 주황 (성장/전환점)
     // - 'achievement': 민트 (성취)
     // - 'milestone': 골드 + 글로우 (마일스톤)
   },
@@ -415,7 +357,7 @@ const milestones = [
     date: '2024.10',
     title: '"감으로 디버깅" → 체계적 접근',
     description: '문제를 체계적으로 분석하고 기록하기 시작. 디버깅 과정을 습관화하고 문서화.',
-    type: 'turning-point',
+    type: 'growth',           // ⭐ 'turning-point' 아님. 실제 타입: 'growth'
   },
   {
     date: '2025.07',
@@ -438,24 +380,23 @@ const milestones = [
 const learningItems = [
   {
     skill: 'C++',              // 스킬명
-    status: '학습 중',          // 상태
-    progress: 30,              // 진행률 (0-100)
-    description: '로보틱스 핵심 언어. 현재 기초 문법과 STL 학습 중.',
+    status: '학습 중',          // 상태 ('학습 중' | '학습 예정' | '관심')
+    description: '로보틱스 핵심 언어, 기초 문법과 STL 학습 중',
   },
   {
     skill: 'ROS2',
     status: '학습 예정',
-    progress: 10,
-    description: 'ROS1 경험을 바탕으로 ROS2 마이그레이션 준비 중.',
+    description: 'ROS1 경험 기반 ROS2 마이그레이션 준비',
   },
   {
-    skill: 'Realtime Linux',
+    skill: 'Realtime Systems',
     status: '관심',
-    progress: 5,
-    description: 'RTOS, PREEMPT_RT 등 실시간 시스템 학습 계획.',
+    description: 'RTOS, PREEMPT_RT 등 실시간 시스템',
   },
 ];
 ```
+
+> **참고**: `progress` 필드는 현재 코드에 없음 (UI에 진행률 바 미구현).
 
 ### 8. 연락처 수정 (ContactSection.js)
 
@@ -603,8 +544,8 @@ const learningItems = [
 > Phase 0 완료 후, 노션 콘텐츠 기반으로 웹사이트 데이터 수정
 
 - [ ] Phase별 하위 항목 정확하게 업데이트 (LifecycleSection.js)
-- [x] Architecture 레이어 경험 여부 업데이트 + 노션 링크 연결 (ArchitectureModal.js)
-- [x] 프로젝트 3개 선정 및 상세 내용 작성 + 노션 링크 연결 (ProjectsSection.js)
+- [x] Architecture 레이어 경험 여부 업데이트 (PhaseModal.js의 ArchitectureView)
+- [x] 프로젝트 6개 선정 및 상세 내용 작성 + 노션 링크 연결 (ProjectsSection.js)
 - [x] 사이트 정보 정확하게 업데이트 + 노션 링크 연결 (DeploymentSection.js)
 - [x] 성장 타임라인 전환점 확정 (GrowthSection.js)
 - [x] 연락처 정보 업데이트 (ContactSection.js)
@@ -615,8 +556,8 @@ const learningItems = [
 
 > Phase 0에서 만든 노션 페이지를 웹사이트와 연결
 
-- [ ] 실제 사용되는 PhaseModal.js의 ArchitectureView에 노션 링크 연결 (시스템 아키텍처 상세 페이지) - **⚠️ ArchitectureModal.js에는 추가되었으나 이 파일은 사용되지 않음**
-- [ ] 프로젝트 카드에 노션 상세 페이지 링크 추가 (notionLink 필드) - ⚠️ CSS만 준비됨
+- [ ] PhaseModal.js의 ArchitectureView에 노션 링크 연결 (시스템 아키텍처 상세 페이지)
+- [x] 프로젝트 카드에 노션 상세 페이지 링크 추가 (notionLink 필드) - 구현 완료
 - [x] 사이트 항목 클릭 시 노션 상세 페이지 연결
 - [x] Contact 섹션 노션 링크 연결
 - [ ] 프로젝트 상세 모달 (선택적)
@@ -799,18 +740,10 @@ const learningItems = [
 - [ ] LearningSection: README에 있는 progress 필드 실제 구현 추가
 - [ ] DeploymentSection: README에 있는 highlight 필드 실제 구현 추가
 - [ ] LearningSection.css: 모바일 반응형 CSS 불일치 수정 (flex 사용 중인데 grid-template-columns 사용)
-- [ ] **PhaseModal.js에 노션 링크 추가 필요** - 실제 사용되는 아키텍처 뷰(PhaseModal.js)에는 노션 링크가 없음. ArchitectureModal.js에는 추가되었으나 이 파일은 사용되지 않음
-- [ ] README.md Phase 수정 가이드 업데이트 - 실제 구조 반영:
-  - LifecycleSection.js: phases 배열 (id, number, title, titleEn, icon, experienced, isHighlight)
-    - README 예시에서 `hasArchitecture`, `items` 필드 제거 필요 (실제로 없음)
-    - `icon` 필드 추가 필요 (이모지 사용)
-  - PhaseModal.js: phaseDetails 객체 (description, layers[], isArchitecture)
-    - README 예시에서 `items` → `layers` 필드명 수정 필요
-- [ ] README.md의 sites 구조 수정 필요:
-  - 실제: (id, period, name, robot, role, notionLink)
-  - README 예시: (id, name, location, type, period, role, highlight)
-  - `type` → `robot` 필드명 수정, `location`/`highlight` 제거, `notionLink` 추가 필요
-- [x] README.md의 milestones 구조 검증 완료 - 구조 일치 (type 값만 Phase 13-5에서 수정 필요)
+- [ ] PhaseModal.js의 ArchitectureView에 노션 링크 추가 필요
+- [x] README.md Phase 수정 가이드 업데이트 - 실제 구조 반영 완료
+- [x] README.md의 sites 구조 수정 완료 - 실제 구조 (id, period, name, robot, role, notionLink) 반영
+- [x] README.md의 milestones type 값 수정 완료 - 'turning-point' → 'growth'
 
 #### 13-2. 접근성 및 표준 준수
 - [ ] favicon 추가 (link rel="icon") - 현재 누락
@@ -818,8 +751,7 @@ const learningItems = [
 - [ ] manifest.json 추가 (PWA 지원 준비)
 
 #### 13-3. 코드 정리
-- [ ] ArchitectureModal.js 파일이 더 이상 사용되지 않음 → 삭제 필요 (PhaseModal.js로 통합됨)
-- [ ] ArchitectureModal.css 파일도 함께 삭제
+- [x] ArchitectureModal.js/css 삭제 완료
 - [ ] 사용되지 않는 CSS 클래스 정리
 - [ ] ProjectsSection.css: `.project-title` 중복 정의 수정 (line 69-75, 77-79) - 두 번째 정의가 첫 번째를 덮어씀
 - [ ] ContactSection.js: footer 연도(2025) 하드코딩 → 동적 처리 필요 (`new Date().getFullYear()`) (line 72)
@@ -837,14 +769,14 @@ const learningItems = [
 - [ ] 공통 hover 효과를 CSS 변수 또는 mixin으로 추출
 
 #### 13-5. 문서 일관성
-- [ ] CLAUDE.md Architecture 섹션에서 ArchitectureModal.js 참조 제거 (더 이상 사용 안 함)
-- [ ] CLAUDE.md Architecture 섹션에 PhaseModal.js가 ArchitectureView를 포함한다고 명시
-- [ ] CLAUDE.md와 README.md 간 구조 설명 동기화
-- [ ] README.md GrowthSection 예시에서 type 'turning-point' → 'growth'로 수정 (실제 코드와 일치시키기)
+- [x] CLAUDE.md Architecture 섹션에서 ArchitectureModal.js 참조 제거 (더 이상 사용 안 함)
+- [x] CLAUDE.md Architecture 섹션에 PhaseModal.js가 ArchitectureView를 포함한다고 명시
+- [x] CLAUDE.md와 README.md 간 구조 설명 동기화
+- [x] README.md GrowthSection 예시에서 type 'turning-point' → 'growth'로 수정
 
-#### 13-7. 완료 항목 검증 (⚠️ 불일치 발견)
-- [ ] ProjectsSection.js에 notionLink 필드 구현 필요 (CSS만 준비되어 있음, 데이터/JSX 미구현)
-- [ ] README.md projects 예시에서 `titleEn` 필드 제거 필요 (실제 코드에 없음) 또는 코드에 추가
+#### 13-7. 완료 항목 검증
+- [x] ProjectsSection.js에 notionLink 필드 구현 완료 (데이터 + JSX 모두 구현됨)
+- [x] README.md projects 예시에서 `titleEn` 필드 제거 완료
 - [x] 완료 항목 목록의 "Phase 2: 프로젝트 카드에 노션 링크 기능 추가" 상태 수정 완료
 
 #### 13-6. 코드 중복 제거
@@ -956,12 +888,12 @@ const learningItems = [
 - [x] GitHub Pages 배포 설정 (gh-pages, homepage URL)
 - [x] Phase 1: 사이트 정보 업데이트 (DeploymentSection.js) - 실제 사이트명으로 변경
 - [x] Phase 1: 연락처 정보 업데이트 (ContactSection.js) - Email, GitHub, LinkedIn 실제 정보로 변경
-- [ ] Phase 1: 프로젝트 추가 검토 (STVL 3D 장애물 회피, Localization Fail Safe, OCR 송장 인식 등) - 현재 3개
-- [ ] Phase 2: 프로젝트 카드에 노션 링크 기능 추가 (ProjectsSection.js) - ⚠️ CSS만 추가됨, 데이터/JSX 미구현
+- [x] Phase 1: 프로젝트 추가 완료 (STVL 3D 장애물 회피, Localization Fail Safe, OCR 송장 인식) - 현재 6개
+- [x] Phase 2: 프로젝트 카드에 노션 링크 기능 추가 완료 (ProjectsSection.js)
 - [x] Phase 2: 사이트 항목에 노션 링크 기능 추가 (DeploymentSection.js)
 - [x] Phase 2: Contact 섹션 노션 링크 실제 URL로 변경 (ContactSection.js)
 - [x] Phase 2: ArchitectureModal에 노션 링크 추가 (단, 이 컴포넌트는 현재 사용되지 않음 - Phase 13에서 삭제 예정)
-- [ ] Phase 2: ProjectsSection 하단 CTA 노션 링크 실제 URL로 변경 - ⚠️ 여전히 href="#"
+- [x] Phase 2: ProjectsSection 하단 CTA 노션 링크 실제 URL로 변경 완료
 
 ---
 
@@ -1012,9 +944,11 @@ import NewSection from './components/NewSection';
 ```
 
 #### 4. 모달 추가
-- `ArchitectureModal.js` 패턴 참고
+- `PhaseModal.js` 패턴 참고 (overlay + content 구조)
 - 부모 컴포넌트에서 `useState`로 열림/닫힘 관리
-- 모달 외부 클릭 시 닫히도록 `onClick` 이벤트 처리
+- 모달 외부 클릭 시 닫히도록 overlay에 `onClick` 이벤트 처리
+- content 영역은 `e.stopPropagation()`으로 클릭 이벤트 차단
+- **참고**: `ArchitectureModal.js`는 사용 안 함 (PhaseModal.js로 통합됨)
 
 #### 5. 반응형 수정
 - 각 컴포넌트 CSS 하단의 `@media (max-width: 768px)` 수정
