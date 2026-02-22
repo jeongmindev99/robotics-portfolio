@@ -10,12 +10,26 @@ const archItemSchema = [
 ];
 
 const layerSchema = [
-  { key: 'name',        label: '항목명',     type: 'text' },
-  { key: 'description', label: '설명 (툴팁)', type: 'text' },
-  { key: 'experienced', label: '직접 경험',   type: 'boolean' },
-  { key: 'indirect',    label: '간접 경험',   type: 'boolean' },
-  { key: 'stage',       label: 'Stage 번호', type: 'number' },
+  { key: 'name',           label: '항목명',     type: 'text' },
+  { key: 'description',    label: '설명 (툴팁)', type: 'text' },
+  { key: 'experienceType', label: '경험',        type: 'select', options: ['미경험', '직접 경험', '간접 경험'] },
+  { key: 'stage',          label: 'Stage 번호', type: 'number' },
 ];
+
+const layerToFormValues = (layer) => ({
+  name: layer.name,
+  description: layer.description,
+  experienceType: layer.indirect ? '간접 경험' : (layer.experienced ? '직접 경험' : '미경험'),
+  stage: layer.stage,
+});
+
+const formValuesToLayer = (values) => ({
+  name: values.name,
+  description: values.description,
+  experienced: values.experienceType !== '미경험',
+  indirect: values.experienceType === '간접 경험',
+  stage: values.stage,
+});
 
 function ArchitectureView({ onClose, phase, isAdminMode, notionLink }) {
   const { isAdmin, isAuthed, data, updateArchitectureItem, updatePhaseMeta } = useAdmin();
@@ -409,8 +423,8 @@ function PhaseModal({ phase, onClose, isAdminMode }) {
         <AdminEditModal
           title="Phase 항목 수정"
           schema={layerSchema}
-          initialValues={editingLayer}
-          onSave={(values) => handleSave(editTarget.index, values)}
+          initialValues={layerToFormValues(editingLayer)}
+          onSave={(values) => handleSave(editTarget.index, formValuesToLayer(values))}
           onClose={() => setEditTarget(null)}
         />
       )}
