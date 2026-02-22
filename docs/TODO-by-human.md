@@ -14,14 +14,3 @@
 
 ### Notion 연동
 - [ ] PhaseModal의 ArchitectureView에 노션 링크 연결
-
----
-
-## 완료된 작업
-
-- [x] SW 개발 아키텍처 수정 가능한 구조로 (arch-node ✏️ 버튼, AdminContext 뮤테이션) — PR #7
-- [x] 날짜 하드코딩 제거 (Navigation 저작권 연도, Hero growthStart 파싱) — PR #7
-- [x] 소개 문구·통계 수정 가능한 구조로 (heroData.js 분리, admin ✏️ UI) — PR #7
-- [x] 성장 기간 수정 가능한 구조로 (heroContent.growthStart admin 편집 지원) — PR #7
-- [x] 사이트 배포 수 자동 계산 (sites.length 참조) — PR #7
-- [x] 이메일·링크 수정 가능한 구조로 (contactData.js 분리, admin ✏️ UI) — PR #7
