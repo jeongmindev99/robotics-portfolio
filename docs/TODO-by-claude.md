@@ -53,6 +53,113 @@
 
 ---
 
+## 다음 작업
+
+---
+
+### A. 간접 경험 데이터 — 전 Phase 확장
+
+**배경**: `indirect: true` 마킹이 현재 `design` Phase에만 적용되어 있음.
+`inspection` ~ `cicd`의 각 항목에는 `indirect` 필드 자체가 없어, 간접 경험을 표현할 수 없음.
+렌더링 로직(PhaseModal.js)과 admin 편집 스키마(layerSchema)는 이미 `indirect`를 지원 중.
+
+**현재 상태 (`src/data/phaseData.js`)**:
+- `design`: `indirect: true/false` 명시 ✅
+- `inspection`, `assembly`, `setup`, `operation`, `cicd`: `indirect` 필드 없음 ❌
+
+#### A-1. phaseData.js 데이터 수정 (`src/data/phaseData.js`)
+
+각 Phase별 `experienced: true` 항목을 검토하여 직접/간접 여부 판단 후 `indirect` 필드 추가.
+
+| Phase | `indirect: true` 후보 (검토 필요) |
+|-------|----------------------------------|
+| inspection | 외관·치수 검사, PCB 검사, 전기 테스트, 전원 테스트, 낙하·진동 시험, 방수·방진 테스트, EMC 테스트, 품질 기록 |
+| assembly | 프레임 조립, 모터 장착, 센서 장착, 전자부 통합, 케이블 배선, 도장·마감, 방수 씰링, 무게중심 측정, 통합 테스트 |
+| setup | 네트워크 인프라 설치, 경로 최적화, 시나리오 개발, 이미지 학습, 안전 설정, 통합 시험·인수 테스트, 운영 교육 |
+| operation | 예측 정비 |
+| cicd | 자동 빌드, 자동 테스트, 배포 자동화, 모니터링 연동 |
+
+- [ ] `inspection` 각 항목에 `indirect: true/false` 추가
+- [ ] `assembly` 각 항목에 `indirect: true/false` 추가
+- [ ] `setup` 각 항목에 `indirect: true/false` 추가
+- [ ] `operation` 각 항목에 `indirect: true/false` 추가
+- [ ] `cicd` 각 항목에 `indirect: true/false` 추가
+
+> **작업 방법**: `experienced: false` 항목은 `indirect: false`로 통일.
+> `experienced: true` 항목만 직접(false) / 간접(true) 구분.
+
+---
+
+### B. 데이터 정확성 — Phase별 하위 항목 검토
+
+**배경**: phaseData.js의 `experienced` 값이 실제 경험과 일치하는지 전수 검토 필요.
+A항목(indirect 추가) 작업과 병행하여 진행.
+
+#### B-1. 각 Phase 항목 정확성 검토 (`src/data/phaseData.js`)
+
+- [ ] **design** — 현재 `experienced: true` 항목 (구동계 선정, 센서 선정, 하드웨어 통신 선정, SW 아키텍처) 정확한지 확인
+- [ ] **inspection** — CAN 통신 테스트, 모터 테스트, 센서 테스트만 `experienced: true`인 것이 맞는지 확인
+- [ ] **assembly** — 조인트/센서 캘리브레이션만 `experienced: true`인 것이 맞는지 확인
+- [ ] **setup** — 현장 평가, 지도 생성, 존·구역 설정, 포즈 등록만 `experienced: true`인 것이 맞는지 확인
+- [ ] **operation** — 예측 정비를 제외한 전 항목 `experienced: true`인 것이 맞는지 확인
+- [ ] **cicd** — 버전 관리, 코드 리뷰, 컨테이너화, 설정 관리, 롤백, 릴리스 관리가 `experienced: true`인 것이 맞는지 확인
+- [ ] **architectureLayers** — Perception 그룹(SLAM, Object Detection, Sensor Fusion, Point Cloud) 전체 `experienced: false`인 것이 맞는지 확인
+
+#### B-2. 누락 항목 추가
+
+- [ ] 각 Phase에서 빠진 실제 경험 항목이 있다면 추가
+- [ ] 추가 시 `name`, `description`, `experienced`, `indirect`, `stage` 필드 모두 기입
+
+---
+
+### C. Notion 연동 — ArchitectureView 노션 링크
+
+**배경**: 다른 섹션(ProjectsSection, DeploymentSection)은 카드마다 `notionLink`가 있지만,
+SW 개발 아키텍처 모달(ArchitectureView)에는 노션 링크가 없음.
+`phaseDetails.development`에 `notionLink` 필드를 추가하고 ArchitectureView 헤더에 표시.
+
+#### C-1. phaseData.js 수정 (`src/data/phaseData.js`)
+- [ ] `phaseDetails.development`에 `notionLink` 필드 추가
+  ```js
+  development: {
+    description: '로봇 소프트웨어 시스템을 개발하는 핵심 단계',
+    isArchitecture: true,
+    notionLink: 'https://...',  // 추가
+  },
+  ```
+
+#### C-2. AdminContext.js 수정 (`src/context/AdminContext.js`)
+- [ ] `updatePhaseMeta(phaseId, fields)` 뮤테이션 추가
+  - `phaseDetails[phaseId]`의 `description`, `notionLink` 등 레이어 외 필드 수정용
+  - `markDirty('phaseDetails')` 호출
+- [ ] context value에 `updatePhaseMeta` 추가
+
+#### C-3. PhaseModal.js 수정 (`src/components/PhaseModal.js`)
+- [ ] `ArchitectureView`에 `notionLink` prop 전달
+  ```js
+  // details에서 꺼내서 전달 (adminActive 반영)
+  const activeDetails = adminActive ? data.phaseDetails : phaseDetails;
+  const devDetails = activeDetails['development'];
+  return <ArchitectureView ... notionLink={devDetails.notionLink} />;
+  ```
+- [ ] `ArchitectureView` 함수 파라미터에 `notionLink` 추가
+- [ ] 헤더 영역에 노션 링크 버튼 렌더
+  ```jsx
+  {notionLink && (
+    <a href={notionLink} target="_blank" rel="noopener noreferrer" className="notion-link-btn">
+      Notion에서 보기 ↗
+    </a>
+  )}
+  ```
+- [ ] admin 모드: 헤더에 ✏️ 버튼 추가 → `notionLink` 편집 모달 열기
+  - schema: `[{ key: 'notionLink', label: 'Notion URL', type: 'url' }]`
+  - 저장 시 `updatePhaseMeta('development', { notionLink })` 호출
+
+#### C-4. PhaseModal.css 수정 (`src/components/PhaseModal.css`)
+- [ ] `.notion-link-btn` 스타일 추가 (다른 섹션의 Notion 버튼과 일관성 있게)
+
+---
+
 ## 남은 항목
 
 - [ ] `npm run deploy` 후 `?admin` 없이 접속 → 관리자 UI 미노출 확인 (배포 후 수동 확인)
