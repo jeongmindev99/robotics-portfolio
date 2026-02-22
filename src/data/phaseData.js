@@ -41,20 +41,20 @@ export const phaseDetails = {
     description: '조립 전 부품 및 전장품의 품질을 검증하는 단계',
     layers: [
       // Stage 1: 외관 검사 (순차 첫 번째)
-      { name: '외관·치수 검사', description: '부품 손상, 이물질, 마킹 및 기구 공차 확인', experienced: false, stage: 1 },
+      { name: '외관·치수 검사', description: '부품 손상, 이물질, 마킹 및 기구 공차 확인', experienced: false, indirect: false, stage: 1 },
       // Stage 2: 전기/기능 검증 (병렬)
-      { name: 'PCB 검사',      description: 'PCB 납땜 상태 및 패턴 검사',            experienced: false, stage: 2 },
-      { name: '전기 테스트',   description: '절연 저항, 도통, 전압 측정',            experienced: false, stage: 2 },
-      { name: 'CAN 통신 테스트', description: '모터 드라이버, 센서 CAN 통신 검증',  experienced: true,  stage: 2 },
-      { name: '모터 테스트',   description: '정/역방향 회전, 토크, 전류 테스트',     experienced: true,  stage: 2 },
-      { name: '센서 테스트',   description: 'LiDAR, 카메라, IMU 데이터 검증',       experienced: true,  stage: 2 },
-      { name: '전원 테스트',   description: '배터리 전압, 전류, 충방전 테스트',      experienced: false, stage: 2 },
+      { name: 'PCB 검사',        description: 'PCB 납땜 상태 및 패턴 검사',            experienced: false, indirect: false, stage: 2 },
+      { name: '전기 테스트',     description: '절연 저항, 도통, 전압 측정',            experienced: false, indirect: false, stage: 2 },
+      { name: 'CAN 통신 테스트', description: '모터 드라이버, 센서 CAN 통신 검증',    experienced: true,  indirect: false, stage: 2 },
+      { name: '모터 테스트',     description: '정/역방향 회전, 토크, 전류 테스트',     experienced: true,  indirect: false, stage: 2 },
+      { name: '센서 테스트',     description: 'LiDAR, 카메라, IMU 데이터 검증',       experienced: true,  indirect: false, stage: 2 },
+      { name: '전원 테스트',     description: '배터리 전압, 전류, 충방전 테스트',      experienced: false, indirect: false, stage: 2 },
       // Stage 3: 환경 시험 (병렬)
-      { name: '낙하·진동 시험',  description: '기계적 충격 및 진동 내구성 테스트',    experienced: false, stage: 3 },
-      { name: '방수·방진 테스트', description: 'IP 등급 기준 침수 및 먼지 차단 테스트', experienced: false, stage: 3 },
-      { name: 'EMC 테스트',     description: '전자기 적합성 및 외부 간섭 테스트',     experienced: false, stage: 3 },
+      { name: '낙하·진동 시험',   description: '기계적 충격 및 진동 내구성 테스트',      experienced: false, indirect: false, stage: 3 },
+      { name: '방수·방진 테스트', description: 'IP 등급 기준 침수 및 먼지 차단 테스트', experienced: false, indirect: false, stage: 3 },
+      { name: 'EMC 테스트',       description: '전자기 적합성 및 외부 간섭 테스트',     experienced: false, indirect: false, stage: 3 },
       // Stage 4: 기록 (순차 마지막)
-      { name: '품질 기록', description: '검사 결과 문서화 및 이력 관리', experienced: false, stage: 4 },
+      { name: '품질 기록', description: '검사 결과 문서화 및 이력 관리', experienced: false, indirect: false, stage: 4 },
     ]
   },
 
@@ -62,52 +62,53 @@ export const phaseDetails = {
     description: '검증된 부품들을 조립하고 캘리브레이션하는 단계',
     layers: [
       // Stage 1: 골격 (순차)
-      { name: '프레임 조립', description: '로봇 본체 프레임 및 샤시 조립', experienced: false, stage: 1 },
+      { name: '프레임 조립', description: '로봇 본체 프레임 및 샤시 조립', experienced: false, indirect: false, stage: 1 },
       // Stage 2: 부품 장착 (병렬)
-      { name: '모터 장착',   description: '휠/암 모터 및 감속기 장착',               experienced: false, stage: 2 },
-      { name: '센서 장착',   description: 'LiDAR, 카메라, 초음파 센서 마운팅',       experienced: false, stage: 2 },
-      { name: '전자부 통합', description: '컨트롤러, 드라이버 보드 장착',             experienced: false, stage: 2 },
+      { name: '모터 장착',   description: '휠/암 모터 및 감속기 장착',               experienced: false, indirect: false, stage: 2 },
+      { name: '센서 장착',   description: 'LiDAR, 카메라, 초음파 센서 마운팅',       experienced: false, indirect: false, stage: 2 },
+      { name: '전자부 통합', description: '컨트롤러, 드라이버 보드 장착',             experienced: false, indirect: false, stage: 2 },
       // Stage 3: 배선 (순차)
-      { name: '케이블 배선 및 결선', description: '와이어 하네스 제작, 케이블 라우팅, 커넥터 압착/납땜', experienced: false, stage: 3 },
-      { name: '접지 처리',          description: '접지 연결 및 본딩',                                   experienced: false, stage: 3 },
+      { name: '케이블 배선 및 결선', description: '와이어 하네스 제작, 케이블 라우팅, 커넥터 압착/납땜', experienced: false, indirect: false, stage: 3 },
+      { name: '접지 처리',          description: '접지 연결 및 본딩',                                   experienced: false, indirect: false, stage: 3 },
       // Stage 4: 외장 마감 (병렬)
-      { name: '도장·마감',  description: '표면 처리 및 외장 마감 작업',   experienced: false, stage: 4 },
-      { name: '방수 씰링',  description: '커넥터 및 개구부 방수 처리',    experienced: false, stage: 4 },
+      { name: '도장·마감', description: '표면 처리 및 외장 마감 작업', experienced: false, indirect: false, stage: 4 },
+      { name: '방수 씰링', description: '커넥터 및 개구부 방수 처리', experienced: false, indirect: false, stage: 4 },
       // Stage 5: 품질 확인 (순차)
-      { name: '무게중심 측정', description: '조립 완료 후 중량 및 무게중심 밸런스 확인', experienced: false, stage: 5 },
+      { name: '무게중심 측정', description: '조립 완료 후 중량 및 무게중심 밸런스 확인', experienced: false, indirect: false, stage: 5 },
       // Stage 6: 캘리브레이션 (병렬)
-      { name: '조인트 캘리브레이션', description: '조인트 영점 및 엔코더 정렬',    experienced: true,  stage: 6 },
-      { name: '센서 캘리브레이션',   description: '카메라 내외부 파라미터 보정',  experienced: true,  stage: 6 },
+      { name: '조인트 캘리브레이션', description: '조인트 영점 및 엔코더 정렬',  experienced: true, indirect: false, stage: 6 },
+      { name: '센서 캘리브레이션',   description: '카메라 내외부 파라미터 보정', experienced: true, indirect: false, stage: 6 },
       // Stage 7: 통합 검증 (순차 마지막)
-      { name: '통합 테스트', description: '조립 완료 후 전체 동작 확인', experienced: false, stage: 7 },
+      { name: '통합 테스트', description: '조립 완료 후 전체 동작 확인', experienced: false, indirect: false, stage: 7 },
     ]
   },
 
   development: {
     description: '로봇 소프트웨어 시스템을 개발하는 핵심 단계',
     isArchitecture: true,
+    notionLink: '',
   },
 
   setup: {
     description: '실제 현장에서 로봇을 세팅하고 시나리오를 구성하는 단계',
     layers: [
       // Stage 1: 현장 진입 (순차)
-      { name: '현장 평가',          description: '바닥 상태, 네트워크, 장애물 사전 조사',  experienced: true,  stage: 1 },
+      { name: '현장 평가',           description: '바닥 상태, 네트워크, 장애물 사전 조사',        experienced: true,  indirect: false, stage: 1 },
       // Stage 2: 인프라 구축 (순차)
-      { name: '네트워크 인프라 설치', description: 'WiFi AP 설치, 엘리베이터 IO·도어 제어 연동', experienced: false, stage: 2 },
+      { name: '네트워크 인프라 설치', description: 'WiFi AP 설치, 엘리베이터 IO·도어 제어 연동', experienced: false, indirect: false, stage: 2 },
       // Stage 3: 지도 생성 (순차)
-      { name: '지도 생성', description: 'SLAM으로 현장 지도 생성 및 편집', experienced: true, stage: 3 },
+      { name: '지도 생성', description: 'SLAM으로 현장 지도 생성 및 편집', experienced: true, indirect: false, stage: 3 },
       // Stage 4: 공간 설정 (병렬)
-      { name: '존·구역 설정', description: '엘리베이터, 출입문, 금지 구역 설정', experienced: true, stage: 4 },
-      { name: '포즈 등록',    description: '대기, 충전, 배송 위치 좌표 등록',  experienced: true, stage: 4 },
+      { name: '존·구역 설정', description: '엘리베이터, 출입문, 금지 구역 설정', experienced: true, indirect: false, stage: 4 },
+      { name: '포즈 등록',    description: '대기, 충전, 배송 위치 좌표 등록',    experienced: true, indirect: false, stage: 4 },
       // Stage 5: 시나리오 구성 (병렬)
-      { name: '경로 최적화',   description: '이동 경로 및 대기 전략 최적화',       experienced: false, stage: 5 },
-      { name: '시나리오 개발', description: '배송 플로우 및 예외 처리 구현',       experienced: false, stage: 5 },
-      { name: '이미지 학습',   description: '버튼, 도어 인식 모델 현장 학습',     experienced: false, stage: 5 },
-      { name: '안전 설정',     description: '비상정지, 속도 제한, 안전 구역 설정', experienced: false, stage: 5 },
+      { name: '경로 최적화',   description: '이동 경로 및 대기 전략 최적화',       experienced: false, indirect: false, stage: 5 },
+      { name: '시나리오 개발', description: '배송 플로우 및 예외 처리 구현',       experienced: false, indirect: false, stage: 5 },
+      { name: '이미지 학습',   description: '버튼, 도어 인식 모델 현장 학습',     experienced: false, indirect: false, stage: 5 },
+      { name: '안전 설정',     description: '비상정지, 속도 제한, 안전 구역 설정', experienced: false, indirect: false, stage: 5 },
       // Stage 6: 최종 검증 및 인계 (병렬)
-      { name: '통합 시험·인수 테스트', description: '전체 시나리오 반복 테스트 및 고객 입회 최종 검증', experienced: false, stage: 6 },
-      { name: '운영 교육',             description: '현장 담당자 교육 및 비상 시 대응 절차 수립',     experienced: false, stage: 6 },
+      { name: '통합 시험·인수 테스트', description: '전체 시나리오 반복 테스트 및 고객 입회 최종 검증', experienced: false, indirect: false, stage: 6 },
+      { name: '운영 교육',             description: '현장 담당자 교육 및 비상 시 대응 절차 수립',     experienced: false, indirect: false, stage: 6 },
     ]
   },
 
@@ -115,19 +116,19 @@ export const phaseDetails = {
     description: '배포된 로봇을 모니터링하고 유지보수하는 단계',
     layers: [
       // Stage 1: 실시간 모니터링 (병렬, 상시)
-      { name: '실시간 모니터링', description: '로봇 상태, 위치, 배터리 실시간 확인', experienced: true,  stage: 1 },
-      { name: '플릿 관리',       description: '다중 로봇 작업 배분 및 스케줄링',    experienced: true,  stage: 1 },
-      { name: '알림/경보',       description: '이상 상황 즉시 알림 (SMS, Slack 등)', experienced: true,  stage: 1 },
+      { name: '실시간 모니터링', description: '로봇 상태, 위치, 배터리 실시간 확인', experienced: true,  indirect: false, stage: 1 },
+      { name: '플릿 관리',       description: '다중 로봇 작업 배분 및 스케줄링',    experienced: true,  indirect: false, stage: 1 },
+      { name: '알림/경보',       description: '이상 상황 즉시 알림 (SMS, Slack 등)', experienced: true,  indirect: false, stage: 1 },
       // Stage 2: 장애 대응 (병렬, 발생 시)
-      { name: '장애 대응', description: '현장 이슈 원격/현장 대응',        experienced: true, stage: 2 },
-      { name: '로그 분석', description: '시스템 로그 분석으로 원인 파악',  experienced: true, stage: 2 },
-      { name: '원격 지원', description: 'SSH, VPN으로 원격 디버깅',        experienced: true, stage: 2 },
+      { name: '장애 대응', description: '현장 이슈 원격/현장 대응',       experienced: true,  indirect: false, stage: 2 },
+      { name: '로그 분석', description: '시스템 로그 분석으로 원인 파악', experienced: true,  indirect: false, stage: 2 },
+      { name: '원격 지원', description: 'SSH, VPN으로 원격 디버깅',       experienced: true,  indirect: false, stage: 2 },
       // Stage 3: 성과 분석 (병렬, 주기적)
-      { name: '성능 분석', description: '가동률, 배송 성공률 등 KPI 분석', experienced: true, stage: 3 },
-      { name: '리포팅',    description: '운영 현황 보고서 작성',            experienced: true, stage: 3 },
+      { name: '성능 분석', description: '가동률, 배송 성공률 등 KPI 분석', experienced: true,  indirect: false, stage: 3 },
+      { name: '리포팅',    description: '운영 현황 보고서 작성',           experienced: true,  indirect: false, stage: 3 },
       // Stage 4: 정비 (병렬, 계획적)
-      { name: '예방 정비', description: '정기 점검 및 소모품 교체',              experienced: true,  stage: 4 },
-      { name: '예측 정비', description: '데이터 기반 고장 예측 및 선제 조치',    experienced: false, stage: 4 },
+      { name: '예방 정비', description: '정기 점검 및 소모품 교체',           experienced: true,  indirect: false, stage: 4 },
+      { name: '예측 정비', description: '데이터 기반 고장 예측 및 선제 조치', experienced: false, indirect: false, stage: 4 },
     ]
   },
 
@@ -135,20 +136,20 @@ export const phaseDetails = {
     description: '소프트웨어 배포 및 버전 관리를 자동화하는 단계',
     layers: [
       // Stage 1: 개발 관리 (병렬, 상시)
-      { name: '버전 관리', description: 'Git 브랜치 전략 및 태깅',   experienced: true, stage: 1 },
-      { name: '코드 리뷰', description: 'PR 기반 코드 리뷰 프로세스', experienced: true, stage: 1 },
+      { name: '버전 관리', description: 'Git 브랜치 전략 및 태깅',    experienced: true,  indirect: false, stage: 1 },
+      { name: '코드 리뷰', description: 'PR 기반 코드 리뷰 프로세스', experienced: true,  indirect: false, stage: 1 },
       // Stage 2: 자동화 검증 (병렬)
-      { name: '자동 빌드', description: '코드 변경 시 자동 빌드 트리거',        experienced: false, stage: 2 },
-      { name: '자동 테스트', description: 'Unit/Integration 테스트 자동화',     experienced: false, stage: 2 },
+      { name: '자동 빌드',   description: '코드 변경 시 자동 빌드 트리거',    experienced: false, indirect: false, stage: 2 },
+      { name: '자동 테스트', description: 'Unit/Integration 테스트 자동화', experienced: false, indirect: false, stage: 2 },
       // Stage 3: 패키징 (병렬)
-      { name: '컨테이너화', description: '애플리케이션 컨테이너 이미지 생성', experienced: true, stage: 3 },
-      { name: '설정 관리',  description: '환경별 설정 파일 관리',             experienced: true, stage: 3 },
+      { name: '컨테이너화', description: '애플리케이션 컨테이너 이미지 생성', experienced: true,  indirect: false, stage: 3 },
+      { name: '설정 관리',  description: '환경별 설정 파일 관리',             experienced: true,  indirect: false, stage: 3 },
       // Stage 4: 배포 (병렬)
-      { name: '배포 자동화', description: '스테이징/프로덕션 자동 배포',       experienced: false, stage: 4 },
-      { name: '롤백',        description: '이전 버전으로 신속하게 복구',        experienced: true,  stage: 4 },
+      { name: '배포 자동화', description: '스테이징/프로덕션 자동 배포',  experienced: false, indirect: false, stage: 4 },
+      { name: '롤백',        description: '이전 버전으로 신속하게 복구', experienced: true,  indirect: false, stage: 4 },
       // Stage 5: 릴리스 관리 (병렬)
-      { name: '릴리스 관리',   description: '릴리스 노트 및 변경 이력 관리',       experienced: true,  stage: 5 },
-      { name: '모니터링 연동', description: '배포 후 헬스체크 및 알림 연동',       experienced: false, stage: 5 },
+      { name: '릴리스 관리',   description: '릴리스 노트 및 변경 이력 관리', experienced: true,  indirect: false, stage: 5 },
+      { name: '모니터링 연동', description: '배포 후 헬스체크 및 알림 연동', experienced: false, indirect: false, stage: 5 },
     ]
   }
 };

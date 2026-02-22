@@ -17,10 +17,11 @@ const layerSchema = [
   { key: 'stage',       label: 'Stage 번호', type: 'number' },
 ];
 
-function ArchitectureView({ onClose, phase, isAdminMode }) {
-  const { isAdmin, isAuthed, data, updateArchitectureItem } = useAdmin();
+function ArchitectureView({ onClose, phase, isAdminMode, notionLink }) {
+  const { isAdmin, isAuthed, data, updateArchitectureItem, updatePhaseMeta } = useAdmin();
   const adminActive = isAdmin && isAuthed && isAdminMode;
   const [editTarget, setEditTarget] = useState(null); // { layerIdx, groupIdx, itemIdx }
+  const [editingNotion, setEditingNotion] = useState(false);
 
   const activeArchLayers = adminActive ? data.architectureLayers : architectureLayers;
 
@@ -167,6 +168,25 @@ function ArchitectureView({ onClose, phase, isAdminMode }) {
             <p className="phase-modal-description">
               {experiencedItems}/{totalItems} components experienced
             </p>
+            <div className="arch-header-actions">
+              {notionLink && (
+                <a
+                  href={notionLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="arch-notion-link"
+                >
+                  Notion에서 보기 ↗
+                </a>
+              )}
+              {adminActive && (
+                <button
+                  className="admin-btn admin-btn-edit arch-notion-edit-btn"
+                  onClick={() => setEditingNotion(true)}
+                  title="Notion 링크 수정"
+                >✏️ Notion 링크</button>
+              )}
+            </div>
           </div>
 
           <div className="arch-diagram">
@@ -212,6 +232,16 @@ function ArchitectureView({ onClose, phase, isAdminMode }) {
           onClose={() => setEditTarget(null)}
         />
       )}
+
+      {editingNotion && (
+        <AdminEditModal
+          title="Notion 링크 수정"
+          schema={[{ key: 'notionLink', label: 'Notion URL', type: 'url' }]}
+          initialValues={{ notionLink: notionLink || '' }}
+          onSave={(values) => { updatePhaseMeta(phase.id, values); setEditingNotion(false); }}
+          onClose={() => setEditingNotion(false)}
+        />
+      )}
     </>
   );
 }
@@ -228,7 +258,7 @@ function PhaseModal({ phase, onClose, isAdminMode }) {
   const details = activePhaseDetails[phase.id];
 
   if (details.isArchitecture) {
-    return <ArchitectureView phase={phase} onClose={onClose} isAdminMode={isAdminMode} />;
+    return <ArchitectureView phase={phase} onClose={onClose} isAdminMode={isAdminMode} notionLink={details.notionLink || ''} />;
   }
 
   // Group layers by stage

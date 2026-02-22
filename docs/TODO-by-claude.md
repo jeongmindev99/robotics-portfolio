@@ -79,11 +79,11 @@
 | operation | 예측 정비 |
 | cicd | 자동 빌드, 자동 테스트, 배포 자동화, 모니터링 연동 |
 
-- [ ] `inspection` 각 항목에 `indirect: true/false` 추가
-- [ ] `assembly` 각 항목에 `indirect: true/false` 추가
-- [ ] `setup` 각 항목에 `indirect: true/false` 추가
-- [ ] `operation` 각 항목에 `indirect: true/false` 추가
-- [ ] `cicd` 각 항목에 `indirect: true/false` 추가
+- [x] `inspection` 각 항목에 `indirect: true/false` 추가
+- [x] `assembly` 각 항목에 `indirect: true/false` 추가
+- [x] `setup` 각 항목에 `indirect: true/false` 추가
+- [x] `operation` 각 항목에 `indirect: true/false` 추가
+- [x] `cicd` 각 항목에 `indirect: true/false` 추가
 
 > **작업 방법**: `experienced: false` 항목은 `indirect: false`로 통일.
 > `experienced: true` 항목만 직접(false) / 간접(true) 구분.
@@ -119,44 +119,19 @@ SW 개발 아키텍처 모달(ArchitectureView)에는 노션 링크가 없음.
 `phaseDetails.development`에 `notionLink` 필드를 추가하고 ArchitectureView 헤더에 표시.
 
 #### C-1. phaseData.js 수정 (`src/data/phaseData.js`)
-- [ ] `phaseDetails.development`에 `notionLink` 필드 추가
-  ```js
-  development: {
-    description: '로봇 소프트웨어 시스템을 개발하는 핵심 단계',
-    isArchitecture: true,
-    notionLink: 'https://...',  // 추가
-  },
-  ```
+- [x] `phaseDetails.development`에 `notionLink: ''` 필드 추가
 
 #### C-2. AdminContext.js 수정 (`src/context/AdminContext.js`)
-- [ ] `updatePhaseMeta(phaseId, fields)` 뮤테이션 추가
-  - `phaseDetails[phaseId]`의 `description`, `notionLink` 등 레이어 외 필드 수정용
-  - `markDirty('phaseDetails')` 호출
-- [ ] context value에 `updatePhaseMeta` 추가
+- [x] `updatePhaseMeta(phaseId, fields)` 뮤테이션 추가
+- [x] context value에 `updatePhaseMeta` 추가
 
 #### C-3. PhaseModal.js 수정 (`src/components/PhaseModal.js`)
-- [ ] `ArchitectureView`에 `notionLink` prop 전달
-  ```js
-  // details에서 꺼내서 전달 (adminActive 반영)
-  const activeDetails = adminActive ? data.phaseDetails : phaseDetails;
-  const devDetails = activeDetails['development'];
-  return <ArchitectureView ... notionLink={devDetails.notionLink} />;
-  ```
-- [ ] `ArchitectureView` 함수 파라미터에 `notionLink` 추가
-- [ ] 헤더 영역에 노션 링크 버튼 렌더
-  ```jsx
-  {notionLink && (
-    <a href={notionLink} target="_blank" rel="noopener noreferrer" className="notion-link-btn">
-      Notion에서 보기 ↗
-    </a>
-  )}
-  ```
-- [ ] admin 모드: 헤더에 ✏️ 버튼 추가 → `notionLink` 편집 모달 열기
-  - schema: `[{ key: 'notionLink', label: 'Notion URL', type: 'url' }]`
-  - 저장 시 `updatePhaseMeta('development', { notionLink })` 호출
+- [x] `ArchitectureView`에 `notionLink={details.notionLink || ''}` prop 전달
+- [x] 헤더 `.arch-header-actions` 영역에 Notion 링크 버튼 렌더 (notionLink 있을 때만)
+- [x] admin 모드: `✏️ Notion 링크` 버튼 → AdminEditModal 열기 → `updatePhaseMeta` 호출
 
 #### C-4. PhaseModal.css 수정 (`src/components/PhaseModal.css`)
-- [ ] `.notion-link-btn` 스타일 추가 (다른 섹션의 Notion 버튼과 일관성 있게)
+- [x] `.arch-header-actions`, `.arch-notion-link`, `.arch-notion-edit-btn` 스타일 추가
 
 ---
 
