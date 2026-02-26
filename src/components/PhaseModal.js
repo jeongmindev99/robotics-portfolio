@@ -10,17 +10,32 @@ const archItemSchema = [
 ];
 
 const layerSchema = [
-  { key: 'name',        label: '항목명',     type: 'text' },
-  { key: 'description', label: '설명 (툴팁)', type: 'text' },
-  { key: 'experienced', label: '직접 경험',   type: 'boolean' },
-  { key: 'indirect',    label: '간접 경험',   type: 'boolean' },
-  { key: 'stage',       label: 'Stage 번호', type: 'number' },
+  { key: 'name',           label: '항목명',     type: 'text' },
+  { key: 'description',    label: '설명 (툴팁)', type: 'text' },
+  { key: 'experienceType', label: '경험',        type: 'select', options: ['미경험', '직접 경험', '간접 경험'] },
+  { key: 'stage',          label: 'Stage 번호', type: 'number' },
 ];
 
-function ArchitectureView({ onClose, phase, isAdminMode }) {
-  const { isAdmin, isAuthed, data, updateArchitectureItem } = useAdmin();
+const layerToFormValues = (layer) => ({
+  name: layer.name,
+  description: layer.description,
+  experienceType: layer.indirect ? '간접 경험' : (layer.experienced ? '직접 경험' : '미경험'),
+  stage: layer.stage,
+});
+
+const formValuesToLayer = (values) => ({
+  name: values.name,
+  description: values.description,
+  experienced: values.experienceType !== '미경험',
+  indirect: values.experienceType === '간접 경험',
+  stage: values.stage,
+});
+
+function ArchitectureView({ onClose, phase, isAdminMode, notionLink }) {
+  const { isAdmin, isAuthed, data, updateArchitectureItem, updatePhaseMeta } = useAdmin();
   const adminActive = isAdmin && isAuthed && isAdminMode;
   const [editTarget, setEditTarget] = useState(null); // { layerIdx, groupIdx, itemIdx }
+  const [editingNotion, setEditingNotion] = useState(false);
 
   const activeArchLayers = adminActive ? data.architectureLayers : architectureLayers;
 
@@ -167,6 +182,25 @@ function ArchitectureView({ onClose, phase, isAdminMode }) {
             <p className="phase-modal-description">
               {experiencedItems}/{totalItems} components experienced
             </p>
+            <div className="arch-header-actions">
+              {notionLink && (
+                <a
+                  href={notionLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="arch-notion-link"
+                >
+                  Notion에서 보기 ↗
+                </a>
+              )}
+              {adminActive && (
+                <button
+                  className="admin-btn admin-btn-edit arch-notion-edit-btn"
+                  onClick={() => setEditingNotion(true)}
+                  title="Notion 링크 수정"
+                >✏️ Notion 링크</button>
+              )}
+            </div>
           </div>
 
           <div className="arch-diagram">
@@ -212,6 +246,16 @@ function ArchitectureView({ onClose, phase, isAdminMode }) {
           onClose={() => setEditTarget(null)}
         />
       )}
+
+      {editingNotion && (
+        <AdminEditModal
+          title="Notion 링크 수정"
+          schema={[{ key: 'notionLink', label: 'Notion URL', type: 'url' }]}
+          initialValues={{ notionLink: notionLink || '' }}
+          onSave={(values) => { updatePhaseMeta(phase.id, values); setEditingNotion(false); }}
+          onClose={() => setEditingNotion(false)}
+        />
+      )}
     </>
   );
 }
@@ -228,7 +272,7 @@ function PhaseModal({ phase, onClose, isAdminMode }) {
   const details = activePhaseDetails[phase.id];
 
   if (details.isArchitecture) {
-    return <ArchitectureView phase={phase} onClose={onClose} isAdminMode={isAdminMode} />;
+    return <ArchitectureView phase={phase} onClose={onClose} isAdminMode={isAdminMode} notionLink={details.notionLink || ''} />;
   }
 
   // Group layers by stage
@@ -379,8 +423,8 @@ function PhaseModal({ phase, onClose, isAdminMode }) {
         <AdminEditModal
           title="Phase 항목 수정"
           schema={layerSchema}
-          initialValues={editingLayer}
-          onSave={(values) => handleSave(editTarget.index, values)}
+          initialValues={layerToFormValues(editingLayer)}
+          onSave={(values) => handleSave(editTarget.index, formValuesToLayer(values))}
           onClose={() => setEditTarget(null)}
         />
       )}

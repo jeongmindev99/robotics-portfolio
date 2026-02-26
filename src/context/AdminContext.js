@@ -333,6 +333,13 @@ export function AdminProvider({ children }) {
   }, [setKey]);
 
   // ─── PhaseDetails ──────────────────────────────────────────────────────────
+  const updatePhaseMeta = useCallback((phaseId, fields) => {
+    setKey('phaseDetails', details => ({
+      ...details,
+      [phaseId]: { ...details[phaseId], ...fields },
+    }));
+  }, [setKey]);
+
   const updatePhaseLayer = useCallback((phaseId, index, fields) => {
     setKey('phaseDetails', details => ({
       ...details,
@@ -405,6 +412,7 @@ export function AdminProvider({ children }) {
     updateLearningItem,
     deleteLearningItem,
     addLearningItem,
+    updatePhaseMeta,
     updatePhaseLayer,
     deletePhaseLayer,
     addPhaseLayer,

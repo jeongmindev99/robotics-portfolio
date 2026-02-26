@@ -524,6 +524,46 @@
   display: none;
 }
 
+/* Notion Link */
+.arch-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.arch-notion-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.arch-notion-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.arch-notion-edit-btn {
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px dashed rgba(255, 107, 53, 0.4);
+  background: transparent;
+  color: var(--accent-warning);
+  cursor: pointer;
+}
+
 /* ==================== */
 /* Admin Mode Styles     */
 /* ==================== */
