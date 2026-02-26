@@ -27,14 +27,14 @@ App.js (AdminProvider 래핑, 스크롤 트래킹)
 ├── AdminLoginPrompt.js  # ?admin 접속 시 비밀번호 입력 오버레이
 ├── AdminBar.js          # 관리자 모드 상단 고정 바
 ├── Navigation.js        # 좌측 네비게이션 (80px 고정)
-├── HeroSection.js       # 히어로 + 통계
+├── HeroSection.js       # 히어로 + 통계 (admin 편집 지원)
 ├── LifecycleSection.js  # 7개 Phase
 │   └── PhaseModal.js    # Phase 상세 모달 (ArchitectureView 포함, admin 편집 지원)
 ├── ProjectsSection.js   # PARL 구조 프로젝트 (6개, admin 편집 지원)
 ├── DeploymentSection.js # 사이트 배포 현황 (admin 편집 지원)
 ├── GrowthSection.js     # 성장 타임라인 (admin 편집 지원)
 ├── LearningSection.js   # 학습 현황 (admin 편집 지원)
-└── ContactSection.js    # 연락처
+└── ContactSection.js    # 연락처 (admin 편집 지원)
 ```
 
 관리자 공통 컴포넌트 (`src/components/`):
@@ -50,6 +50,8 @@ App.js (AdminProvider 래핑, 스크롤 트래킹)
 - `deploymentData.js` — Where I Deployed 사이트 목록
 - `growthData.js` — How I Grew 타임라인
 - `learningData.js` — What I'm Learning 목록
+- `heroData.js` — Hero 섹션 콘텐츠 (badge, titleLines, subtitle, growthStart, robotCount)
+- `contactData.js` — 연락처 정보 (email, github, linkedin, notion)
 
 ## Workflow Rules
 
@@ -97,10 +99,19 @@ npm run deploy
 
 **접근**: `?admin` URL 파라미터 추가 (예: `localhost:3000/?admin`)
 **비밀번호**: 프로젝트 루트 `.env.local` 파일의 `REACT_APP_ADMIN_PASSWORD` 값 변경 후 재빌드
-**편집 가능 섹션**: How I Solved / Where I Deployed / How I Grew / What I'm Learning / What I Build (Phase 레이어)
+**편집 가능 섹션**: Hero / How I Solved / Where I Deployed / How I Grew / What I'm Learning / What I Build (Phase 레이어 + SW 아키텍처) / Contact
 **데이터 반영**: 편집 → [내보내기] → JS 코드 복사 → `src/data/xxx.js` 파일 교체 → `npm run deploy`
 
 ## 최근 변경 이력
+
+### 2026-02-22: 데이터 분리 및 admin 편집 범위 확장 (feature/todo-next-tasks → devel)
+- **heroData.js** 신규 — Hero 섹션 콘텐츠 데이터 분리 (badge, titleLines, highlightLine, subtitle, growthStart, robotCount)
+- **contactData.js** 신규 — 연락처 데이터 분리 (email, github, linkedin, notion)
+- **HeroSection.js** 수정 — heroContent/sites 데이터 참조, growthStart 자동 파싱, 사이트 수 자동 계산, admin 편집 UI 추가
+- **ContactSection.js** 수정 — contactInfo 데이터 참조, admin 편집 UI 추가
+- **Navigation.js** 수정 — 저작권 연도 `{new Date().getFullYear()}` 동적 처리
+- **PhaseModal.js** 수정 — ArchitectureView에 useAdmin() 연동, adminActive 패턴 적용, arch-node ✏️ 버튼 추가
+- **AdminContext.js** 수정 — architectureLayers/heroContent/contactInfo CRUD 뮤테이션 추가, EXPORT_VAR_NAMES/FILE_HEADERS 확장
 
 ### 2026-02-21: 관리자 페이지 구현 (feature/admin-page → devel)
 - **AdminContext.js** 신규 — 전체 admin 상태 관리, CRUD, localStorage 자동 저장, JS 코드 export

@@ -4,6 +4,8 @@ import { sites as srcSites } from '../data/deploymentData';
 import { milestones as srcMilestones } from '../data/growthData';
 import { learningItems as srcLearningItems } from '../data/learningData';
 import { phaseDetails as srcPhaseDetails, architectureLayers as srcArchitectureLayers } from '../data/phaseData';
+import { heroContent as srcHeroContent } from '../data/heroData';
+import { contactInfo as srcContactInfo } from '../data/contactData';
 
 // ─── 비밀번호 설정 ──────────────────────────────────────────────────────────
 // 변경하려면 프로젝트 루트의 .env.local 파일에서 REACT_APP_ADMIN_PASSWORD 값을 수정하세요.
@@ -22,6 +24,8 @@ const SOURCE_DATA = {
   learningItems: srcLearningItems,
   phaseDetails: srcPhaseDetails,
   architectureLayers: srcArchitectureLayers,
+  heroContent: srcHeroContent,
+  contactInfo: srcContactInfo,
 };
 
 // ─── 파일별 export 코드 생성 헤더 템플릿 ─────────────────────────────────────
@@ -81,6 +85,44 @@ const FILE_HEADERS = {
  *   stage       {number}  같은 숫자끼리 병렬 배치
  */
 `,
+  architectureLayers: `/**
+ * phaseData.js — SW 개발 아키텍처 데이터 (architectureLayers 부분)
+ *
+ * 레이어 구조:
+ *   name         {string}  레이어 이름
+ *   type         {string}  'single' | 'horizontal' | 'runtime'
+ *   isROS        {boolean} ROS Framework 영역
+ *   isOutsideROS {boolean} ROS 외부 상위 레이어
+ *   items        {Array}   type이 single/runtime일 때 사용
+ *   groups       {Array}   type이 horizontal일 때 사용
+ *     groups[].name  {string}  그룹 이름
+ *     groups[].items {Array}   { name, experienced }
+ */
+`,
+  heroContent: `/**
+ * heroData.js — Hero 섹션 콘텐츠 데이터
+ *
+ * 구조:
+ *   badge       {string}  뱃지 텍스트
+ *   titleLines  {Array}   제목 줄 배열
+ *   highlightLine {number} 강조할 titleLines 인덱스
+ *   subtitle    {string}  부제목
+ *   growthStart {string}  성장 시작 시점 (YYYY.MM)
+ *   robotCount  {number}  로봇 경험 모델 수
+ */
+`,
+  contactInfo: `/**
+ * contactData.js — 연락처 데이터
+ *
+ * 구조:
+ *   email          {string}  이메일 주소
+ *   github         {string}  GitHub URL
+ *   githubDisplay  {string}  GitHub 표시 텍스트
+ *   linkedin       {string}  LinkedIn URL
+ *   linkedinDisplay {string} LinkedIn 표시 텍스트
+ *   notion         {string}  Notion URL
+ */
+`,
 };
 
 const EXPORT_VAR_NAMES = {
@@ -89,6 +131,9 @@ const EXPORT_VAR_NAMES = {
   milestones: 'milestones',
   learningItems: 'learningItems',
   phaseDetails: 'phaseDetails',
+  architectureLayers: 'architectureLayers',
+  heroContent: 'heroContent',
+  contactInfo: 'contactInfo',
 };
 
 // ─── JS 스타일 코드 직렬화 ────────────────────────────────────────────────────
@@ -249,6 +294,44 @@ export function AdminProvider({ children }) {
     }]);
   }, [setKey]);
 
+  // ─── ArchitectureLayers ────────────────────────────────────────────────────
+  const updateArchitectureItem = useCallback((layerIdx, groupIdx, itemIdx, fields) => {
+    setKey('architectureLayers', layers => layers.map((layer, lIdx) => {
+      if (lIdx !== layerIdx) return layer;
+      if (groupIdx !== null) {
+        return {
+          ...layer,
+          groups: layer.groups.map((group, gIdx) =>
+            gIdx !== groupIdx ? group : {
+              ...group,
+              items: group.items.map((item, iIdx) => iIdx === itemIdx ? { ...item, ...fields } : item),
+            }
+          ),
+        };
+      }
+      return {
+        ...layer,
+        items: layer.items.map((item, iIdx) => iIdx === itemIdx ? { ...item, ...fields } : item),
+      };
+    }));
+  }, [setKey]);
+
+  const updateArchitectureLayer = useCallback((layerIdx, fields) => {
+    setKey('architectureLayers', layers =>
+      layers.map((layer, lIdx) => lIdx === layerIdx ? { ...layer, ...fields } : layer)
+    );
+  }, [setKey]);
+
+  // ─── HeroContent ───────────────────────────────────────────────────────────
+  const updateHeroContent = useCallback((fields) => {
+    setKey('heroContent', prev => ({ ...prev, ...fields }));
+  }, [setKey]);
+
+  // ─── ContactInfo ────────────────────────────────────────────────────────────
+  const updateContactInfo = useCallback((fields) => {
+    setKey('contactInfo', prev => ({ ...prev, ...fields }));
+  }, [setKey]);
+
   // ─── PhaseDetails ──────────────────────────────────────────────────────────
   const updatePhaseLayer = useCallback((phaseId, index, fields) => {
     setKey('phaseDetails', details => ({
@@ -325,6 +408,10 @@ export function AdminProvider({ children }) {
     updatePhaseLayer,
     deletePhaseLayer,
     addPhaseLayer,
+    updateArchitectureItem,
+    updateArchitectureLayer,
+    updateHeroContent,
+    updateContactInfo,
     exportCode,
     resetAll,
     resetKey,
