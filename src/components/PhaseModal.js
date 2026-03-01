@@ -4,9 +4,25 @@ import { phaseDetails, architectureLayers } from '../data/phaseData';
 import { useAdmin } from '../context/AdminContext';
 import AdminEditModal from './AdminEditModal';
 
+const archItemToFormValues = (item) => ({
+  name: item.name,
+  experienceType: item.indirect ? '간접 경험' : (item.experienced ? '직접 경험' : '미경험'),
+});
+
+const archFormValuesToItem = (values) => ({
+  name: values.name,
+  experienced: values.experienceType !== '미경험',
+  indirect: values.experienceType === '간접 경험',
+});
+
 const archItemSchema = [
   { key: 'name',        label: '항목명',   type: 'text' },
-  { key: 'experienced', label: '경험 여부', type: 'boolean' },
+  {
+    key: 'experienceType',
+    label: '경험',
+    type: 'select',
+    options: ['미경험', '직접 경험', '간접 경험'],
+  },
 ];
 
 const layerSchema = [
@@ -64,7 +80,7 @@ function ArchitectureView({ onClose, phase, isAdminMode, notionLink }) {
   };
 
   const handleSaveItem = (values) => {
-    updateArchitectureItem(editTarget.layerIdx, editTarget.groupIdx, editTarget.itemIdx, values);
+    updateArchitectureItem(editTarget.layerIdx, editTarget.groupIdx, editTarget.itemIdx, archFormValuesToItem(values));
     setEditTarget(null);
   };
 
@@ -89,7 +105,7 @@ function ArchitectureView({ onClose, phase, isAdminMode, notionLink }) {
                   <div className="arch-group-label">{group.name}</div>
                   <div className="arch-group-nodes">
                     {group.items.map((item, itemIdx) => (
-                      <div key={itemIdx} className={`arch-node ${item.experienced ? 'exp' : ''} ${adminActive ? 'admin-item-wrapper' : ''}`}>
+                      <div key={itemIdx} className={`arch-node ${item.experienced ? (item.indirect ? 'exp-indirect' : 'exp') : ''} ${adminActive ? 'admin-item-wrapper' : ''}`}>
                         {item.name}
                         {adminActive && (
                           <div className="admin-card-controls">
@@ -112,7 +128,7 @@ function ArchitectureView({ onClose, phase, isAdminMode, notionLink }) {
             <div className="arch-layer-label">{layer.name}</div>
             <div className="arch-runtime-stack">
               {layer.items.map((item, itemIdx) => (
-                <div key={itemIdx} className={`arch-runtime-item ${item.experienced ? 'exp' : ''} ${adminActive ? 'admin-item-wrapper' : ''}`}>
+                <div key={itemIdx} className={`arch-runtime-item ${item.experienced ? (item.indirect ? 'exp-indirect' : 'exp') : ''} ${adminActive ? 'admin-item-wrapper' : ''}`}>
                   {item.name}
                   {adminActive && (
                     <div className="admin-card-controls">
@@ -241,7 +257,7 @@ function ArchitectureView({ onClose, phase, isAdminMode, notionLink }) {
         <AdminEditModal
           title="아키텍처 항목 수정"
           schema={archItemSchema}
-          initialValues={editItem}
+          initialValues={archItemToFormValues(editItem)}
           onSave={handleSaveItem}
           onClose={() => setEditTarget(null)}
         />
@@ -348,6 +364,9 @@ function PhaseModal({ phase, onClose, isAdminMode }) {
             <h2 className="phase-modal-title">{phase.title}</h2>
             <span className="phase-modal-title-en">{phase.titleEn}</span>
             <p className="phase-modal-description">{details.description}</p>
+            <div className="phase-exp-summary">
+              직접 {directCount} · {hasIndirect && `간접 ${indirectCount} · `}미경험 {notExpCount}
+            </div>
           </div>
 
           <div className="phase-diagram">

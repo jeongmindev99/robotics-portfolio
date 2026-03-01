@@ -5,7 +5,7 @@ const navItems = [
   { id: 'hero', label: 'Home', labelKr: '홈' },
   { id: 'lifecycle', label: 'What I Build', labelKr: '역할' },
   { id: 'projects', label: 'How I Solved', labelKr: '프로젝트' },
-  { id: 'deployment', label: 'Where I Deployed', labelKr: '현장' },
+  { id: 'deployment', label: 'Where I Deployed', labelKr: '배포 현황' },
   { id: 'growth', label: 'How I Grew', labelKr: '성장' },
   { id: 'learning', label: 'What I\'m Learning', labelKr: '학습' },
   { id: 'contact', label: 'Contact', labelKr: '연락' },

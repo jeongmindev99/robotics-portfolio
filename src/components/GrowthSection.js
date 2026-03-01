@@ -94,6 +94,27 @@ function GrowthSection() {
           )}
         </div>
 
+        <div className="growth-legend">
+          <div className="legend-row">
+            <div className="legend-item">
+              <span className="legend-marker start"></span>
+              <span>시작</span>
+            </div>
+            <div className="legend-item">
+              <span className="legend-marker growth"></span>
+              <span>배움 및 성장</span>
+            </div>
+            <div className="legend-item">
+              <span className="legend-marker achievement"></span>
+              <span>성과 달성</span>
+            </div>
+            <div className="legend-item">
+              <span className="legend-marker milestone"></span>
+              <span>주요 이정표</span>
+            </div>
+          </div>
+        </div>
+
         <div className="growth-quote">
           <blockquote>
             "모르는 것을 인정하고, 빠르게 배우고, 체계적으로 기록한다"

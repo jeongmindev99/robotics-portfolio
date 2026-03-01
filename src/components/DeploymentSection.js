@@ -5,12 +5,40 @@ import { useAdmin } from '../context/AdminContext';
 import AdminEditModal from './AdminEditModal';
 
 const siteSchema = [
-  { key: 'period',     label: '기간 (YYYY.MM)',  type: 'text' },
-  { key: 'name',       label: '사이트명',         type: 'text' },
-  { key: 'robot',      label: '로봇 종류',        type: 'text' },
-  { key: 'role',       label: '담당 역할',        type: 'text' },
-  { key: 'notionLink', label: 'Notion Link',     type: 'url' },
+  { key: 'startDate', label: '시작 (YYYY.MM)',  type: 'text' },
+  { key: 'endDate',   label: '종료 (YYYY.MM 또는 현재)', type: 'text' },
+  { key: 'name',      label: '사이트명',         type: 'text' },
+  { key: 'robot',     label: '로봇 종류',        type: 'text' },
+  { key: 'role',      label: '담당 역할',        type: 'text' },
+  { key: 'notionLink', label: 'Notion Link',    type: 'url' },
+  { key: 'youtubeLink', label: 'YouTube 영상 링크', type: 'url' },
 ];
+
+// Extract YouTube video ID from various URL formats and return embed URL
+function getYouTubeEmbedUrl(url) {
+  if (!url) return null;
+
+  let videoId;
+  // Handle youtu.be URLs
+  const youtuMatch = url.match(/youtu\.be\/([^/?]+)/);
+  if (youtuMatch) {
+    videoId = youtuMatch[1];
+  } else {
+    // Handle youtube.com URLs
+    const youtubeMatch = url.match(/[?&]v=([^&]+)/);
+    if (youtubeMatch) {
+      videoId = youtubeMatch[1];
+    } else {
+      // Check if it's already an embed URL
+      const embedMatch = url.match(/\/embed\/([^/?]+)/);
+      if (embedMatch) {
+        videoId = embedMatch[1];
+      }
+    }
+  }
+
+  return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+}
 
 function DeploymentSection() {
   const { isAdmin, isAuthed, data, updateSite, deleteSite, addSite } = useAdmin();
@@ -18,6 +46,7 @@ function DeploymentSection() {
   const siteList = adminActive ? data.sites : sites;
 
   const [editId, setEditId] = useState(null);
+  const [videoUrl, setVideoUrl] = useState(null);
 
   const handleEdit = (site) => setEditId(site.id);
 
@@ -64,15 +93,26 @@ function DeploymentSection() {
           </div>
           {siteList.map((site) => (
             <div key={site.id} className="table-row admin-item-wrapper">
-              <span className="cell-period">{site.period}</span>
+              <span className="cell-period">{site.startDate} ~ {site.endDate}</span>
               <span className="cell-name">{site.name}</span>
               <span className="cell-robot">{site.robot}</span>
               <span className="cell-role">{site.role}</span>
               <span className="cell-link">
-                {site.notionLink && !adminActive && (
-                  <a href={site.notionLink} target="_blank" rel="noopener noreferrer" className="site-notion-link">
-                    상세
-                  </a>
+                {!adminActive && (
+                  <div className="link-buttons">
+                    {site.youtubeLink && (
+                      <button
+                        className="video-btn"
+                        onClick={() => setVideoUrl(getYouTubeEmbedUrl(site.youtubeLink))}
+                        title="영상 보기"
+                      >▶ 영상</button>
+                    )}
+                    {site.notionLink && (
+                      <a href={site.notionLink} target="_blank" rel="noopener noreferrer" className="site-notion-link">
+                        상세
+                      </a>
+                    )}
+                  </div>
                 )}
                 {adminActive && (
                   <span className="admin-row-controls">
@@ -99,6 +139,23 @@ function DeploymentSection() {
           </button>
         )}
       </div>
+
+      {videoUrl && (
+        <div className="video-modal-overlay" onClick={() => setVideoUrl(null)}>
+          <div className="video-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="video-modal-close" onClick={() => setVideoUrl(null)} aria-label="닫기">✕</button>
+            <iframe
+              width="100%"
+              height="500"
+              src={videoUrl}
+              title="배포 현장 영상"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      )}
 
       {editingSite && (
         <AdminEditModal
