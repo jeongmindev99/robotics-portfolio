@@ -7,7 +7,6 @@
  *   highlightLine {number}  강조할 titleLines 인덱스
  *   subtitle      {string}  부제목
  *   growthStart   {string}  성장 시작 시점 (YYYY.MM)
- *   robotCount    {number}  로봇 경험 모델 수
  */
 
 export const heroContent = {
@@ -20,5 +19,4 @@ export const heroContent = {
   highlightLine: 1,
   subtitle: '문제를 해결하다 보니, 어느새 소프트웨어 잡부가 되어버린 나의 여정',
   growthStart: '2024.05',
-  robotCount: 4,
 };

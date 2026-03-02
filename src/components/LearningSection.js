@@ -4,8 +4,16 @@ import { learningItems } from '../data/learningData';
 import { useAdmin } from '../context/AdminContext';
 import AdminEditModal from './AdminEditModal';
 
+const CATEGORIES = ['전체', '로보틱스 직무', 'AI', '자기개발'];
+
 const learningSchema = [
   { key: 'skill',       label: '기술/주제명',   type: 'text' },
+  {
+    key: 'category',
+    label: '카테고리',
+    type: 'select',
+    options: ['로보틱스 직무', 'AI', '자기개발'],
+  },
   {
     key: 'status',
     label: '상태',
@@ -21,6 +29,7 @@ function LearningSection() {
   const learningList = adminActive ? data.learningItems : learningItems;
 
   const [editIndex, setEditIndex] = useState(null);
+  const [activeCategory, setActiveCategory] = useState('전체');
 
   const handleEdit = (index) => setEditIndex(index);
 
@@ -40,6 +49,10 @@ function LearningSection() {
     }
   };
 
+  const filteredItems = activeCategory === '전체'
+    ? learningList
+    : learningList.filter(item => item.category === activeCategory);
+
   const editingItem = editIndex !== null ? learningList[editIndex] : null;
 
   return (
@@ -53,30 +66,48 @@ function LearningSection() {
           </p>
         </div>
 
+        {!adminActive && (
+          <div className="learning-tabs">
+            {CATEGORIES.map(cat => (
+              <button
+                key={cat}
+                className={`learning-tab-btn ${activeCategory === cat ? 'active' : ''}`}
+                onClick={() => setActiveCategory(cat)}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        )}
+
         <div className="learning-grid">
-          {learningList.map((item, index) => (
-            <div key={index} className="learning-card admin-item-wrapper">
-              {adminActive && (
-                <div className="admin-card-controls">
-                  <button
-                    className="admin-btn admin-btn-edit"
-                    onClick={() => handleEdit(index)}
-                    title="수정"
-                  >✏️</button>
-                  <button
-                    className="admin-btn admin-btn-delete"
-                    onClick={() => handleDelete(index)}
-                    title="삭제"
-                  >🗑️</button>
+          {filteredItems.map((item, index) => {
+            // Find the original index in the full list for edit/delete operations
+            const originalIndex = learningList.findIndex(i => i === item);
+            return (
+              <div key={originalIndex} className="learning-card admin-item-wrapper">
+                {adminActive && (
+                  <div className="admin-card-controls">
+                    <button
+                      className="admin-btn admin-btn-edit"
+                      onClick={() => handleEdit(originalIndex)}
+                      title="수정"
+                    >✏️</button>
+                    <button
+                      className="admin-btn admin-btn-delete"
+                      onClick={() => handleDelete(originalIndex)}
+                      title="삭제"
+                    >🗑️</button>
+                  </div>
+                )}
+                <div className="learning-header">
+                  <h4 className="learning-skill">{item.skill}</h4>
+                  <span className="learning-status">{item.status}</span>
                 </div>
-              )}
-              <div className="learning-header">
-                <h4 className="learning-skill">{item.skill}</h4>
-                <span className="learning-status">{item.status}</span>
+                <p className="learning-description">{item.description}</p>
               </div>
-              <p className="learning-description">{item.description}</p>
-            </div>
-          ))}
+            );
+          })}
 
           {adminActive && (
             <button className="admin-add-btn learning-add-btn" onClick={handleAdd}>

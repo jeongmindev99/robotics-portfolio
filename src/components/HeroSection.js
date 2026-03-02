@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './HeroSection.css';
 import { heroContent } from '../data/heroData';
 import { sites } from '../data/deploymentData';
+import { projects } from '../data/projectsData';
 import { useAdmin } from '../context/AdminContext';
 import AdminEditModal from './AdminEditModal';
 
@@ -10,8 +11,27 @@ const heroSchema = [
   { key: 'titleLines',  label: '제목 줄 (줄바꿈으로 구분)', type: 'textarea' },
   { key: 'subtitle',    label: '부제목',       type: 'textarea' },
   { key: 'growthStart', label: '성장 시작 (YYYY.MM)', type: 'text' },
-  { key: 'robotCount',  label: '로봇 모델 수', type: 'number' },
 ];
+
+// Calculate duration between growthStart and now
+function calcDuration(growthStart) {
+  const [year, month] = growthStart.split('.').map(Number);
+  const start = new Date(year, month - 1, 1);
+  const now = new Date();
+
+  let years = now.getFullYear() - start.getFullYear();
+  let months = now.getMonth() - start.getMonth();
+
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  if (years > 0) {
+    return `${years}년 ${months}개월`;
+  }
+  return `${months}개월`;
+}
 
 function HeroSection() {
   const { isAdmin, isAuthed, data, updateHeroContent } = useAdmin();
@@ -20,15 +40,15 @@ function HeroSection() {
 
   const activeHero = adminActive ? data.heroContent : heroContent;
   const activeSites = adminActive ? data.sites : sites;
+  const activeProjects = adminActive ? data.projects : projects;
 
-  const growthYear = activeHero.growthStart.split('.')[0];
-  const growthSuffix = '.' + activeHero.growthStart.split('.')[1] + ' ~ 현재';
+  const growthRange = activeHero.growthStart + ' ~ 현재';
+  const growthDuration = calcDuration(activeHero.growthStart);
 
   const handleSave = (values) => {
     updateHeroContent({
       ...values,
       titleLines: values.titleLines.split('\n').map(l => l.trim()).filter(Boolean),
-      robotCount: Number(values.robotCount),
     });
   };
 
@@ -69,8 +89,8 @@ function HeroSection() {
 
         <div className="hero-stats">
           <div className="stat-item">
-            <span className="stat-number">{growthYear}</span>
-            <span className="stat-label">{growthSuffix}</span>
+            <span className="stat-range">{growthRange}</span>
+            <span className="stat-duration">{growthDuration}</span>
             <span className="stat-desc">성장 기간</span>
           </div>
           <div className="stat-divider"></div>
@@ -81,9 +101,9 @@ function HeroSection() {
           </div>
           <div className="stat-divider"></div>
           <div className="stat-item">
-            <span className="stat-number">{activeHero.robotCount}</span>
-            <span className="stat-label">모델</span>
-            <span className="stat-desc">로봇 경험</span>
+            <span className="stat-number">{activeProjects.length}</span>
+            <span className="stat-label">프로젝트</span>
+            <span className="stat-desc">경험 사례</span>
           </div>
         </div>
 

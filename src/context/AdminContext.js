@@ -250,11 +250,13 @@ export function AdminProvider({ children }) {
       const maxId = list.reduce((m, s) => Math.max(m, s.id), 0);
       return [...list, {
         id: maxId + 1,
-        period: '',
+        startDate: '',
+        endDate: '현재',
         name: '새 사이트',
         robot: '',
         role: '',
         notionLink: '',
+        youtubeLink: '',
       }];
     });
   }, [setKey]);
@@ -289,6 +291,7 @@ export function AdminProvider({ children }) {
   const addLearningItem = useCallback(() => {
     setKey('learningItems', list => [...list, {
       skill: '새 기술',
+      category: '로보틱스 직무',
       status: '관심',
       description: '',
     }]);
