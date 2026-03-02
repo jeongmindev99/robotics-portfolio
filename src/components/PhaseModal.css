@@ -239,7 +239,7 @@
 .phase-node.exp {
   border-color: rgba(255, 165, 0, 0.45);
   border-style: solid;
-  background: transparent;
+  background: rgba(255, 165, 0, 0.05);
 }
 
 .phase-node:hover {
@@ -378,7 +378,7 @@
 .arch-node.exp {
   border-color: rgba(255, 165, 0, 0.45);
   border-style: solid;
-  background: transparent;
+  background: rgba(255, 165, 0, 0.05);
 }
 
 .arch-node.exp-indirect {
@@ -549,7 +549,7 @@
 .arch-runtime-item.exp {
   border-color: rgba(255, 165, 0, 0.45);
   border-style: solid;
-  background: transparent;
+  background: rgba(255, 165, 0, 0.05);
 }
 
 .arch-runtime-item.exp-indirect {
@@ -693,7 +693,7 @@
 }
 
 .legend-dot.exp {
-  color: var(--text-secondary);
+  color: rgba(255, 165, 0, 0.75);
 }
 
 /* ==================== */

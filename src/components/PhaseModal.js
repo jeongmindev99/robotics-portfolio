@@ -71,6 +71,24 @@ function ArchitectureView({ onClose, phase, isAdminMode, notionLink }) {
   const totalItems = activeArchLayers.reduce((acc, layer) => acc + countItems(layer), 0);
   const experiencedItems = activeArchLayers.reduce((acc, layer) => acc + countExperienced(layer), 0);
 
+  // Calculate experience counts for legend
+  const getAllItems = (layers) => {
+    let items = [];
+    layers.forEach(layer => {
+      if (layer.type === 'horizontal') {
+        layer.groups.forEach(g => items.push(...g.items));
+      } else {
+        items.push(...layer.items);
+      }
+    });
+    return items;
+  };
+  const allItems = getAllItems(activeArchLayers);
+  const directCount = allItems.filter(i => i.experienced && !i.indirect).length;
+  const indirectCount = allItems.filter(i => i.indirect).length;
+  const notExpCount = allItems.filter(i => !i.experienced).length;
+  const hasIndirectArch = indirectCount > 0;
+
   const rosLayers = activeArchLayers.filter(l => l.isROS);
   const outsideROSLayers = activeArchLayers.filter(l => l.isOutsideROS);
   const otherLayers = activeArchLayers.filter(l => !l.isROS && !l.isOutsideROS);
@@ -243,11 +261,17 @@ function ArchitectureView({ onClose, phase, isAdminMode, notionLink }) {
           <div className="arch-legend">
             <div className="legend-item">
               <span className="legend-dot exp">●</span>
-              <span>경험</span>
+              <span>직접 경험 ({directCount})</span>
             </div>
+            {hasIndirectArch && (
+              <div className="legend-item">
+                <span className="legend-dot exp-indirect">◎</span>
+                <span>간접 경험 ({indirectCount})</span>
+              </div>
+            )}
             <div className="legend-item">
               <span className="legend-dot">○</span>
-              <span>미경험</span>
+              <span>미경험 ({notExpCount})</span>
             </div>
           </div>
         </div>
