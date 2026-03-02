@@ -233,12 +233,13 @@
 
 .phase-node.exp::before {
   content: '●';
-  color: var(--accent-primary);
+  color: rgba(255, 165, 0, 0.75);
 }
 
 .phase-node.exp {
-  border-color: var(--accent-primary);
-  background: rgba(0, 212, 170, 0.06);
+  border-color: rgba(255, 165, 0, 0.45);
+  border-style: solid;
+  background: transparent;
 }
 
 .phase-node:hover {
@@ -371,12 +372,13 @@
 
 .arch-node.exp::before {
   content: '●';
-  color: var(--accent-primary);
+  color: rgba(255, 165, 0, 0.75);
 }
 
 .arch-node.exp {
-  border-color: var(--accent-primary);
-  background: rgba(0, 212, 170, 0.06);
+  border-color: rgba(255, 165, 0, 0.45);
+  border-style: solid;
+  background: transparent;
 }
 
 .arch-node.exp-indirect {
@@ -541,12 +543,13 @@
 
 .arch-runtime-item.exp::before {
   content: '●';
-  color: var(--accent-primary);
+  color: rgba(255, 165, 0, 0.75);
 }
 
 .arch-runtime-item.exp {
-  border-color: var(--accent-primary);
-  background: rgba(0, 212, 170, 0.06);
+  border-color: rgba(255, 165, 0, 0.45);
+  border-style: solid;
+  background: transparent;
 }
 
 .arch-runtime-item.exp-indirect {
