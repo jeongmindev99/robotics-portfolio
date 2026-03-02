@@ -325,6 +325,48 @@ export function AdminProvider({ children }) {
     );
   }, [setKey]);
 
+  const deleteArchitectureItem = useCallback((layerIdx, groupIdx, itemIdx) => {
+    setKey('architectureLayers', layers => layers.map((layer, lIdx) => {
+      if (lIdx !== layerIdx) return layer;
+      if (groupIdx !== null) {
+        return {
+          ...layer,
+          groups: layer.groups.map((group, gIdx) =>
+            gIdx !== groupIdx ? group : {
+              ...group,
+              items: group.items.filter((_, iIdx) => iIdx !== itemIdx),
+            }
+          ),
+        };
+      }
+      return {
+        ...layer,
+        items: layer.items.filter((_, iIdx) => iIdx !== itemIdx),
+      };
+    }));
+  }, [setKey]);
+
+  const addArchitectureItem = useCallback((layerIdx, groupIdx, newItem) => {
+    setKey('architectureLayers', layers => layers.map((layer, lIdx) => {
+      if (lIdx !== layerIdx) return layer;
+      if (groupIdx !== null) {
+        return {
+          ...layer,
+          groups: layer.groups.map((group, gIdx) =>
+            gIdx !== groupIdx ? group : {
+              ...group,
+              items: [...group.items, newItem],
+            }
+          ),
+        };
+      }
+      return {
+        ...layer,
+        items: [...layer.items, newItem],
+      };
+    }));
+  }, [setKey]);
+
   // ─── HeroContent ───────────────────────────────────────────────────────────
   const updateHeroContent = useCallback((fields) => {
     setKey('heroContent', prev => ({ ...prev, ...fields }));
@@ -421,6 +463,8 @@ export function AdminProvider({ children }) {
     addPhaseLayer,
     updateArchitectureItem,
     updateArchitectureLayer,
+    deleteArchitectureItem,
+    addArchitectureItem,
     updateHeroContent,
     updateContactInfo,
     exportCode,
