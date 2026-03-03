@@ -429,9 +429,6 @@ function PhaseModal({ phase, onClose, isAdminMode }) {
             <h2 className="phase-modal-title">{phase.title}</h2>
             <span className="phase-modal-title-en">{phase.titleEn}</span>
             <p className="phase-modal-description">{details.description}</p>
-            <div className="phase-exp-summary">
-              직접 {directCount} · {hasIndirect && `간접 ${indirectCount} · `}미경험 {notExpCount}
-            </div>
           </div>
 
           <div className="phase-diagram">
