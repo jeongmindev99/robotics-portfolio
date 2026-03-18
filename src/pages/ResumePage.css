@@ -1,0 +1,364 @@
+/* 이력서 페이지에서는 scroll-snap 비활성화 */
+html:has(.resume-page) {
+  scroll-snap-type: none;
+}
+
+.resume-page .r-section {
+  scroll-snap-align: none;
+  scroll-snap-stop: normal;
+}
+
+/* ─── Resume Page ─────────────────────────────────────────────────────── */
+
+.resume-page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  padding: 32px 20px 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ─── Actions ─────────────────────────────────────────────────────────── */
+
+.r-actions {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.r-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border: 1px solid var(--border-highlight);
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  text-decoration: none;
+}
+
+.r-btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* ─── Paper ───────────────────────────────────────────────────────────── */
+
+.r-paper {
+  width: 100%;
+  max-width: 800px;
+  background: #fafafa;
+  color: #222;
+  border-radius: 6px;
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+  padding: 48px 56px;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+/* ─── Header ──────────────────────────────────────────────────────────── */
+
+.r-header {
+  text-align: center;
+  padding-bottom: 24px;
+  border-bottom: 1.5px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.r-name {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 4px;
+}
+
+.r-title {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.r-contact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 16px;
+  font-size: 0.82rem;
+  color: #666;
+}
+
+.r-contact a {
+  color: #0d7d63;
+  text-decoration: none;
+}
+
+.r-contact a:hover {
+  text-decoration: underline;
+}
+
+/* ─── Summary ─────────────────────────────────────────────────────────── */
+
+.r-summary {
+  font-size: 0.88rem;
+  color: #444;
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1.5px solid #ddd;
+}
+
+/* ─── Section ─────────────────────────────────────────────────────────── */
+
+.r-section {
+  margin-bottom: 22px;
+}
+
+.r-section-title {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #0d7d63;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.r-section-body {
+  padding-left: 2px;
+}
+
+/* ─── Entry (experience, project, education, cert) ────────────────────── */
+
+.r-entry {
+  margin-bottom: 14px;
+}
+
+.r-entry:last-child {
+  margin-bottom: 0;
+}
+
+.r-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+}
+
+.r-period {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #999;
+  white-space: nowrap;
+}
+
+.r-role {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 1px;
+}
+
+.r-desc {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 2px;
+}
+
+.r-note {
+  color: #888;
+}
+
+.r-list {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 0;
+}
+
+.r-list li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 0.85rem;
+  color: #444;
+  margin-bottom: 2px;
+}
+
+.r-list li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: #0d7d63;
+}
+
+/* ─── Tags ────────────────────────────────────────────────────────────── */
+
+.r-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 5px;
+}
+
+.r-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 1px 7px;
+  background: #eef6f4;
+  color: #0d7d63;
+  border-radius: 2px;
+}
+
+/* ─── Skills ──────────────────────────────────────────────────────────── */
+
+.r-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.r-skill-row {
+  display: flex;
+  gap: 12px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.r-skill-cat {
+  min-width: 140px;
+  font-weight: 600;
+  color: #333;
+  flex-shrink: 0;
+}
+
+.r-skill-items {
+  color: #555;
+}
+
+/* ─── Publications ────────────────────────────────────────────────────── */
+
+.r-pub-title a {
+  color: #0d7d63;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.88rem;
+}
+
+.r-pub-title a:hover {
+  text-decoration: underline;
+}
+
+/* ─── Languages ───────────────────────────────────────────────────────── */
+
+.r-lang-list {
+  display: flex;
+  gap: 20px;
+  font-size: 0.85rem;
+}
+
+.r-lang strong {
+  color: #333;
+  margin-right: 4px;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .resume-page {
+    padding: 16px 10px 48px;
+  }
+
+  .r-paper {
+    padding: 28px 20px;
+    border-radius: 4px;
+  }
+
+  .r-name {
+    font-size: 1.5rem;
+  }
+
+  .r-contact {
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .r-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .r-skill-row {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .r-skill-cat {
+    min-width: auto;
+    font-size: 0.8rem;
+  }
+
+  .r-lang-list {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+/* ─── Print ───────────────────────────────────────────────────────────── */
+
+@media print {
+  @page {
+    margin: 15mm;
+    size: A4;
+  }
+
+  body {
+    background: white !important;
+  }
+
+  .resume-page {
+    padding: 0;
+    background: white;
+    min-height: auto;
+  }
+
+  .r-actions {
+    display: none !important;
+  }
+
+  .r-paper {
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    max-width: none;
+    background: white;
+  }
+
+  .r-section-title {
+    color: #333;
+  }
+
+  .r-contact a {
+    color: #333;
+  }
+
+  .r-pub-title a {
+    color: #333;
+  }
+
+  .r-tag {
+    border: 1px solid #ccc;
+    background: white;
+    color: #333;
+  }
+}
