@@ -48,7 +48,7 @@ const formValuesToLayer = (values) => ({
 });
 
 function ArchitectureView({ onClose, phase, isAdminMode, notionLink }) {
-  const { isAdmin, isAuthed, data, updateArchitectureItem, updatePhaseMeta } = useAdmin();
+  const { isAdmin, isAuthed, data, updateArchitectureItem, updatePhaseMeta, deleteArchitectureItem, addArchitectureItem } = useAdmin();
   const adminActive = isAdmin && isAuthed && isAdminMode;
   const [editTarget, setEditTarget] = useState(null); // { layerIdx, groupIdx, itemIdx }
   const [editingNotion, setEditingNotion] = useState(false);
@@ -93,6 +93,11 @@ function ArchitectureView({ onClose, phase, isAdminMode, notionLink }) {
   const outsideROSLayers = activeArchLayers.filter(l => l.isOutsideROS);
   const otherLayers = activeArchLayers.filter(l => !l.isROS && !l.isOutsideROS);
 
+  const handleAddItem = (layerIdx, groupIdx) => {
+    const newItem = { name: '새 항목', experienced: false, indirect: false };
+    addArchitectureItem(layerIdx, groupIdx, newItem);
+  };
+
   const handleEditItem = (layerIdx, groupIdx, itemIdx) => {
     setEditTarget({ layerIdx, groupIdx, itemIdx });
   };
@@ -132,11 +137,23 @@ function ArchitectureView({ onClose, phase, isAdminMode, notionLink }) {
                               onClick={(e) => { e.stopPropagation(); handleEditItem(layerIdx, gIdx, itemIdx); }}
                               title="수정"
                             >✏️</button>
+                            <button
+                              className="admin-btn admin-btn-delete"
+                              onClick={(e) => { e.stopPropagation(); deleteArchitectureItem(layerIdx, gIdx, itemIdx); }}
+                              title="삭제"
+                            >🗑️</button>
                           </div>
                         )}
                       </div>
                     ))}
                   </div>
+                  {adminActive && (
+                    <button
+                      className="admin-stage-add-btn"
+                      onClick={() => handleAddItem(layerIdx, gIdx)}
+                      title="항목 추가"
+                    >+</button>
+                  )}
                 </div>
               ))}
             </div>
@@ -155,10 +172,22 @@ function ArchitectureView({ onClose, phase, isAdminMode, notionLink }) {
                         onClick={(e) => { e.stopPropagation(); handleEditItem(layerIdx, null, itemIdx); }}
                         title="수정"
                       >✏️</button>
+                      <button
+                        className="admin-btn admin-btn-delete"
+                        onClick={(e) => { e.stopPropagation(); deleteArchitectureItem(layerIdx, null, itemIdx); }}
+                        title="삭제"
+                      >🗑️</button>
                     </div>
                   )}
                 </div>
               ))}
+              {adminActive && (
+                <button
+                  className="admin-stage-add-btn"
+                  onClick={() => handleAddItem(layerIdx, null)}
+                  title="항목 추가"
+                >+</button>
+              )}
             </div>
           </div>
         ) : (
@@ -166,7 +195,7 @@ function ArchitectureView({ onClose, phase, isAdminMode, notionLink }) {
             <div className="arch-layer-label">{layer.name}</div>
             <div className="arch-layer-nodes">
               {layer.items.map((item, itemIdx) => (
-                <div key={itemIdx} className={`arch-node ${item.experienced ? 'exp' : ''} ${adminActive ? 'admin-item-wrapper' : ''}`}>
+                <div key={itemIdx} className={`arch-node ${item.experienced ? (item.indirect ? 'exp-indirect' : 'exp') : ''} ${adminActive ? 'admin-item-wrapper' : ''}`}>
                   {item.name}
                   {adminActive && (
                     <div className="admin-card-controls">
@@ -175,10 +204,22 @@ function ArchitectureView({ onClose, phase, isAdminMode, notionLink }) {
                         onClick={(e) => { e.stopPropagation(); handleEditItem(layerIdx, null, itemIdx); }}
                         title="수정"
                       >✏️</button>
+                      <button
+                        className="admin-btn admin-btn-delete"
+                        onClick={(e) => { e.stopPropagation(); deleteArchitectureItem(layerIdx, null, itemIdx); }}
+                        title="삭제"
+                      >🗑️</button>
                     </div>
                   )}
                 </div>
               ))}
+              {adminActive && (
+                <button
+                  className="admin-stage-add-btn"
+                  onClick={() => handleAddItem(layerIdx, null)}
+                  title="항목 추가"
+                >+</button>
+              )}
             </div>
           </div>
         )}
@@ -388,9 +429,6 @@ function PhaseModal({ phase, onClose, isAdminMode }) {
             <h2 className="phase-modal-title">{phase.title}</h2>
             <span className="phase-modal-title-en">{phase.titleEn}</span>
             <p className="phase-modal-description">{details.description}</p>
-            <div className="phase-exp-summary">
-              직접 {directCount} · {hasIndirect && `간접 ${indirectCount} · `}미경험 {notExpCount}
-            </div>
           </div>
 
           <div className="phase-diagram">

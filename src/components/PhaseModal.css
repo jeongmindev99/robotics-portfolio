@@ -266,8 +266,7 @@
 
 /* Indirect experience node */
 .phase-node.exp-indirect {
-  border-style: dashed;
-  border-color: rgba(255, 165, 0, 0.45);
+  border: 1px dashed rgba(255, 165, 0, 0.45);
 }
 
 .phase-node.exp-indirect::before {
@@ -382,8 +381,7 @@
 }
 
 .arch-node.exp-indirect {
-  border-style: dashed;
-  border-color: rgba(255, 165, 0, 0.45);
+  border: 1px dashed rgba(255, 165, 0, 0.45);
 }
 
 .arch-node.exp-indirect::before {
@@ -553,8 +551,7 @@
 }
 
 .arch-runtime-item.exp-indirect {
-  border-style: dashed;
-  border-color: rgba(255, 165, 0, 0.45);
+  border: 1px dashed rgba(255, 165, 0, 0.45);
 }
 
 .arch-runtime-item.exp-indirect::before {

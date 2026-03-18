@@ -9,11 +9,10 @@
  *   linkedinDisplay {string} LinkedIn 표시 텍스트
  *   notion         {string}  Notion URL
  */
-
 export const contactInfo = {
   email: 'jeongmin.dev99@gmail.com',
-  github: 'https://github.com/jeongmindev99',
-  githubDisplay: 'github.com/jeongmindev99',
+  github: 'https://github.com/wntdev99',
+  githubDisplay: 'github.com/wntdev99',
   linkedin: 'https://linkedin.com/in/jeongminchoi',
   linkedinDisplay: 'linkedin.com/in/jeongminchoi',
   notion: 'https://notion.so/2e9d8a0a7b5a81c5a57ed22576f1cb0c',
