@@ -16,7 +16,7 @@
 export const landingMeta = {
   terminalLines: [
     { prompt: '$ whoami', delay: 0 },
-    { output: '최정민 — Robotics Software Engineer', delay: 800 },
+    { output: '최정민 — Robotics Software Engineer', delay: 800, highlight: '최정민' },
     { prompt: '$ cat README.md', delay: 2000 },
     { output: '로봇이 만들어지고 현장에 배포되어 운영되기까지,', delay: 2800 },
     { output: '그 모든 과정을 경험한 엔지니어', delay: 3200 },

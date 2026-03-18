@@ -122,7 +122,7 @@ function Terminal() {
   const months = calcMonths(heroContent.growthStart);
   const allLines = useMemo(() => [
     ...landingMeta.terminalLines,
-    { output: `${months}개월째 가동 중 — ${sites.length} sites deployed`, delay: 0 },
+    { output: `${months}개월째 가동 중 — ${sites.length} sites deployed`, delay: 0, isUptime: true },
   ], [months]);
 
   const { displayedLines, isTyping } = useTerminal(allLines);
@@ -138,12 +138,55 @@ function Terminal() {
       <div className="terminal-body">
         {displayedLines.map((line, i) => (
           <div key={i} className={`terminal-line ${line.prompt ? 'terminal-prompt' : 'terminal-output'}`}>
-            <span>{line.displayText}</span>
+            {line.prompt ? (
+              <PromptLine text={line.displayText} />
+            ) : (
+              <OutputLine text={line.displayText} highlight={line.highlight} isUptime={line.isUptime} />
+            )}
           </div>
         ))}
         <span className={`terminal-cursor${!isTyping ? ' terminal-cursor-idle' : ''}`}></span>
       </div>
     </div>
+  );
+}
+
+function PromptLine({ text }) {
+  // "$ command" → $ 는 별도 색상
+  if (text.startsWith('$')) {
+    return (
+      <>
+        <span className="terminal-dollar">$</span>
+        <span>{text.slice(1)}</span>
+      </>
+    );
+  }
+  return <span>{text}</span>;
+}
+
+function OutputLine({ text, highlight, isUptime }) {
+  if (isUptime) {
+    // 숫자 + 단위를 강조
+    return (
+      <span>
+        {text.split(/(\d+[개월째]*\s*|[0-9]+\s*sites)/).map((part, i) =>
+          /\d/.test(part)
+            ? <span key={i} className="terminal-stat">{part}</span>
+            : part
+        )}
+      </span>
+    );
+  }
+  if (!highlight || !text.includes(highlight)) {
+    return <span>{text}</span>;
+  }
+  const idx = text.indexOf(highlight);
+  return (
+    <>
+      {text.slice(0, idx)}
+      <span className="terminal-highlight">{highlight}</span>
+      {text.slice(idx + highlight.length)}
+    </>
   );
 }
 
@@ -205,6 +248,7 @@ function LandingPage() {
           <Terminal />
         </div>
 
+        <p className="landing-guide">어디로 가시겠습니까?</p>
         <div className={`landing-cards${pages.length > 2 ? ' landing-cards-many' : ''}`}>
           {pages.map((item) => (
             <LandingCard key={item.id} item={item} />
