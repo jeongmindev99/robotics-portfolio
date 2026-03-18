@@ -1,72 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { AdminProvider, useAdmin } from './context/AdminContext';
-import Navigation from './components/Navigation';
-import HeroSection from './components/HeroSection';
-import LifecycleSection from './components/LifecycleSection';
-import ProjectsSection from './components/ProjectsSection';
-import DeploymentSection from './components/DeploymentSection';
-import GrowthSection from './components/GrowthSection';
-import LearningSection from './components/LearningSection';
-import ContactSection from './components/ContactSection';
-import AdminLoginPrompt from './components/AdminLoginPrompt';
-import AdminBar from './components/AdminBar';
+import React from 'react';
+import { HashRouter, Routes, Route } from 'react-router-dom';
+import { AdminProvider } from './context/AdminContext';
+import LandingPage from './pages/LandingPage';
+import PortfolioPage from './pages/PortfolioPage';
 import './App.css';
-
-function AppInner() {
-  const { isAdmin, isAuthed } = useAdmin();
-  const [activeSection, setActiveSection] = useState('hero');
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['hero', 'lifecycle', 'projects', 'deployment', 'growth', 'learning', 'contact'];
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  return (
-    <div className="app">
-      {isAdmin && !isAuthed && <AdminLoginPrompt />}
-      {isAdmin && isAuthed && <AdminBar />}
-      <Navigation activeSection={activeSection} onNavigate={scrollToSection} />
-      <main style={isAdmin && isAuthed ? { paddingTop: '48px' } : undefined}>
-        <HeroSection />
-        <LifecycleSection />
-        <ProjectsSection />
-        <DeploymentSection />
-        <GrowthSection />
-        <LearningSection />
-        <ContactSection />
-      </main>
-    </div>
-  );
-}
 
 function App() {
   return (
-    <AdminProvider>
-      <AppInner />
-    </AdminProvider>
+    <HashRouter>
+      <AdminProvider>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/portfolio" element={<PortfolioPage />} />
+        </Routes>
+      </AdminProvider>
+    </HashRouter>
   );
 }
 
