@@ -13,7 +13,7 @@ export const contactInfo = {
   email: 'jeongmin.dev99@gmail.com',
   github: 'https://github.com/wntdev99',
   githubDisplay: 'github.com/wntdev99',
-  linkedin: 'https://linkedin.com/in/jeongminchoi',
-  linkedinDisplay: 'linkedin.com/in/jeongminchoi',
+  linkedin: 'https://www.linkedin.com/in/정민-최-01579b281',
+  linkedinDisplay: 'linkedin.com/in/정민-최',
   notion: '',
 };

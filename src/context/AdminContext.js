@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { projects as srcProjects } from '../data/projectsData';
 import { sites as srcSites } from '../data/deploymentData';
 import { milestones as srcMilestones } from '../data/growthData';
@@ -162,7 +163,8 @@ function toJSCode(value, indent = 0) {
 const AdminContext = createContext(null);
 
 export function AdminProvider({ children }) {
-  const isAdmin = new URLSearchParams(window.location.search).has('admin');
+  const [searchParams] = useSearchParams();
+  const isAdmin = searchParams.has('admin');
   const [isAuthed, setIsAuthed] = useState(
     () => sessionStorage.getItem('adminAuthed') === 'true'
   );
