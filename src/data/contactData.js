@@ -15,5 +15,5 @@ export const contactInfo = {
   githubDisplay: 'github.com/wntdev99',
   linkedin: 'https://linkedin.com/in/jeongminchoi',
   linkedinDisplay: 'linkedin.com/in/jeongminchoi',
-  notion: 'https://notion.so/2e9d8a0a7b5a81c5a57ed22576f1cb0c',
+  notion: '',
 };

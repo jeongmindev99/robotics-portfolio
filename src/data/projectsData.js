@@ -22,7 +22,7 @@ export const projects = [
       'Python',
       'Architecture',
     ],
-    notionLink: 'https://notion.so/f204a48cf6324f6da88d24b2fbdaca29',
+    notionLink: '',
   },
   {
     id: 3,
@@ -36,7 +36,7 @@ export const projects = [
       'Python',
       'Arduino',
     ],
-    notionLink: 'https://notion.so/88adae13663341238cca3c8e9626846c',
+    notionLink: '',
   },
   {
     id: 4,
@@ -49,7 +49,7 @@ export const projects = [
       'ROS2',
       'Claude Code',
     ],
-    notionLink: 'https://www.notion.so/jeongminspace/ROS-ROS2-323d8a0a7b5a80fd9977e58a1123e991?source=copy_link',
+    notionLink: '',
   },
   {
     id: 5,
@@ -62,6 +62,6 @@ export const projects = [
       'Python',
       'C++',
     ],
-    notionLink: 'https://www.notion.so/jeongminspace/7-151f41ce743c4491ba05b5d622184f76',
+    notionLink: '',
   },
 ];
