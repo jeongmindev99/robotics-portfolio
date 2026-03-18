@@ -6,34 +6,28 @@
  * 각 항목 구조:
  *   id       {string}  고유 식별자
  *   title    {string}  카드 제목
- *   desc     {string}  카드 설명 (HTML <br/> 사용 가능)
+ *   desc     {string}  카드 설명 (\n으로 줄바꿈)
  *   icon     {string}  SVG path (viewBox 0 0 24 24 기준)
  *   path     {string}  라우트 경로 (예: '/portfolio')
- *   ready    {boolean} true면 링크 활성화, false면 '준비 중' 표시
+ *   ready    {boolean} true면 링크 활성화, false면 표시 안 함
  *   ctaText  {string}  CTA 버튼 텍스트 (ready일 때 표시)
  */
 
 export const landingMeta = {
+  name: '최정민',
+  role: 'Robotics Software Engineer',
+  skills: ['ROS', 'ROS2', 'Python', 'C++', 'ESP32', 'Lidar', 'Camera', 'Motor', 'MQTT', 'Zenoh', 'Claude Code'],
   terminalLines: [
     { prompt: '$ whoami', delay: 0 },
-    { output: '최정민 — Robotics Software Engineer', delay: 800, highlight: '최정민' },
-    { prompt: '$ cat README.md', delay: 2000 },
-    { output: '로봇이 만들어지고 현장에 배포되어 운영되기까지,', delay: 2800 },
-    { output: '그 모든 과정을 경험한 엔지니어', delay: 3200 },
+    { output: '어제보다 더 나은 움직임을 설계하는 사람', delay: 800 },
+    { prompt: '$ cat ABOUT.md', delay: 2000 },
+    { output: '설계 검증부터 현장 배포, 실운영 안정화까지', delay: 2800 },
+    { output: '로봇 소프트웨어의 전 과정을 경험한 엔지니어', delay: 3200 },
     { prompt: '$ uptime --summary', delay: 4200 },
   ],
 };
 
 export const pages = [
-  {
-    id: 'portfolio',
-    title: '포트폴리오',
-    desc: '프로젝트, 배포 현황, 기술 스택 등\n경험의 전체 여정을 확인하세요',
-    icon: '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',
-    path: '/portfolio',
-    ready: true,
-    ctaText: '살펴보기',
-  },
   {
     id: 'resume',
     title: '이력서',
@@ -42,5 +36,14 @@ export const pages = [
     path: '/resume',
     ready: false,
     ctaText: '확인하기',
+  },
+  {
+    id: 'portfolio',
+    title: '포트폴리오',
+    desc: '프로젝트, 배포 현황, 기술 스택 등\n경험의 전체 여정을 확인하세요',
+    icon: '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',
+    path: '/portfolio',
+    ready: true,
+    ctaText: '프로젝트 경험 보기',
   },
 ];

@@ -14,6 +14,8 @@ function calcMonths(growthStart) {
   return (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
 }
 
+const SESSION_KEY = 'landingTerminalSeen';
+
 /* ─── Card ──────────────────────────────────────────────────────────── */
 function LandingCard({ item }) {
   const descLines = item.desc.split('\n');
@@ -67,17 +69,28 @@ function LandingCard({ item }) {
 const CHAR_INTERVAL = 40;
 const LINE_PAUSE = 400;
 
-function useTerminal(lines) {
-  const [displayedLines, setDisplayedLines] = useState([]);
-  const [done, setDone] = useState(false);
+function useTerminal(lines, skipAnimation) {
+  const [displayedLines, setDisplayedLines] = useState(() => {
+    if (skipAnimation) {
+      return lines.map(line => ({
+        ...line,
+        displayText: line.prompt || line.output,
+      }));
+    }
+    return [];
+  });
+  const [done, setDone] = useState(skipAnimation);
   const stateRef = useRef({ lineIdx: 0, charIdx: 0 });
   const timerRef = useRef(null);
 
   useEffect(() => {
+    if (skipAnimation) return;
+
     function tick() {
       const { lineIdx, charIdx } = stateRef.current;
       if (lineIdx >= lines.length) {
         setDone(true);
+        try { sessionStorage.setItem(SESSION_KEY, '1'); } catch {}
         return;
       }
 
@@ -112,7 +125,7 @@ function useTerminal(lines) {
 
     timerRef.current = setTimeout(tick, 500);
     return () => clearTimeout(timerRef.current);
-  }, [lines]);
+  }, [lines, skipAnimation]);
 
   return { displayedLines, isTyping: !done };
 }
@@ -120,12 +133,16 @@ function useTerminal(lines) {
 /* ─── Terminal ──────────────────────────────────────────────────────── */
 function Terminal() {
   const months = calcMonths(heroContent.growthStart);
+  const skipAnimation = useMemo(() => {
+    try { return sessionStorage.getItem(SESSION_KEY) === '1'; } catch { return false; }
+  }, []);
+
   const allLines = useMemo(() => [
     ...landingMeta.terminalLines,
-    { output: `${months}개월째 가동 중 — ${sites.length} sites deployed`, delay: 0, isUptime: true },
+    { output: `${months}개월째 가동 중 — ${sites.length}개 현장 로봇 배포 (한국/일본)`, delay: 0, isUptime: true },
   ], [months]);
 
-  const { displayedLines, isTyping } = useTerminal(allLines);
+  const { displayedLines, isTyping } = useTerminal(allLines, skipAnimation);
 
   return (
     <div className="terminal">
@@ -152,7 +169,6 @@ function Terminal() {
 }
 
 function PromptLine({ text }) {
-  // "$ command" → $ 는 별도 색상
   if (text.startsWith('$')) {
     return (
       <>
@@ -166,10 +182,9 @@ function PromptLine({ text }) {
 
 function OutputLine({ text, highlight, isUptime }) {
   if (isUptime) {
-    // 숫자 + 단위를 강조
     return (
       <span>
-        {text.split(/(\d+[개월째]*\s*|[0-9]+\s*sites)/).map((part, i) =>
+        {text.split(/(\d+[개월째]*\s*|[0-9]+개\s*현장)/).map((part, i) =>
           /\d/.test(part)
             ? <span key={i} className="terminal-stat">{part}</span>
             : part
@@ -187,6 +202,17 @@ function OutputLine({ text, highlight, isUptime }) {
       <span className="terminal-highlight">{highlight}</span>
       {text.slice(idx + highlight.length)}
     </>
+  );
+}
+
+/* ─── Skills ───────────────────────────────────────────────────────── */
+function SkillTags() {
+  return (
+    <div className="skill-tags">
+      {landingMeta.skills.map((skill) => (
+        <span key={skill} className="skill-tag">{skill}</span>
+      ))}
+    </div>
   );
 }
 
@@ -219,7 +245,6 @@ function SocialLinks() {
           target={link.href.startsWith('mailto:') ? undefined : '_blank'}
           rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
           className="social-link"
-          title={link.label}
         >
           <svg
             width="20" height="20" viewBox="0 0 24 24"
@@ -244,11 +269,17 @@ function LandingPage() {
       </div>
 
       <div className="landing-content">
+        <div className="landing-static-header">
+          <h1 className="static-name">{landingMeta.name}</h1>
+          <p className="static-role">{landingMeta.role}</p>
+        </div>
+
         <div className="landing-header">
           <Terminal />
         </div>
 
-        <p className="landing-guide">어디로 가시겠습니까?</p>
+        <SkillTags />
+
         <div className={`landing-cards${pages.length > 2 ? ' landing-cards-many' : ''}`}>
           {pages.map((item) => (
             <LandingCard key={item.id} item={item} />
@@ -258,7 +289,7 @@ function LandingPage() {
         <SocialLinks />
 
         <div className="landing-footer">
-          <span>&copy; {new Date().getFullYear()} JC</span>
+          <span>&copy; {new Date().getFullYear()} {landingMeta.name}</span>
         </div>
       </div>
     </div>

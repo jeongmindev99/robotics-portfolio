@@ -65,19 +65,40 @@
   max-width: 900px;
 }
 
-.landing-header {
-  margin-bottom: 60px;
-  animation: fadeInUp 0.8s ease;
+/* ─── Static Header (P0_0) ───────────────────────────────────────────── */
+.landing-static-header {
+  margin-bottom: 32px;
+  animation: fadeInUp 0.6s ease;
+}
+
+.static-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.static-role {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--accent-primary);
+  letter-spacing: 0.02em;
 }
 
 /* ─── Terminal ────────────────────────────────────────────────────────── */
+.landing-header {
+  margin-bottom: 32px;
+  animation: fadeInUp 0.8s ease 0.1s both;
+}
+
 .terminal {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   overflow: hidden;
   text-align: left;
-  max-width: 620px;
+  max-width: 640px;
   margin: 0 auto;
 }
 
@@ -161,14 +182,25 @@
   50% { opacity: 0; }
 }
 
-/* ─── Guide ──────────────────────────────────────────────────────────── */
-.landing-guide {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 20px;
-  letter-spacing: 0.02em;
+/* ─── Skill Tags (P1_0) ─────────────────────────────────────────────── */
+.skill-tags {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 40px;
   animation: fadeInUp 0.8s ease 0.15s both;
+}
+
+.skill-tag {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1px solid var(--border-highlight);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
 }
 
 /* ─── Cards ──────────────────────────────────────────────────────────── */
@@ -176,7 +208,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
-  margin-bottom: 60px;
+  margin-bottom: 48px;
   animation: fadeInUp 0.8s ease 0.2s both;
 }
 
@@ -205,6 +237,10 @@
   opacity: 0.45;
   cursor: default;
   pointer-events: none;
+}
+
+.card-cta-soon {
+  color: var(--text-muted);
 }
 
 .card-icon {
@@ -252,20 +288,17 @@
   gap: 10px;
 }
 
-.card-cta-soon {
-  color: var(--text-muted);
-}
-
 /* ─── Cards: 3개 이상 ────────────────────────────────────────────────── */
 .landing-cards-many {
   grid-template-columns: repeat(3, 1fr);
 }
 
-/* ─── Social Links ───────────────────────────────────────────────────── */
+/* ─── Social Links (P1_2) ────────────────────────────────────────────── */
 .social-links {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
   margin-bottom: 40px;
   animation: fadeInUp 0.8s ease 0.3s both;
 }
@@ -280,6 +313,7 @@
   border: 1px solid var(--border-color);
   background: var(--bg-card);
   color: var(--text-secondary);
+  text-decoration: none;
   transition: all 0.25s ease;
 }
 
@@ -309,6 +343,11 @@
   }
 
   .landing-header {
-    margin-bottom: 40px;
+    margin-bottom: 24px;
+  }
+
+  .social-links {
+    flex-direction: column;
+    align-items: center;
   }
 }
