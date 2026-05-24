@@ -10,7 +10,7 @@
  *   notion         {string}  Notion URL
  */
 export const contactInfo = {
-  email: 'jeongmin.dev99@gmail.com',
+  email: 'jeongmin.dev.99@gmail.com',
   github: 'https://github.com/wntdev99',
   githubDisplay: 'github.com/wntdev99',
   linkedin: 'https://www.linkedin.com/in/정민-최-01579b281',
