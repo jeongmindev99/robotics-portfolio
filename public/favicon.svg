@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- 배경: 토스 앱 아이콘 스타일의 둥근 정사각형 (R=16) -->
+  <rect width="64" height="64" rx="16" fill="#FFFFFF" />
+  
+  <!-- 메인 아이콘: 추상화된 로봇 조인트/그리퍼 (Toss Blue) -->
+  <g fill="#0051FF">
+    <!-- 중앙 핵심 조인트 -->
+    <circle cx="32" cy="32" r="6" />
+    
+    <!-- 부드럽게 감싸는 움직임을 표현하는 두 개의 팔 -->
+    <path d="M 22 42 
+             A 14 14 0 0 1 22 22 
+             M 42 22 
+             A 14 14 0 0 1 42 42" 
+          stroke="#0051FF" stroke-width="7" stroke-linecap="round" fill="none"/>
+  
+    <!-- 이니셜 'J'를 시각화하는 부가 곡선 -->
+    <path d="M 32 32
+             A 7 7 0 0 0 32 46"
+          stroke="#0051FF" stroke-width="5" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>
