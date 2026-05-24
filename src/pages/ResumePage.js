@@ -70,7 +70,25 @@ export default function ResumePage() {
                   <span className="r-period">{exp.period}</span>
                 </div>
                 {exp.role && <div className="r-role">{exp.role}</div>}
-                {exp.achievements.length > 0 && (
+                {exp.summary && <div className="r-desc">{exp.summary}</div>}
+                {exp.projects && exp.projects.length > 0 && (
+                  <div className="r-projects">
+                    {exp.projects.map((proj, i) => (
+                      <div key={i} className="r-project">
+                        <div className="r-row r-project-row">
+                          <span className="r-project-title">{proj.title}</span>
+                          {proj.period && <span className="r-period">{proj.period}</span>}
+                        </div>
+                        {proj.bullets && proj.bullets.length > 0 && (
+                          <ul className="r-list">
+                            {proj.bullets.map((b, j) => <li key={j}>{b}</li>)}
+                          </ul>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {exp.achievements && exp.achievements.length > 0 && (
                   <ul className="r-list">
                     {exp.achievements.map((a, i) => <li key={i}>{a}</li>)}
                   </ul>
@@ -107,6 +125,11 @@ export default function ResumePage() {
                   {edu.degree} / {edu.major}
                   {edu.note && <span className="r-note"> — {edu.note}</span>}
                 </div>
+                {edu.thesis && (
+                  <div className="r-desc r-thesis">
+                    <span className="r-thesis-label">졸업논문</span> {edu.thesis}
+                  </div>
+                )}
               </div>
             ))}
           </Section>
