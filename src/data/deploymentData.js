@@ -7,7 +7,6 @@
  *   name       {string}  사이트명
  *   robot      {string}  로봇 종류
  *   role       {string}  담당 역할
- *   notionLink {string}  노션 상세 링크
  */
 export const sites = [
   {
@@ -17,8 +16,7 @@ export const sites = [
     name: '소프트뱅크 로보틱스 (PoC)',
     robot: 'JamesW',
     role: '투자 유치 PoC 시연 세팅 지원 (야마토 본사·코엑스)',
-    notionLink: '',
-    youtubeLink: '',
+    youtubeLink: 'https://www.youtube.com/watch?v=yWmRWOPGK2I',
   },
   {
     id: 9,
@@ -27,8 +25,7 @@ export const sites = [
     name: '판교 테크원',
     robot: 'JamesW, StationXZ',
     role: '배송 시나리오 설계, 현장 단독 세팅, 인계 후 1년 원격 안정화',
-    notionLink: '',
-    youtubeLink: '',
+    youtubeLink: 'https://www.youtube.com/watch?v=7C5bNyzlaNE',
   },
   {
     id: 10,
@@ -37,7 +34,6 @@ export const sites = [
     name: '왕십리 지웰홈즈',
     robot: 'JamesW, StationXZ',
     role: '로봇 하드웨어 검증, 현장 세팅, 실운영 및 안정화, 모터 영점 근본 해결',
-    notionLink: '',
     youtubeLink: '',
   },
   {
@@ -47,7 +43,6 @@ export const sites = [
     name: '서초 레미안',
     robot: 'JamesP',
     role: '로봇 하드웨어 검증, 단방향→양방향 배송 시나리오 확장, 현장 세팅, 실운영 및 안정화',
-    notionLink: '',
     youtubeLink: '',
   },
   {
@@ -57,7 +52,6 @@ export const sites = [
     name: '일본 팜코트',
     robot: 'JamesW, JmW, StationXZ',
     role: '로봇 하드웨어 검증, 배송 시나리오 설계, 현장 세팅, 실운영 및 안정화',
-    notionLink: '',
     youtubeLink: '',
   },
   {
@@ -67,7 +61,6 @@ export const sites = [
     name: '대치 에델루이',
     robot: 'JamesP',
     role: '로봇 하드웨어 검증, 배송 시나리오 설계, 현장 세팅, 실운영 및 안정화',
-    notionLink: '',
     youtubeLink: '',
   },
   {
@@ -77,7 +70,6 @@ export const sites = [
     name: '일본 캐널코트',
     robot: 'JamesW, JmW, StationXZ',
     role: '로봇 하드웨어 검증, 실운영 및 안정화',
-    notionLink: '',
     youtubeLink: '',
   },
   {
@@ -87,7 +79,6 @@ export const sites = [
     name: '부산 에코델타 호반써밋',
     robot: 'JamesP',
     role: '로봇 하드웨어 검증, 배송 시나리오 설계, 현장 단독 세팅, 실운영 및 안정화',
-    notionLink: '',
     youtubeLink: '',
   },
   {
@@ -97,7 +88,6 @@ export const sites = [
     name: '부산 에코델타 수자인',
     robot: 'JamesP',
     role: '로봇 하드웨어 검증, 배송 시나리오 설계, 현장 단독 세팅, 실운영 및 안정화',
-    notionLink: '',
     youtubeLink: '',
   },
 ];

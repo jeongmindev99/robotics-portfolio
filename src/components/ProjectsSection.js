@@ -10,7 +10,6 @@ const projectSchema = [
   { key: 'action',     label: 'Action',             type: 'textarea' },
   { key: 'result',     label: 'Result',             type: 'textarea' },
   { key: 'tags',       label: 'Tags (쉼표 구분)',   type: 'tags' },
-  { key: 'notionLink', label: 'Notion Link',        type: 'url' },
 ];
 
 function ProjectsSection() {
@@ -109,14 +108,6 @@ function ProjectsSection() {
 
               <div className="project-footer">
                 <span className="project-id">#{String(index + 1).padStart(2, '0')}</span>
-                {project.notionLink && (
-                  <a href={project.notionLink} target="_blank" rel="noopener noreferrer" className="project-notion-link">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466l1.823 1.447zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.166V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.934z"/>
-                    </svg>
-                    상세 보기
-                  </a>
-                )}
               </div>
             </div>
           ))}
@@ -128,15 +119,6 @@ function ProjectsSection() {
           )}
         </div>
 
-        <div className="projects-cta">
-          <p>더 많은 프로젝트는 노션에서 확인하세요</p>
-          <a href="https://notion.so/2e9d8a0a7b5a81c5a57ed22576f1cb0c" target="_blank" rel="noopener noreferrer" className="notion-link">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466l1.823 1.447zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.166V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.934zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952l1.448.327s0 .84-1.168.84l-3.22.186c-.094-.187 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.14c-.093-.514.28-.887.747-.933l3.222-.187zM2.668 1.358L16.6.256c1.636-.14 2.057.234 2.757.793l3.828 2.66c.467.326.607.653.607 1.12v17.127c0 1.073-.374 1.726-1.682 1.82l-15.457.933c-.981.047-1.448-.093-1.962-.747L1.5 19.896c-.56-.746-.794-1.306-.794-1.96V2.805c0-.84.374-1.353 1.168-1.447z"/>
-            </svg>
-            <span>Notion Portfolio</span>
-          </a>
-        </div>
       </div>
 
       {editingProject && (
