@@ -10,33 +10,22 @@ const siteSchema = [
   { key: 'name',      label: '사이트명',         type: 'text' },
   { key: 'robot',     label: '로봇 종류',        type: 'text' },
   { key: 'role',      label: '담당 역할',        type: 'text' },
-  { key: 'notionLink', label: 'Notion Link',    type: 'url' },
   { key: 'youtubeLink', label: 'YouTube 영상 링크', type: 'url' },
 ];
 
-// Extract YouTube video ID from various URL formats and return embed URL
-function getYouTubeEmbedUrl(url) {
+function getYouTubeVideoId(url) {
   if (!url) return null;
-
-  let videoId;
-  // Handle youtu.be URLs
   const youtuMatch = url.match(/youtu\.be\/([^/?]+)/);
-  if (youtuMatch) {
-    videoId = youtuMatch[1];
-  } else {
-    // Handle youtube.com URLs
-    const youtubeMatch = url.match(/[?&]v=([^&]+)/);
-    if (youtubeMatch) {
-      videoId = youtubeMatch[1];
-    } else {
-      // Check if it's already an embed URL
-      const embedMatch = url.match(/\/embed\/([^/?]+)/);
-      if (embedMatch) {
-        videoId = embedMatch[1];
-      }
-    }
-  }
+  if (youtuMatch) return youtuMatch[1];
+  const youtubeMatch = url.match(/[?&]v=([^&]+)/);
+  if (youtubeMatch) return youtubeMatch[1];
+  const embedMatch = url.match(/\/embed\/([^/?]+)/);
+  if (embedMatch) return embedMatch[1];
+  return null;
+}
 
+function getYouTubeEmbedUrl(url) {
+  const videoId = getYouTubeVideoId(url);
   return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
 }
 
@@ -100,18 +89,23 @@ function DeploymentSection() {
               <span className="cell-link">
                 {!adminActive && (
                   <div className="link-buttons">
-                    {site.youtubeLink && (
-                      <button
-                        className="video-btn"
-                        onClick={() => setVideoUrl(getYouTubeEmbedUrl(site.youtubeLink))}
-                        title="영상 보기"
-                      >▶ 영상</button>
-                    )}
-                    {site.notionLink && (
-                      <a href={site.notionLink} target="_blank" rel="noopener noreferrer" className="site-notion-link">
-                        상세
-                      </a>
-                    )}
+                    {site.youtubeLink && (() => {
+                      const videoId = getYouTubeVideoId(site.youtubeLink);
+                      return videoId ? (
+                        <button
+                          className="video-thumbnail-btn"
+                          onClick={() => setVideoUrl(getYouTubeEmbedUrl(site.youtubeLink))}
+                          title="영상 보기"
+                        >
+                          <img
+                            src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+                            alt="영상 보기"
+                            className="video-thumbnail-img"
+                          />
+                          <span className="video-play-overlay">▶</span>
+                        </button>
+                      ) : null;
+                    })()}
                   </div>
                 )}
                 {adminActive && (

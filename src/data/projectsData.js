@@ -8,7 +8,6 @@
  *   action     {string}  취한 행동
  *   result     {string}  결과 (highlight 표시)
  *   tags       {Array}   기술 태그
- *   notionLink {string}  노션 상세 링크
  */
 export const projects = [
   {
@@ -22,7 +21,6 @@ export const projects = [
       'Python',
       'Architecture',
     ],
-    notionLink: '',
   },
   {
     id: 3,
@@ -36,7 +34,6 @@ export const projects = [
       'Python',
       'Arduino',
     ],
-    notionLink: '',
   },
   {
     id: 4,
@@ -49,7 +46,6 @@ export const projects = [
       'ROS2',
       'Claude Code',
     ],
-    notionLink: '',
   },
   {
     id: 5,
@@ -62,6 +58,5 @@ export const projects = [
       'Python',
       'C++',
     ],
-    notionLink: '',
   },
 ];

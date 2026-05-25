@@ -233,7 +233,6 @@ export function AdminProvider({ children }) {
         action: '',
         result: '',
         tags: [],
-        notionLink: '',
       }];
     });
   }, [setKey]);
@@ -257,7 +256,6 @@ export function AdminProvider({ children }) {
         name: '새 사이트',
         robot: '',
         role: '',
-        notionLink: '',
         youtubeLink: '',
       }];
     });
