@@ -34,7 +34,7 @@ export const sites = [
     name: '왕십리 지웰홈즈',
     robot: 'JamesW, StationXZ',
     role: '로봇 하드웨어 검증, 현장 세팅, 실운영 및 안정화, 모터 영점 근본 해결',
-    youtubeLink: '',
+    youtubeLink: 'https://youtu.be/NCMHiNgXUOA',
   },
   {
     id: 11,
@@ -61,7 +61,7 @@ export const sites = [
     name: '대치 에델루이',
     robot: 'JamesP',
     role: '로봇 하드웨어 검증, 배송 시나리오 설계, 현장 세팅, 실운영 및 안정화',
-    youtubeLink: '',
+    youtubeLink: 'https://youtu.be/qk4zacep3bI',
   },
   {
     id: 14,
@@ -79,7 +79,7 @@ export const sites = [
     name: '부산 에코델타 호반써밋',
     robot: 'JamesP',
     role: '로봇 하드웨어 검증, 배송 시나리오 설계, 현장 단독 세팅, 실운영 및 안정화',
-    youtubeLink: '',
+    youtubeLink: 'https://youtu.be/wKhTsZStq10',
   },
   {
     id: 16,
@@ -88,6 +88,6 @@ export const sites = [
     name: '부산 에코델타 수자인',
     robot: 'JamesP',
     role: '로봇 하드웨어 검증, 배송 시나리오 설계, 현장 단독 세팅, 실운영 및 안정화',
-    youtubeLink: '',
+    youtubeLink: 'https://youtu.be/yboPAA3EFh4',
   },
 ];
